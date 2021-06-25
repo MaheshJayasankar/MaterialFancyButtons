@@ -1,7 +1,5 @@
-package com.rilixtech.materialfancybutton;
+package com.applibgroup.materialfancybutton;
 
-import android.content.Context;
-import android.util.Log;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import com.rilixtech.materialfancybutton.utils.GenericsUtil;

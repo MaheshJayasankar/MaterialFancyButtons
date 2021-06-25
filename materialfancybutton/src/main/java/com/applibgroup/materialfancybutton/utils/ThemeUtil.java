@@ -1,4 +1,4 @@
-package com.rilixtech.materialfancybutton.utils;
+package com.applibgroup.materialfancybutton.utils;
 
 import android.annotation.TargetApi;
 import android.content.Context;

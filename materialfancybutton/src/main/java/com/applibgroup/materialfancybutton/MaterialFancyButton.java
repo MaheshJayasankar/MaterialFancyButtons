@@ -1,22 +1,4 @@
-package com.rilixtech.materialfancybutton;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
-import android.os.Build;
-import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+package com.applibgroup.materialfancybutton;
 
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;

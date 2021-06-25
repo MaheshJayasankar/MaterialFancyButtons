@@ -1,4 +1,4 @@
-package com.rilixtech.materialfancybutton.utils;
+package com.applibgroup.materialfancybutton.utils;
 
 
 import ohos.app.Context;

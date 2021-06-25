@@ -17,5 +17,6 @@ ohos {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':materialfancybutton')
     testImplementation 'junit:junit:4.13'
 }

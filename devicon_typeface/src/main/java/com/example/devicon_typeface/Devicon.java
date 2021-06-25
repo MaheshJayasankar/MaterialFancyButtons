@@ -1,7 +1,10 @@
 package com.example.devicon_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.applibgroup.materialfancybutton.typeface.IIcon;
+import com.applibgroup.materialfancybutton.typeface.ITypeface;
+import ohos.agp.text.Font;
+import ohos.app.Context;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -10,7 +13,7 @@ public class Devicon implements ITypeface{
     private static final String TTF_FILE = "devicon-font-v2.0.0.1.ttf";
     private static final String MAPPING_FONT_PREFIX = "devi";
 
-    private static Typeface typeface = null;
+    private static Font typeface = null;
     private static HashMap<String, Character> mChars;
 
     @Override public IIcon getIcon(String key) {
@@ -82,8 +85,9 @@ public class Devicon implements ITypeface{
         return "https://github.com/konpa/devicon/blob/master/LICENSE";
     }
 
+
     @Override
-    public Typeface getTypeface(Context context) {
+    public Font getTypeface(Context context) {
         if (typeface == null) {
             try {
                 typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + TTF_FILE);

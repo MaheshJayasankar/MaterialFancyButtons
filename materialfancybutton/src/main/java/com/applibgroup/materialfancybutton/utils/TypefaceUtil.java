@@ -1,4 +1,4 @@
-package com.rilixtech.materialfancybutton.utils;
+package com.applibgroup.materialfancybutton.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;

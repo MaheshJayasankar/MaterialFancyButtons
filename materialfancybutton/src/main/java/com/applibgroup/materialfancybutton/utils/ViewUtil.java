@@ -1,4 +1,4 @@
-package com.rilixtech.materialfancybutton.utils;
+package com.applibgroup.materialfancybutton.utils;
 
 import android.annotation.SuppressLint;
 import android.content.res.TypedArray;
@@ -22,7 +22,7 @@ public class ViewUtil {
 
 	private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
-    @SuppressLint("NewApi")
+    @SuppressWarnings("NewApi")
     public static int generateViewId() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             for (;;) {
