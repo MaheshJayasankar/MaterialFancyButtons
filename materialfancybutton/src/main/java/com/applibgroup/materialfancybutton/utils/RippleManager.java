@@ -1,14 +1,9 @@
 package com.rilixtech.materialfancybutton.utils;
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
+
 import com.rilixtech.materialfancybutton.R;
 import com.rilixtech.materialfancybutton.drawable.RippleDrawable;
+import ohos.app.Context;
 
 public final class RippleManager implements View.OnClickListener {
 
@@ -22,7 +17,7 @@ public final class RippleManager implements View.OnClickListener {
    * Should be called in the construction method of view to create a RippleDrawable.
    */
   public void onCreate(View v, Context context, AttributeSet attrs, int defStyleAttr,
-      int defStyleRes, float[] cornerRadii) {
+                       int defStyleRes, float[] cornerRadii) {
     if (v.isInEditMode()) return;
 
     TypedArray a =

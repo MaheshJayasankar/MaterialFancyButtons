@@ -1,7 +1,7 @@
 package com.rilixtech.materialfancybutton.utils;
 
-import android.content.Context;
-import android.text.TextUtils;
+
+import ohos.app.Context;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
