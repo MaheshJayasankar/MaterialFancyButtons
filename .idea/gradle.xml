@@ -11,6 +11,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/devicon_typeface" />
             <option value="$PROJECT_DIR$/entry" />
             <option value="$PROJECT_DIR$/materialfancybutton" />
           </set>

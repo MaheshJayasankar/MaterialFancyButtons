@@ -1,1 +1,1 @@
-include ':entry', ':materialfancybutton'
+include ':entry', ':materialfancybutton', ':devicon_typeface'
