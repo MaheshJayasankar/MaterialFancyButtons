@@ -5,6 +5,8 @@ import android.util.Log;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import com.rilixtech.materialfancybutton.utils.GenericsUtil;
+import ohos.app.Context;
+
 import java.util.Collection;
 import java.util.HashMap;
 
