@@ -1,8 +1,8 @@
 package com.applibgroup.materialfancybutton;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
-import com.rilixtech.materialfancybutton.utils.FontUtil;
+import com.applibgroup.materialfancybutton.typeface.IIcon;
+import com.applibgroup.materialfancybutton.typeface.ITypeface;
+import com.applibgroup.materialfancybutton.utils.FontUtil;
 
 import java.util.ArrayList;
 import java.util.List;

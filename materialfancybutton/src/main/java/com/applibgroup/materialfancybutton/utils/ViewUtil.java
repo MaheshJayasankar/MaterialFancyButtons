@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.rilixtech.materialfancybutton.R;
+import com.applibgroup.materialfancybutton.R;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ViewUtil {
