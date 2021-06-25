@@ -2,6 +2,7 @@ package com.example.dripicons_typeface;
 
 import com.applibgroup.materialfancybutton.typeface.IIcon;
 import com.applibgroup.materialfancybutton.typeface.ITypeface;
+import ohos.agp.text.Font;
 import ohos.app.Context;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ public class Dripicons implements ITypeface {
     private static final String TTF_FILE = "dripicons-v2.ttf";
     private static final String MAPPING_FONT_PREFIX = "drpi";
 
-    private static Typeface typeface = null;
+    private static Font.Builder typeface = null;
 
     private static HashMap<String, Character> mChars;
 
@@ -78,15 +79,15 @@ public class Dripicons implements ITypeface {
         return "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL";
     }
 
-    @Override public Typeface getTypeface(Context context) {
+    @Override public Font getTypeface(Context context) {
         if (typeface == null) {
             try {
-                typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + TTF_FILE);
+                typeface = new Font.Builder( "fonts/" + TTF_FILE);
             } catch (Exception e) {
                 return null;
             }
         }
-        return typeface;
+        return typeface.build();
     }
 
     private static final char a = 0x0027;

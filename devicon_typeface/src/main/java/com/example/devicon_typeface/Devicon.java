@@ -13,7 +13,7 @@ public class Devicon implements ITypeface{
     private static final String TTF_FILE = "devicon-font-v2.0.0.1.ttf";
     private static final String MAPPING_FONT_PREFIX = "devi";
 
-    private static Typeface typeface = null;
+    private static Font.Builder typeface = null;
     private static HashMap<String, Character> mChars;
 
     @Override public IIcon getIcon(String key) {
@@ -90,12 +90,12 @@ public class Devicon implements ITypeface{
     public Font getTypeface(Context context) {
         if (typeface == null) {
             try {
-                typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + TTF_FILE);
+                typeface = new Font.Builder("fonts/" + TTF_FILE);
             } catch (Exception e) {
                 return null;
             }
         }
-        return typeface;
+        return typeface.build();
     }
 
     public enum Icon implements IIcon {
@@ -285,7 +285,7 @@ public class Devicon implements ITypeface{
 
         public ITypeface getTypeface() {
             if (typeface == null) {
-                typeface = new DevIcon();
+                typeface = new Devicon();
             }
             return typeface;
         }
