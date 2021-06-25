@@ -26,6 +26,7 @@ public class ColorUtil {
 		return Color.argb(a, r, g, b);
 	}
 
+	// TODO: Write tests for following 3 functions
 	private static int getRedComponent(int color)
 	{
 		return (color >> 16) & 0xFF;

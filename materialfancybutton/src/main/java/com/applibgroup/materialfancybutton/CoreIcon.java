@@ -1,10 +1,10 @@
-package com.rilixtech.materialfancybutton;
+package com.applibgroup.materialfancybutton;
 
-import android.content.Context;
-import android.util.Log;
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
-import com.rilixtech.materialfancybutton.utils.GenericsUtil;
+import com.applibgroup.materialfancybutton.typeface.IIcon;
+import com.applibgroup.materialfancybutton.typeface.ITypeface;
+import com.applibgroup.materialfancybutton.utils.GenericsUtil;
+import ohos.app.Context;
+
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -26,12 +26,12 @@ public final class CoreIcon {
           ITypeface typeface = (ITypeface) Class.forName(fontsClassPath).newInstance();
           validateFont(typeface);
           FONTS.put(typeface.getMappingPrefix(), typeface);
-          Log.d(MaterialFancyButton.TAG, "Typeface = " + typeface.getAuthor());
+          //Log.d(MaterialFancyButton.TAG, "Typeface = " + typeface.getAuthor());
         } catch (Exception e) {
-          Log.e(MaterialFancyButton.TAG, "Can't init: " + fontsClassPath);
+          //Log.e(MaterialFancyButton.TAG, "Can't init: " + fontsClassPath);
         }
       }
-      Log.d(MaterialFancyButton.TAG, "Total font = " + FONTS.size());
+      //Log.d(MaterialFancyButton.TAG, "Total font = " + FONTS.size());
       INIT_DONE = true;
     }
   }

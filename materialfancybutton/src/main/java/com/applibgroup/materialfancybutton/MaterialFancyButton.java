@@ -1,44 +1,39 @@
-package com.rilixtech.materialfancybutton;
+package com.applibgroup.materialfancybutton;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
-import android.os.Build;
-import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
-import com.rilixtech.materialfancybutton.utils.FontUtil;
+import com.applibgroup.materialfancybutton.typeface.IIcon;
+import com.applibgroup.materialfancybutton.typeface.ITypeface;
+import com.applibgroup.materialfancybutton.utils.FontUtil;
+import com.applibgroup.materialfancybutton.utils.TextUtils;
+import ohos.agp.colors.RgbColor;
+import ohos.agp.components.*;
+import ohos.agp.components.element.Element;
+import ohos.agp.components.element.ElementContainer;
+import ohos.agp.components.element.ShapeElement;
+import ohos.agp.components.element.StateElement;
+import ohos.agp.text.Font;
+import ohos.agp.text.Layout;
+import ohos.agp.utils.Color;
+import ohos.agp.utils.LayoutAlignment;
+import ohos.agp.utils.TextAlignment;
+import ohos.app.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MaterialFancyButton extends LinearLayout {
+public class MaterialFancyButton extends DirectionalLayout {
 
   public static final String TAG = MaterialFancyButton.class.getSimpleName();
 
   // # Background Attributes
-  private int mDefaultBackgroundColor = Color.BLACK;
+  private int mDefaultBackgroundColor = Color.BLACK.getValue();
   private int mFocusBackgroundColor = 0;
-  private int mDisabledBackgroundColor = Color.parseColor("#f6f7f9");
-  private int mDisabledTextColor = Color.parseColor("#bec2c9");
-  private int mDisabledBorderColor = Color.parseColor("#dddfe2");
+  private int mDisabledBackgroundColor = Color.getIntColor("#f6f7f9");
+  private int mDisabledTextColor = Color.getIntColor("#bec2c9");
+  private int mDisabledBorderColor = Color.getIntColor("#dddfe2");
 
   // # Text Attributes
-  private int mDefaultTextColor = Color.WHITE;
-  private int mDefaultIconColor = Color.WHITE;
+  private int mDefaultTextColor = Color.WHITE.getValue();
+  private int mDefaultIconColor = Color.WHITE.getValue();
   //private int mTextPosition = 1;
   private int mTextSize = FontUtil.spToPx(getContext(), 15);
   private int mTextGravity; // Gravity.CENTER
@@ -46,7 +41,7 @@ public class MaterialFancyButton extends LinearLayout {
   private int mTextStyle;
 
   // # Icon Attributes
-  private Drawable mIconResource = null;
+  private Element mIconResource = null;
   private int mFontIconSize = FontUtil.spToPx(getContext(), 15);
   private String mFontIcon = null;
   private int mIconPosition = 1;
@@ -69,8 +64,8 @@ public class MaterialFancyButton extends LinearLayout {
   private boolean mEnabled;
   private boolean mTextAllCaps;
 
-  private Typeface mTextTypeFace = null;
-  private Typeface mIconTypeFace = null;
+  private Font mTextTypeFace = null;
+  private Font mIconTypeFace = null;
 
   /**
    * Tags to identify icon position
@@ -80,9 +75,9 @@ public class MaterialFancyButton extends LinearLayout {
   public static final int POSITION_TOP = 3;
   public static final int POSITION_BOTTOM = 4;
 
-  private ImageView mIconView;
-  private TextView mFontIconView;
-  private TextView mTextView;
+  private Image mIconView;
+  private Text mFontIconView;
+  private Text mTextView;
 
   private boolean mGhost = false; // Default is a solid button !
 
@@ -91,8 +86,10 @@ public class MaterialFancyButton extends LinearLayout {
     initializeMaterialFancyButton();
   }
 
-  public MaterialFancyButton(Context context, AttributeSet attrs) {
+  public MaterialFancyButton(Context context, AttrSet attrs) {
     super(context, attrs);
+
+    // TODO Replace with custom attribute set parsing logic
     TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.MaterialFancyButton, 0, 0);
     initAttributesArray(arr);
     arr.recycle();
@@ -116,7 +113,7 @@ public class MaterialFancyButton extends LinearLayout {
     //this.removeAllViews();
     setupBackground();
 
-    List<View> views = new ArrayList<>();
+    List<Component> views = new ArrayList<>();
 
     if (mIconPosition == POSITION_LEFT || mIconPosition == POSITION_TOP) {
       if (mIconView != null) views.add(mIconView);
@@ -128,8 +125,8 @@ public class MaterialFancyButton extends LinearLayout {
       if (mFontIconView != null) views.add(mFontIconView);
     }
 
-    for (View view : views) {
-      addView(view);
+    for (Component view : views) {
+      addComponent(view);
     }
   }
 
@@ -140,48 +137,49 @@ public class MaterialFancyButton extends LinearLayout {
    */
   private void setupTextView() {
     if (mText == null) mText = "BUTTON";
-    if (mTextView == null) mTextView = new TextView(getContext());
+    if (mTextView == null) mTextView = new Text(getContext());
 
     mTextView.setText(mText);
-    mTextView.setGravity(mTextGravity);
-    mTextView.setTextColor(mEnabled ? mDefaultTextColor : mDisabledTextColor);
+    mTextView.setTextAlignment(mTextGravity);
+    mTextView.setTextColor(new Color(mEnabled ? mDefaultTextColor : mDisabledTextColor));
     mTextView.setTextSize(FontUtil.pxToSp(getContext(), mTextSize));
-    mTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-    mTextView.setTypeface(mTextView.getTypeface(), mTextStyle);
+    mTextView.setLayoutConfig(new LayoutConfig(LayoutConfig.MATCH_CONTENT, LayoutConfig.MATCH_CONTENT));
+    // TODO How to set font style?
+    mTextView.setFont(mTextView.getFont());
   }
 
   /**
    * Setup Font Icon View
    */
   private void setupFontIconView() {
-    Log.d("setupFontIconView", "mFontIcon = " + mFontIcon);
+    // Log.d("setupFontIconView", "mFontIcon = " + mFontIcon);
     if (mFontIcon == null) return;
-    if(mFontIconView == null) mFontIconView = new TextView(getContext());
-    mFontIconView.setTextColor(mEnabled ? mDefaultIconColor : mDisabledTextColor);
-    LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    params.rightMargin = mIconPaddingRight;
-    params.leftMargin = mIconPaddingLeft;
-    params.topMargin = mIconPaddingTop;
-    params.bottomMargin = mIconPaddingBottom;
+    if(mFontIconView == null) mFontIconView = new Text(getContext());
+    mFontIconView.setTextColor(new Color(mEnabled ? mDefaultIconColor : mDisabledTextColor));
+    LayoutConfig params = new LayoutConfig(LayoutConfig.MATCH_CONTENT, LayoutConfig.MATCH_CONTENT);
+    params.setMarginRight(mIconPaddingRight);
+    params.setMarginLeft(mIconPaddingLeft);
+    params.setMarginTop(mIconPaddingTop);
+    params.setMarginBottom(mIconPaddingBottom);
 
     if (mTextView == null) {
-      params.gravity = Gravity.CENTER;
-      mFontIconView.setGravity(Gravity.CENTER_VERTICAL);
+      params.alignment = LayoutAlignment.CENTER;
+      mFontIconView.setTextAlignment(TextAlignment.VERTICAL_CENTER);
     } else {
       if (mIconPosition == POSITION_TOP || mIconPosition == POSITION_BOTTOM) {
-        params.gravity = Gravity.CENTER;
-        mFontIconView.setGravity(Gravity.CENTER);
+        params.alignment = LayoutAlignment.CENTER;
+        mFontIconView.setTextAlignment(TextAlignment.CENTER);
       } else {
-        mFontIconView.setGravity(Gravity.CENTER_VERTICAL);
-        params.gravity = Gravity.CENTER_VERTICAL;
+        mFontIconView.setTextAlignment(TextAlignment.VERTICAL_CENTER);
+        params.alignment = LayoutAlignment.VERTICAL_CENTER;
       }
     }
 
-    mFontIconView.setLayoutParams(params);
+    mFontIconView.setLayoutConfig(params);
     mFontIconView.setTextSize(FontUtil.pxToSp(getContext(), mFontIconSize));
     mFontIconView.setText(mFontIcon);
-    mFontIconView.setTypeface(mIconTypeFace);
-    Log.d("setupFontIconView", "mIconTypeFace  =  " + mIconTypeFace.toString());
+    mFontIconView.setFont(mIconTypeFace);
+    //Log.d("setupFontIconView", "mIconTypeFace  =  " + mIconTypeFace.toString());
   }
 
   /**
@@ -190,25 +188,25 @@ public class MaterialFancyButton extends LinearLayout {
    * @return : ImageView
    */
   private void setupIconView() {
-    if (mIconView == null) mIconView = new ImageView(getContext());
+    if (mIconView == null) mIconView = new Image(getContext());
     mIconView.setPadding(mIconPaddingLeft, mIconPaddingTop, mIconPaddingRight, mIconPaddingBottom);
-    LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    LayoutConfig params = new LayoutConfig(LayoutConfig.MATCH_CONTENT, LayoutConfig.MATCH_CONTENT);
     if (TextUtils.isEmpty(mText)) {
-      params.gravity = Gravity.CENTER_VERTICAL;
+      params.alignment = LayoutAlignment.VERTICAL_CENTER;
     } else {
       if (mIconPosition == POSITION_TOP || mIconPosition == POSITION_BOTTOM) {
-        params.gravity = Gravity.CENTER;
+        params.alignment = LayoutAlignment.CENTER;
       } else {
-        params.gravity = Gravity.START;
+        params.alignment = LayoutAlignment.START;
       }
     }
-    mIconView.setLayoutParams(params);
+    mIconView.setLayoutConfig(params);
 
     if (mIconResource == null) {
-      Log.d(TAG, "mIconResource is null");
+      //Log.d(TAG, "mIconResource is null");
     } else {
-      mIconView.setImageDrawable(mIconResource);
-      Log.d(TAG, "mIconResource is not null");
+      mIconView.setImageElement(mIconResource);
+      //Log.d(TAG, "mIconResource is not null");
     }
   }
 
@@ -301,15 +299,10 @@ public class MaterialFancyButton extends LinearLayout {
     }
   }
 
-  GradientDrawable disabledDrawable;
-  StateListDrawable states;
-  GradientDrawable drawable2;
-
-  @SuppressLint("NewApi")
   private void setupBackground() {
-    GradientDrawable defaultDrawable = new GradientDrawable();
+    ShapeElement defaultDrawable = new ShapeElement();
     defaultDrawable.setCornerRadius(mRadius);
-    defaultDrawable.setCornerRadii(new float[] { mRadiusTopLeft, mRadiusTopLeft,
+    defaultDrawable.setCornerRadiiArray(new float[] { mRadiusTopLeft, mRadiusTopLeft,
         mRadiusTopRight, mRadiusTopRight,
         mRadiusBottomRight, mRadiusBottomRight,
         mRadiusBottomLeft, mRadiusBottomLeft
@@ -317,115 +310,102 @@ public class MaterialFancyButton extends LinearLayout {
 
     if (mGhost) {
       // Hollow Background
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        defaultDrawable.setColor(getContext().getColor(android.R.color.transparent));
-      } else {
-        defaultDrawable.setColor(getResources().getColor(android.R.color.transparent));
-      }
+      defaultDrawable.setRgbColor(new RgbColor(Color.TRANSPARENT.getValue()));
+
     } else {
-      defaultDrawable.setColor(mDefaultBackgroundColor);
+      defaultDrawable.setRgbColor(new RgbColor(mDefaultBackgroundColor));
     }
 
-    GradientDrawable focusDrawable = new GradientDrawable();
+    ShapeElement focusDrawable = new ShapeElement();
 
     focusDrawable.setCornerRadius(mRadius);
-    focusDrawable.setCornerRadii(new float[] {
+    focusDrawable.setCornerRadiiArray(new float[] {
         mRadiusTopLeft, mRadiusTopLeft, mRadiusTopRight, mRadiusTopRight, mRadiusBottomRight, mRadiusBottomRight,
         mRadiusBottomLeft, mRadiusBottomLeft
     });
-    focusDrawable.setColor(mFocusBackgroundColor);
+    focusDrawable.setRgbColor(new RgbColor(mFocusBackgroundColor));
 
     // Disabled Drawable
     //if(disabledDrawable == null) {
-    GradientDrawable disabledDrawable = new GradientDrawable();
+    ShapeElement disabledDrawable = new ShapeElement();
     //}
     disabledDrawable.setCornerRadius(mRadius);
-    focusDrawable.setCornerRadii(new float[] {
+    focusDrawable.setCornerRadiiArray(new float[] {
         mRadiusTopLeft, mRadiusTopLeft, mRadiusTopRight, mRadiusTopRight, mRadiusBottomRight, mRadiusBottomRight,
         mRadiusBottomLeft, mRadiusBottomLeft
     });
-    disabledDrawable.setColor(mDisabledBackgroundColor);
-    disabledDrawable.setStroke(mBorderWidth, mDisabledBorderColor);
+    disabledDrawable.setRgbColor(new RgbColor(mDisabledBackgroundColor));
+    disabledDrawable.setStroke(mBorderWidth, new RgbColor(mDisabledBorderColor));
 
     // Handle Border
-    if (mBorderColor != 0) defaultDrawable.setStroke(mBorderWidth, mBorderColor);
+    if (mBorderColor != 0) defaultDrawable.setStroke(mBorderWidth, new RgbColor(mBorderColor));
 
     // Handle disabled border color
     if (!mEnabled) {
-      defaultDrawable.setStroke(mBorderWidth, mDisabledBorderColor);
+      defaultDrawable.setStroke(mBorderWidth, new RgbColor(mDisabledBorderColor));
       if (mGhost) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-          disabledDrawable.setColor(getContext().getColor(android.R.color.transparent));
-        } else {
-          //noinspection deprecation
-          disabledDrawable.setColor(getResources().getColor(android.R.color.transparent));
-        }
+          disabledDrawable.setRgbColor(new RgbColor(Color.TRANSPARENT.getValue()));
       }
     }
 
     setupRippleEffect(defaultDrawable, focusDrawable, disabledDrawable);
   }
 
-  private void setupRippleEffect(GradientDrawable defaultDrawable, GradientDrawable focusDrawable,
-      GradientDrawable disabledDrawable) {
+  private void setupRippleEffect(ShapeElement defaultDrawable, ShapeElement focusDrawable,
+                                 ShapeElement disabledDrawable) {
     //private boolean mUseSystemFont = false; // Default is using robotoregular.ttf
     boolean mUseRippleEffect = false;
-    StateListDrawable states = new StateListDrawable();
-    GradientDrawable drawable2 = new GradientDrawable();
+    StateElement states = new StateElement();
+    ShapeElement drawable2 = new ShapeElement();
     drawable2.setCornerRadius(mRadius);
-    focusDrawable.setCornerRadii(new float[] {
+    focusDrawable.setCornerRadiiArray(new float[] {
         mRadiusTopLeft, mRadiusTopLeft, mRadiusTopRight, mRadiusTopRight, mRadiusBottomRight, mRadiusBottomRight,
         mRadiusBottomLeft, mRadiusBottomLeft
     });
     if (mGhost) {
-      drawable2.setColor(getResources().getColor(android.R.color.transparent)); // No focus color
+      drawable2.setRgbColor(new RgbColor(Color.TRANSPARENT.getValue())); // No focus color
     } else {
-      drawable2.setColor(mFocusBackgroundColor);
+      drawable2.setRgbColor(new RgbColor(mFocusBackgroundColor));
     }
 
     // Handle Button Border
     if (mBorderColor != 0) {
       if (mGhost) {
-        drawable2.setStroke(mBorderWidth, mFocusBackgroundColor); // Border is the main part of button now
+        drawable2.setStroke(mBorderWidth, new RgbColor(mFocusBackgroundColor)); // Border is the main part of button now
       } else {
-        drawable2.setStroke(mBorderWidth, mBorderColor);
+        drawable2.setStroke(mBorderWidth, new RgbColor(mBorderColor));
       }
     }
 
     if (!mEnabled) {
-      drawable2.setStroke(mBorderWidth, mDisabledBorderColor);
+      drawable2.setStroke(mBorderWidth, new RgbColor(mDisabledBorderColor));
     }
 
     if (mFocusBackgroundColor != 0) {
-      states.addState(new int[] { android.R.attr.state_pressed }, drawable2);
-      states.addState(new int[] { android.R.attr.state_focused }, drawable2);
-      states.addState(new int[] { -android.R.attr.state_enabled }, disabledDrawable);
+      states.addState(new int[] { ComponentState.COMPONENT_STATE_PRESSED }, drawable2);
+      states.addState(new int[] { ComponentState.COMPONENT_STATE_FOCUSED }, drawable2);
+      states.addState(new int[] { ComponentState.COMPONENT_STATE_DISABLED }, disabledDrawable);
     }
 
     states.addState(new int[] {}, defaultDrawable);
-
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-      setBackgroundDrawable(states);
-    } else {
-      setBackground(states);
-    }
+    setBackground(states);
   }
 
   private void initializeButtonContainer() {
     if (mIconPosition == POSITION_TOP || mIconPosition == POSITION_BOTTOM) {
-      setOrientation(LinearLayout.VERTICAL);
+      setOrientation(DirectionalLayout.VERTICAL);
     } else {
-      setOrientation(LinearLayout.HORIZONTAL);
+      setOrientation(DirectionalLayout.HORIZONTAL);
     }
 
-    if (getLayoutParams() == null) {
-      LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-      setLayoutParams(params);
+    if (getLayoutConfig() == null) {
+      LayoutConfig params = new LayoutConfig(LayoutConfig.MATCH_CONTENT, LayoutConfig.MATCH_CONTENT);
+      setLayoutConfig(params);
     }
 
-    setGravity(Gravity.CENTER);
+    setAlignment(LayoutAlignment.CENTER);
     setClickable(true);
-    setFocusable(true);
+    setFocusable(FOCUS_ENABLE);
     if (mIconResource == null
         && mFontIcon == null
         && getPaddingLeft() == 0
@@ -482,13 +462,14 @@ public class MaterialFancyButton extends LinearLayout {
   @SuppressWarnings("unused") public void setTextColor(int color) {
     mDefaultTextColor = color;
     if (mTextView == null) setupTextView();
-    mTextView.setTextColor(color);
+    mTextView.setTextColor(new Color(color));
   }
 
   public void setTextStyle(/*@Typeface.Style*/ int style) {
     mTextSize = style;
     if(mTextView == null) setupTextView();
-    mTextView.setTypeface(mTextView.getTypeface(), style);
+    // TODO: How to add style to font?
+    mTextView.setFont(mTextView.getFont());
   }
 
   /**
@@ -497,7 +478,7 @@ public class MaterialFancyButton extends LinearLayout {
    * @param color : Color
    */
   @SuppressWarnings("unused") public void setIconColor(int color) {
-    if (mFontIconView != null) mFontIconView.setTextColor(color);
+    if (mFontIconView != null) mFontIconView.setTextColor(new Color(color));
   }
 
   /**
@@ -538,7 +519,7 @@ public class MaterialFancyButton extends LinearLayout {
   @SuppressWarnings("unused") public void setDisableTextColor(int color) {
     mDisabledTextColor = color;
     setupTextView();
-    if (!mEnabled) mTextView.setTextColor(color);
+    if (!mEnabled) mTextView.setTextColor(new Color(color));
   }
 
   /**
@@ -570,7 +551,7 @@ public class MaterialFancyButton extends LinearLayout {
    */
   @SuppressWarnings("unused") public void setTextGravity(int gravity) {
     mTextGravity = gravity;
-    if (mTextView != null) mTextView.setGravity(gravity);
+    if (mTextView != null) mTextView.setTextAlignment(gravity);
   }
 
   /**
@@ -596,31 +577,15 @@ public class MaterialFancyButton extends LinearLayout {
   }
 
   /**
-   * Set an icon from resources to the button
-   *
-   * @param drawable : Int resource
-   */
-  public void setIconResource(int drawable) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      mIconResource = getResources().getDrawable(drawable, getContext().getTheme());
-    } else {
-      mIconResource = getResources().getDrawable(drawable);
-    }
-    if (mIconView == null) setupIconView();
-    if (mFontIconView == null) setupFontIconView();
-    mIconView.setImageDrawable(mIconResource);
-  }
-
-  /**
    * Set a drawable to the button
    *
    * @param drawable : Drawable resource
    */
-  @SuppressWarnings("unused") public void setIconResource(Drawable drawable) {
+  @SuppressWarnings("unused") public void setIconResource(Element drawable) {
     mIconResource = drawable;
     if (mIconView == null) setupIconView();
     if(mFontIconView == null) setupFontIconView();
-    mIconView.setImageDrawable(mIconResource);
+    mIconView.setImageElement(mIconResource);
   }
 
   /**
@@ -648,13 +613,13 @@ public class MaterialFancyButton extends LinearLayout {
       setIcon(font.getIcon(icon));
       //Log.d(TAG, font.getIcon(icon).getTypeface().getDescription());
     } catch (Exception ex) {
-      Log.e(TAG, "Wrong icon name: " + icon);
+      // Log.e(TAG, "Wrong icon name: " + icon);
     }
   }
 
   public void setIcon(IIcon icon) {
     ITypeface typeface = icon.getTypeface();
-    Log.d(TAG, "Typeface = " + icon.getTypeface().getFontName());
+    // Log.d(TAG, "Typeface = " + icon.getTypeface().getFontName());
     mIconTypeFace = typeface.getTypeface(getContext().getApplicationContext());
     setIconResource(String.valueOf(icon.getCharacter()));
   }
@@ -724,7 +689,7 @@ public class MaterialFancyButton extends LinearLayout {
     mRadiusBottomRight = radius;
 
     setupView();
-    Log.d(TAG, "setRadius is called");
+    // Log.d(TAG, "setRadius is called");
   }
 
   public void setRadius(int radiusTopLeft, int radiusTopRight, int radiusBottomLeft, int radiusBottomRight) {
@@ -784,7 +749,7 @@ public class MaterialFancyButton extends LinearLayout {
   public void setCustomTextFont(String fontName) {
     mTextTypeFace = FontUtil.findFont(getContext(), fontName, null);
     setupTextView();
-    mTextView.setTypeface(mTextTypeFace);
+    mTextView.setFont(mTextTypeFace);
   }
 
   /**
@@ -796,7 +761,7 @@ public class MaterialFancyButton extends LinearLayout {
   @SuppressWarnings("unused") public void setIconFont(String fontName) {
     mIconTypeFace = FontUtil.findFont(getContext(), fontName, null);
     setupFontIconView();
-    mFontIconView.setTypeface(mIconTypeFace);
+    mFontIconView.setFont(mIconTypeFace);
   }
 
   /**
@@ -831,7 +796,7 @@ public class MaterialFancyButton extends LinearLayout {
    *
    * @return TextView Object
    */
-  @SuppressWarnings("unused") public TextView getTextViewObject() {
+  @SuppressWarnings("unused") public Text getTextViewObject() {
     return mTextView;
   }
 
@@ -840,7 +805,7 @@ public class MaterialFancyButton extends LinearLayout {
    *
    * @return TextView Object
    */
-  @SuppressWarnings("unused") public TextView getIconFontObject() {
+  @SuppressWarnings("unused") public Text getIconFontObject() {
     return mFontIconView;
   }
 
@@ -849,7 +814,7 @@ public class MaterialFancyButton extends LinearLayout {
    *
    * @return ImageView Object
    */
-  @SuppressWarnings("unused") public ImageView getIconImageObject() {
+  @SuppressWarnings("unused") public Image getIconImageObject() {
     return mIconView;
   }
 }

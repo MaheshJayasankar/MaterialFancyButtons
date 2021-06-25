@@ -1,7 +1,10 @@
 package com.applibgroup.materialfancybutton.utils;
 
+import ohos.agp.components.AttrHelper;
 import ohos.agp.text.Font;
 import ohos.app.Context;
+import ohos.hiviewdfx.HiLog;
+import ohos.hiviewdfx.HiLogLabel;
 
 import java.io.File;
 import java.util.Arrays;
@@ -11,16 +14,21 @@ import java.util.Map;
 public class FontUtil {
 
   private static final String TAG = FontUtil.class.getSimpleName();
+  private static final int DOMAIN = 0xD000100;
+  private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, DOMAIN, TAG);
 
   private static Map<String, Font> cachedFontMap = new HashMap<>();
 
   public static int pxToSp(final Context context, final float px) {
     // TODO: potential mapping AttrHelper.getFontRatio? Check with Android
-    return Math.round(px / context.getResources().getDisplayMetrics().scaledDensity);
+    // return Math.round(px / context.getResources().getDisplayMetrics().scaledDensity);
+    return Math.round(px / AttrHelper.getFontRatio(context));
   }
 
   public static int spToPx(final Context context, final float sp) {
-    return Math.round(sp * context.getResources().getDisplayMetrics().scaledDensity);
+    // TODO: potential mapping AttrHelper.getFontRatio? Check with Android
+    // return Math.round(sp * context.getResources().getDisplayMetrics().scaledDensity);
+    return Math.round(sp * AttrHelper.getFontRatio(context));
   }
 
   public static Font findFont(Context context, String fontPath, String defaultFontPath) {
@@ -39,6 +47,7 @@ public class FontUtil {
       return cachedFontMap.get(fontName);
     } else {
       try {
+        // TODO Find mapping for AssetManager
         AssetManager assets = context.getResources().getAssets();
 
         if (Arrays.asList(assets.list("")).contains(fontPath)) {
@@ -64,11 +73,14 @@ public class FontUtil {
           throw new Exception("Font not Found");
         }
       } catch (Exception e) {
-        Log.e(TAG,
-            String.format("Unable to find %s font. Using Typeface.DEFAULT instead.", fontName));
+        HiLog.error(LABEL,
+            "Unable to find %{public}s font. Using Typeface.DEFAULT instead.", fontName);
         cachedFontMap.put(fontName, Font.DEFAULT);
         return Font.DEFAULT;
       }
     }
   }
+
+  }
+
 }
