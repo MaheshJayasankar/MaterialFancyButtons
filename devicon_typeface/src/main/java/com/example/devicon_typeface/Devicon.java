@@ -13,7 +13,7 @@ public class Devicon implements ITypeface{
     private static final String TTF_FILE = "devicon-font-v2.0.0.1.ttf";
     private static final String MAPPING_FONT_PREFIX = "devi";
 
-    private static Font typeface = null;
+    private static Typeface typeface = null;
     private static HashMap<String, Character> mChars;
 
     @Override public IIcon getIcon(String key) {
