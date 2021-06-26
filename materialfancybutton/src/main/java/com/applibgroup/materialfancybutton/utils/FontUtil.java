@@ -51,22 +51,21 @@ public class FontUtil {
         AssetManager assets = context.getResources().getAssets();
 
         if (Arrays.asList(assets.list("")).contains(fontPath)) {
-          Font typeface = Font.createFromAsset(context.getAssets(), fontName);
+          Font typeface = new Font.Builder(fontName).build();
           cachedFontMap.put(fontName, typeface);
           return typeface;
         } else if (Arrays.asList(assets.list("fonts")).contains(fontName)) {
           Font typeface =
-                  Font.createFromAsset(context.getAssets(), String.format("fonts/%s", fontName));
+                  new Font.Builder(String.format("fonts/%s", fontName)).build();
           cachedFontMap.put(fontName, typeface);
           return typeface;
         } else if (Arrays.asList(assets.list("iconfonts")).contains(fontName)) {
-          Font typeface = Font.createFromAsset(context.getAssets(),
-              String.format("iconfonts/%s", fontName));
+          Font typeface = new Font.Builder(String.format("iconfonts/%s", fontName)).build();
           cachedFontMap.put(fontName, typeface);
           return typeface;
         } else if (!TextUtils.isEmpty(defaultFontPath) && Arrays.asList(assets.list(""))
             .contains(defaultFontPath)) {
-          Font typeface = Font.createFromAsset(context.getAssets(), defaultFontPath);
+          Font typeface = new Font.Builder(defaultFontPath).build();
           cachedFontMap.put(defaultFontName, typeface);
           return typeface;
         } else {
