@@ -851,7 +851,5 @@
     },
     { "name": "foui_zoom_out",
       "value": "foui_zoom_out"
-    },
-
-    {} ]
+    }]
 }

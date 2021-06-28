@@ -602,7 +602,5 @@
     },
     { "name": "drpi_zoom_out",
       "value": "drpi_zoom_out"
-    },
-
-    {} ]
+    }]
 }
