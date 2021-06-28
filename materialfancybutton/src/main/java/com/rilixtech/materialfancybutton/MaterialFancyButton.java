@@ -266,8 +266,8 @@ public class MaterialFancyButton extends DirectionalLayout {
     // //
     // // String Attribute Temporary Variables
     String fontIcon = getStringAttribute(attrSet, "mfb_fontIconResource");
-    String iconFontFamily = getStringAttribute(attrSet, "mfb_fontIconResource");
-    String textFontFamily = getStringAttribute(attrSet, "mfb_fontIconResource");
+    String iconFontFamily = getStringAttribute(attrSet, "mfb_iconFont");
+    String textFontFamily = getStringAttribute(attrSet, "mfb_textFont");
     // //
     mIcon = getStringAttribute(attrSet, "mfb_icon");
     HiLog.debug(LABEL, "mIcon = %{public}s", mIcon);
