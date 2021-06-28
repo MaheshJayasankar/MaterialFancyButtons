@@ -1,2 +1,2 @@
-include ':entry', ':materialfancybutton', ':devicon_typeface', ':dripicons_typeface', ':foundation_icons_typeface',
+include ':entry', ':materialfancybutton', ':devicon_typeface', ':dripicons_typeface', ':foundation_icons_typeface', ':glyphicons_halflings_typeface',
         ':community_material_typeface', ':entypo_typeface', ':fontawesome_typeface'
