@@ -4,14 +4,22 @@ import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import com.rilixtech.materialfancybutton.utils.GenericsUtil;
 import ohos.app.Context;
+import ohos.hiviewdfx.HiLog;
+import ohos.hiviewdfx.HiLogLabel;
 
 import java.util.Collection;
 import java.util.HashMap;
 
 public final class CoreIcon {
 
+  private static final String TAG = MaterialFancyButton.class.getSimpleName();
+  private static final int DOMAIN = 0xD000100;
+  private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, DOMAIN, TAG);
+
   private static boolean INIT_DONE = false;
   private static HashMap<String, ITypeface> FONTS = new HashMap<>();
+
+
 
   public static final int FONT_MAPPING_PREFIX = 4;
 
@@ -26,12 +34,16 @@ public final class CoreIcon {
           ITypeface typeface = (ITypeface) Class.forName(fontsClassPath).newInstance();
           validateFont(typeface);
           FONTS.put(typeface.getMappingPrefix(), typeface);
-          //Log.d(MaterialFancyButton.TAG, "Typeface = " + typeface.getAuthor());
-        } catch (Exception e) {
-          //Log.e(MaterialFancyButton.TAG, "Can't init: " + fontsClassPath);
+          HiLog.debug(LABEL, "Typeface = %{public}s", typeface.getAuthor());
+        }
+        catch (ClassNotFoundException e){
+          HiLog.debug(LABEL, "%{public}s not found.", fontsClassPath);
+        }
+        catch (Exception e) {
+          HiLog.debug(LABEL, "Can't init: %{public}s", fontsClassPath);
         }
       }
-      //Log.d(MaterialFancyButton.TAG, "Total font = " + FONTS.size());
+      HiLog.debug(LABEL, "Total font = %{public}d", FONTS.size());
       INIT_DONE = true;
     }
   }

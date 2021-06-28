@@ -33,7 +33,7 @@ public class FontUtil {
     return Math.round(sp * AttrHelper.getFontRatio(context));
   }
 
-  // TODO To test if this functionality works. Put fonts in materialfancybutton/resources/rawfile
+  // TODO Workaround to AssetManager. Put fonts in materialfancybutton/resources/rawfile. Test if working
   public static Font findFont(Context context, String fontPath, String defaultFontPath) {
 
     if (fontPath == null) {

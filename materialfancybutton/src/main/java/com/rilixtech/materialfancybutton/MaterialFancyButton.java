@@ -14,13 +14,17 @@ import ohos.agp.utils.Color;
 import ohos.agp.utils.LayoutAlignment;
 import ohos.agp.utils.TextAlignment;
 import ohos.app.Context;
+import ohos.hiviewdfx.HiLog;
+import ohos.hiviewdfx.HiLogLabel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MaterialFancyButton extends DirectionalLayout {
 
-  public static final String TAG = MaterialFancyButton.class.getSimpleName();
+  private static final String TAG = MaterialFancyButton.class.getSimpleName();
+  private static final int DOMAIN = 0xD000100;
+  private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, DOMAIN, TAG);
 
   // # Background Attributes
   private int mDefaultBackgroundColor = Color.BLACK.getValue();
@@ -147,7 +151,7 @@ public class MaterialFancyButton extends DirectionalLayout {
    * Setup Font Icon View
    */
   private void setupFontIconView() {
-    // Log.d("setupFontIconView", "mFontIcon = " + mFontIcon);
+    HiLog.debug(LABEL, "setupFontIconView mFontIcon = %{public}s", mFontIcon);
     if (mFontIcon == null) return;
     if(mFontIconView == null) mFontIconView = new Text(getContext());
     mFontIconView.setTextColor(new Color(mEnabled ? mDefaultIconColor : mDisabledTextColor));
@@ -174,7 +178,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     mFontIconView.setTextSize(FontUtil.pxToSp(getContext(), mFontIconSize));
     mFontIconView.setText(mFontIcon);
     mFontIconView.setFont(mIconTypeFace);
-    //Log.d("setupFontIconView", "mIconTypeFace  =  " + mIconTypeFace.toString());
+    HiLog.debug(LABEL, "setupFontIconView mIconTypeFace  =  %{public}s", mIconTypeFace.toString());
   }
 
   /**
@@ -198,10 +202,10 @@ public class MaterialFancyButton extends DirectionalLayout {
     mIconView.setLayoutConfig(params);
 
     if (mIconResource == null) {
-      //Log.d(TAG, "mIconResource is null");
+      HiLog.debug(LABEL, "mIconResource is null");
     } else {
       mIconView.setImageElement(mIconResource);
-      //Log.d(TAG, "mIconResource is not null");
+      HiLog.debug(LABEL, "mIconResource is not null");
     }
   }
 
@@ -266,10 +270,11 @@ public class MaterialFancyButton extends DirectionalLayout {
     String textFontFamily = getStringAttribute(attrSet, "mfb_fontIconResource");
     // //
     mIcon = getStringAttribute(attrSet, "mfb_icon");
+    HiLog.debug(LABEL, "mIcon = %{public}s", mIcon);
 
     // DRAWABLE ATTRIBUTE
     if (attrSet.getAttr("mfb_iconResource").isPresent())
-      attrSet.getAttr("mfb_iconResource").get().getElement();
+      mIconResource = attrSet.getAttr("mfb_iconResource").get().getElement();
 
     // Resolve Temporary Attribute Variables
     if (fontIcon != null) mFontIcon = fontIcon;
@@ -504,7 +509,7 @@ public class MaterialFancyButton extends DirectionalLayout {
   public void setTextStyle(/*@Typeface.Style*/ int style) {
     mTextSize = style;
     if(mTextView == null) setupTextView();
-    // TODO: How to add style to font?
+    // TODO: How to set font style?
     mTextView.setFont(mTextView.getFont());
   }
 
@@ -649,13 +654,13 @@ public class MaterialFancyButton extends DirectionalLayout {
       setIcon(font.getIcon(icon));
       //Log.d(TAG, font.getIcon(icon).getTypeface().getDescription());
     } catch (Exception ex) {
-      // Log.e(TAG, "Wrong icon name: " + icon);
+      HiLog.error(LABEL, "Wrong icon name: %{public}s", icon);
     }
   }
 
   public void setIcon(IIcon icon) {
     ITypeface typeface = icon.getTypeface();
-    // Log.d(TAG, "Typeface = " + icon.getTypeface().getFontName());
+    HiLog.debug(LABEL, "Typeface = %{public}s", icon.getTypeface().getFontName());
     mIconTypeFace = typeface.getTypeface(getContext().getApplicationContext());
     setIconResource(String.valueOf(icon.getCharacter()));
   }
@@ -725,7 +730,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     mRadiusBottomRight = radius;
 
     setupView();
-    // Log.d(TAG, "setRadius is called");
+    HiLog.debug(LABEL, "setRadius is called");
   }
 
   public void setRadius(int radiusTopLeft, int radiusTopRight, int radiusBottomLeft, int radiusBottomRight) {
