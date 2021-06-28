@@ -7,11 +7,9 @@ import com.applibgroup.materialfancybutton.utils.TextUtils;
 import ohos.agp.colors.RgbColor;
 import ohos.agp.components.*;
 import ohos.agp.components.element.Element;
-import ohos.agp.components.element.ElementContainer;
 import ohos.agp.components.element.ShapeElement;
 import ohos.agp.components.element.StateElement;
 import ohos.agp.text.Font;
-import ohos.agp.text.Layout;
 import ohos.agp.utils.Color;
 import ohos.agp.utils.LayoutAlignment;
 import ohos.agp.utils.TextAlignment;
@@ -89,10 +87,7 @@ public class MaterialFancyButton extends DirectionalLayout {
   public MaterialFancyButton(Context context, AttrSet attrs) {
     super(context, attrs);
 
-    // TODO Replace with custom attribute set parsing logic
-    TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.MaterialFancyButton, 0, 0);
-    initAttributesArray(arr);
-    arr.recycle();
+    initAttributes(attrs);
     initializeMaterialFancyButton();
   }
 
@@ -210,81 +205,76 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
   }
 
+  // TODO Workaround to initAttributesArray, test if this feature is working as intended
   /**
    * Initialize Attributes arrays
    *
-   * @param attrs : Attributes array
+   * @param attrSet : Attributes array
    */
-  private void initAttributesArray(TypedArray attrs) {
-    mDefaultBackgroundColor = attrs.getColor(R.styleable.MaterialFancyButton_mfb_defaultColor, mDefaultBackgroundColor);
-    mFocusBackgroundColor = attrs.getColor(R.styleable.MaterialFancyButton_mfb_focusColor, mFocusBackgroundColor);
-    mDisabledBackgroundColor = attrs.getColor(R.styleable.MaterialFancyButton_mfb_disabledColor, mDisabledBackgroundColor);
-
-    mEnabled = attrs.getBoolean(R.styleable.MaterialFancyButton_android_enabled, true);
-
-    mDisabledTextColor = attrs.getColor(R.styleable.MaterialFancyButton_mfb_disabledTextColor, mDisabledTextColor);
-    mDisabledBorderColor = attrs.getColor(R.styleable.MaterialFancyButton_mfb_disabledBorderColor, mDisabledBorderColor);
-    mDefaultTextColor = attrs.getColor(R.styleable.MaterialFancyButton_mfb_textColor, mDefaultTextColor);
+  private void initAttributes(AttrSet attrSet){
+    // COLOR ATTRIBUTES
+    mDefaultBackgroundColor = getColorAttribute(attrSet, "mfb_defaultColor", mDefaultBackgroundColor);
+    mFocusBackgroundColor = getColorAttribute(attrSet, "mfb_focusColor", mFocusBackgroundColor);
+    mDisabledBackgroundColor = getColorAttribute(attrSet, "mfb_disabledColor", mDisabledBackgroundColor);
+    mDisabledTextColor = getColorAttribute(attrSet, "mfb_disabledTextColor", mDisabledTextColor);
+    mDisabledBorderColor = getColorAttribute(attrSet, "mfb_disabledBorderColor", mDisabledBorderColor);
+    mDefaultTextColor = getColorAttribute(attrSet, "mfb_textColor", mDefaultTextColor);
     // if default color is set then the icon's color is the same (the default for icon's color)
-    mDefaultIconColor = attrs.getColor(R.styleable.MaterialFancyButton_mfb_iconColor, mDefaultTextColor);
+    mDefaultIconColor = getColorAttribute(attrSet, "mfb_iconColor", mDefaultTextColor);
+    mBorderColor = getColorAttribute(attrSet, "mfb_borderColor", mBorderColor);
 
-    mTextSize = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_textSize, mTextSize);
-    mTextSize = (int) attrs.getDimension(R.styleable.MaterialFancyButton_android_textSize, mTextSize);
-    mTextStyle = attrs.getInt(R.styleable.MaterialFancyButton_android_textStyle, Typeface.NORMAL);
+    // BOOLEAN ATTRIBUTES
+    mEnabled = getBoolAttribute(attrSet, "enabled", true);
+    // // mTextAllCaps
+    mTextAllCaps = getBoolAttribute(attrSet, "mfb_textAllCaps", false);
+    mTextAllCaps = getBoolAttribute(attrSet, "textAllCaps", mTextAllCaps);
+    // //
+    mGhost = getBoolAttribute(attrSet, "mfb_ghost", mGhost);
 
-    mTextGravity = attrs.getInt(R.styleable.MaterialFancyButton_mfb_textGravity, Gravity.CENTER);
+    // DIMENSION ATTRIBUTES
+    // // mTextSize
+    mTextSize = getDimensionAttribute(attrSet, "mfb_textSize", mTextSize);
+    mTextSize = getDimensionAttribute(attrSet, "textSize", mTextSize);
+    // //
+    mBorderWidth = getDimensionAttribute(attrSet, "mfb_borderWidth", mBorderWidth);
+    mRadius = getDimensionAttribute(attrSet, "mfb_radius", mRadius);
+    mRadiusTopLeft = getDimensionAttribute(attrSet, "mfb_radiusTopLeft", mRadius);
+    mRadiusTopRight = getDimensionAttribute(attrSet, "mfb_radiusTopRight", mRadius);
+    mRadiusBottomLeft = getDimensionAttribute(attrSet, "mfb_radiusBottomLeft", mRadius);
+    mRadiusBottomRight = getDimensionAttribute(attrSet, "mfb_radiusBottomRight", mRadius);
+    mFontIconSize = getDimensionAttribute(attrSet, "mfb_fontIconSize", mFontIconSize);
+    mIconPaddingLeft = getDimensionAttribute(attrSet, "mfb_iconPaddingLeft", mIconPaddingLeft);
+    mIconPaddingRight = getDimensionAttribute(attrSet, "mfb_iconPaddingRight", mIconPaddingRight);
+    mIconPaddingTop = getDimensionAttribute(attrSet, "mfb_iconPaddingTop", mIconPaddingTop);
+    mIconPaddingBottom = getDimensionAttribute(attrSet, "mfb_iconPaddingBottom", mIconPaddingBottom);
 
-    mBorderColor = attrs.getColor(R.styleable.MaterialFancyButton_mfb_borderColor, Color.TRANSPARENT);
-    mBorderWidth = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_borderWidth, mBorderWidth);
+    // INTEGER ATTRIBUTES
+    mTextStyle = getIntegerAttribute(attrSet, "mfb_textStyle", Font.REGULAR);
+    mTextGravity = getIntegerAttribute(attrSet, "mfb_textGravity", TextAlignment.CENTER);
+    mIconPosition = getIntegerAttribute(attrSet, "mfb_iconPosition", mIconPosition);
 
-    // Handle radius for button.
-    mRadius = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_radius, mRadius);
+    // STRING ATTRIBUTES
+    // // mText
+    String text = getStringAttribute(attrSet, "mfb_text");
+    if (text == null)
+      text = getStringAttribute(attrSet, "text");
+    if (text != null) mText = mTextAllCaps ? text.toUpperCase() : text;
+    // //
+    // // String Attribute Temporary Variables
+    String fontIcon = getStringAttribute(attrSet, "mfb_fontIconResource");
+    String iconFontFamily = getStringAttribute(attrSet, "mfb_fontIconResource");
+    String textFontFamily = getStringAttribute(attrSet, "mfb_fontIconResource");
+    // //
+    mIcon = getStringAttribute(attrSet, "mfb_icon");
 
-    mRadiusTopLeft = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_radiusTopLeft, mRadius);
-    mRadiusTopRight = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_radiusTopRight, mRadius);
-    mRadiusBottomLeft = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_radiusBottomLeft, mRadius);
-    mRadiusBottomRight = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_radiusBottomRight, mRadius);
+    // DRAWABLE ATTRIBUTE
+    if (attrSet.getAttr("mfb_iconResource").isPresent())
+      attrSet.getAttr("mfb_iconResource").get().getElement();
 
-    mFontIconSize = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_fontIconSize, mFontIconSize);
-
-    mIconPaddingLeft = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_iconPaddingLeft, mIconPaddingLeft);
-    mIconPaddingRight = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_iconPaddingRight, mIconPaddingRight);
-    mIconPaddingTop = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_iconPaddingTop, mIconPaddingTop);
-    mIconPaddingBottom = (int) attrs.getDimension(R.styleable.MaterialFancyButton_mfb_iconPaddingBottom, mIconPaddingBottom);
-
-    mTextAllCaps = attrs.getBoolean(R.styleable.MaterialFancyButton_mfb_textAllCaps, false);
-    mTextAllCaps = attrs.getBoolean(R.styleable.MaterialFancyButton_android_textAllCaps, false);
-
-    mGhost = attrs.getBoolean(R.styleable.MaterialFancyButton_mfb_ghost, mGhost);
-    //mUseSystemFont = attrsArray.getBoolean(R.styleable.MaterialFancyButtonAttrs_fb_useSystemFont,
-    //    mUseSystemFont);
-
-    String text = attrs.getString(R.styleable.MaterialFancyButton_mfb_text);
-
-    //no mfb_text attribute
-    if (text == null) text = attrs.getString(R.styleable.MaterialFancyButton_android_text);
-
-    mIconPosition = attrs.getInt(R.styleable.MaterialFancyButton_mfb_iconPosition, mIconPosition);
-
-    String fontIcon = attrs.getString(R.styleable.MaterialFancyButton_mfb_fontIconResource);
-
-    String iconFontFamily = attrs.getString(R.styleable.MaterialFancyButton_mfb_iconFont);
-    String textFontFamily = attrs.getString(R.styleable.MaterialFancyButton_mfb_textFont);
-
-    try {
-      mIconResource = attrs.getDrawable(R.styleable.MaterialFancyButton_mfb_iconResource);
-    } catch (Exception e) {
-      mIconResource = null;
-    }
-
-    mIcon = attrs.getString(R.styleable.MaterialFancyButton_mfb_icon);
-
-    Log.d(TAG, "mIcon = " + mIcon);
+    // Resolve Temporary Attribute Variables
     if (fontIcon != null) mFontIcon = fontIcon;
 
-    if (text != null) mText = mTextAllCaps ? text.toUpperCase() : text;
-
-    if (mIcon == null) {
+    if (mIcon == null){
       if (iconFontFamily == null) {
         mIconTypeFace = FontUtil.findFont(getContext(), null, null);
       } else {
@@ -296,6 +286,52 @@ public class MaterialFancyButton extends DirectionalLayout {
       } else {
         mTextTypeFace = FontUtil.findFont(getContext(), textFontFamily, null);
       }
+    }
+
+  }
+
+  private int getColorAttribute(AttrSet attrSet, String attrName, int defaultValue){
+    if (attrSet.getAttr(attrName).isPresent()){
+      return attrSet.getAttr(attrName).get().getColorValue().getValue();
+    }
+    else{
+      return defaultValue;
+    }
+  }
+
+  private boolean getBoolAttribute(AttrSet attrSet, String attrName, boolean defaultValue){
+    if (attrSet.getAttr(attrName).isPresent()){
+      return attrSet.getAttr(attrName).get().getBoolValue();
+    }
+    else{
+      return defaultValue;
+    }
+  }
+
+  private int getDimensionAttribute(AttrSet attrSet, String attrName, int defaultValue){
+    if (attrSet.getAttr(attrName).isPresent()){
+      return attrSet.getAttr(attrName).get().getDimensionValue();
+    }
+    else{
+      return defaultValue;
+    }
+  }
+
+  private int getIntegerAttribute(AttrSet attrSet, String attrName, int defaultValue){
+    if (attrSet.getAttr(attrName).isPresent()){
+      return attrSet.getAttr(attrName).get().getIntegerValue();
+    }
+    else{
+      return defaultValue;
+    }
+  }
+
+  private String getStringAttribute(AttrSet attrSet, String attrName){
+    if (attrSet.getAttr(attrName).isPresent()){
+      return attrSet.getAttr(attrName).get().getStringValue();
+    }
+    else{
+      return null;
     }
   }
 

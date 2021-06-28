@@ -6,10 +6,11 @@ import ohos.app.Context;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 
-import java.io.File;
+import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class FontUtil {
 
@@ -17,27 +18,32 @@ public class FontUtil {
   private static final int DOMAIN = 0xD000100;
   private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, DOMAIN, TAG);
 
+  private static final String LIBRARY_NAME = "materialfancybutton";
+
   private static Map<String, Font> cachedFontMap = new HashMap<>();
 
   public static int pxToSp(final Context context, final float px) {
-    // TODO: potential mapping AttrHelper.getFontRatio? Check with Android
+    // TODO: Mapping not confirmed. Need to test
     // return Math.round(px / context.getResources().getDisplayMetrics().scaledDensity);
     return Math.round(px / AttrHelper.getFontRatio(context));
   }
 
   public static int spToPx(final Context context, final float sp) {
-    // TODO: potential mapping AttrHelper.getFontRatio? Check with Android
+    // TODO: Mapping not confirmed. Need to test
     // return Math.round(sp * context.getResources().getDisplayMetrics().scaledDensity);
     return Math.round(sp * AttrHelper.getFontRatio(context));
   }
 
+  // TODO To test if this functionality works. Put fonts in materialfancybutton/resources/rawfile
   public static Font findFont(Context context, String fontPath, String defaultFontPath) {
 
     if (fontPath == null) {
       return Font.DEFAULT;
     }
 
-    String fontName = new File(fontPath).getName();
+    File fontPathFile = new File(fontPath);
+    String fontName = fontPathFile.getName();
+    String fontParentDir = fontPathFile.getParent();
     String defaultFontName = "";
     if (!TextUtils.isEmpty(defaultFontPath)) {
       defaultFontName = new File(defaultFontPath).getName();
@@ -47,39 +53,53 @@ public class FontUtil {
       return cachedFontMap.get(fontName);
     } else {
       try {
-        // TODO Find mapping for AssetManager
-        AssetManager assets = context.getResources().getAssets();
-
-        if (Arrays.asList(assets.list("")).contains(fontPath)) {
-          Font typeface = new Font.Builder(fontName).build();
-          cachedFontMap.put(fontName, typeface);
-          return typeface;
-        } else if (Arrays.asList(assets.list("fonts")).contains(fontName)) {
-          Font typeface =
-                  new Font.Builder(String.format("fonts/%s", fontName)).build();
-          cachedFontMap.put(fontName, typeface);
-          return typeface;
-        } else if (Arrays.asList(assets.list("iconfonts")).contains(fontName)) {
-          Font typeface = new Font.Builder(String.format("iconfonts/%s", fontName)).build();
-          cachedFontMap.put(fontName, typeface);
-          return typeface;
-        } else if (!TextUtils.isEmpty(defaultFontPath) && Arrays.asList(assets.list(""))
-            .contains(defaultFontPath)) {
-          Font typeface = new Font.Builder(defaultFontPath).build();
-          cachedFontMap.put(defaultFontName, typeface);
-          return typeface;
+        Font loadedFont = getFont(context, fontName, fontParentDir);
+        if (loadedFont != null) {
+          cachedFontMap.put(fontName, loadedFont);
+          return loadedFont;
         } else {
-          throw new Exception("Font not Found");
+        // Search in the default font directory for the font
+        final String defaultParentDir = String.format("%s/resources/rawfile/", LIBRARY_NAME);
+        loadedFont = getFont(context, fontName, defaultParentDir);
+        if (loadedFont != null)
+        {
+          cachedFontMap.put(fontName, loadedFont);
+          return loadedFont;
+        } else {
+        loadedFont = getFont(context, defaultFontName, defaultFontPath);
+        if (loadedFont != null)
+        {
+          cachedFontMap.put(fontName, loadedFont);
+          return loadedFont;
         }
+        else {
+          throw new FileNotFoundException();
+        }}}
       } catch (Exception e) {
         HiLog.error(LABEL,
-            "Unable to find %{public}s font. Using Typeface.DEFAULT instead.", fontName);
+            "Unable to find %{public}s font. Using Font.DEFAULT instead.", fontName);
         cachedFontMap.put(fontName, Font.DEFAULT);
         return Font.DEFAULT;
       }
     }
   }
 
+  private static Font getFont(Context context, String fontId, String parentDirectory) {
+    final int BUFFER_LENGTH = 8192;
+    final int DEFAULT_ERROR = -1;
+    String path = new File(parentDirectory, fontId).getPath();
+    File file = new File(context.getDataDir(), fontId);
+    try (OutputStream outputStream = new FileOutputStream(file);
+         InputStream inputStream = context.getResourceManager().getRawFileEntry(path).openRawFile()) {
+      byte[] buffer = new byte[BUFFER_LENGTH];
+      int bytesRead = inputStream.read(buffer, 0, BUFFER_LENGTH);
+      while (bytesRead != DEFAULT_ERROR) {
+        outputStream.write(buffer, 0, bytesRead);
+        bytesRead = inputStream.read(buffer, 0, BUFFER_LENGTH);
+      }
+    } catch (IOException exception) {
+      return null;
+    }
+    return Optional.of(new Font.Builder(file).build()).get();
   }
-
 }
