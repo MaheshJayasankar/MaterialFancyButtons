@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="PLATFORM" />
+        <option name="distributionType" value="LOCAL" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="D:\Program Files\Huawei\DevEco Studio 2.1.0.303\tools\gradle" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/community_material_typeface" />
+            <option value="$PROJECT_DIR$/devicon_typeface" />
+            <option value="$PROJECT_DIR$/dripicons_typeface" />
+            <option value="$PROJECT_DIR$/entry" />
+            <option value="$PROJECT_DIR$/entypo_typeface" />
+            <option value="$PROJECT_DIR$/fontawesome_typeface" />
+            <option value="$PROJECT_DIR$/materialfancybutton" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+        <option name="useQualifiedModuleNames" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,1 @@
+include ':entry', ':materialfancybutton', ':devicon_typeface', ':dripicons_typeface', ':community_material_typeface', ':entypo_typeface', ':fontawesome_typeface'
