@@ -1,7 +1,7 @@
 package com.example.entypo_typeface;
 
-import com.applibgroup.materialfancybutton.typeface.ITypeface;
-import com.applibgroup.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
 import ohos.agp.text.Font;
 import ohos.app.Context;
 

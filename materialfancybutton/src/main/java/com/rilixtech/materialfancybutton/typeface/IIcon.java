@@ -1,4 +1,4 @@
-package com.applibgroup.materialfancybutton.typeface;
+package com.rilixtech.materialfancybutton.typeface;
 
 /**
  * Created by mikepenz on 06.11.14.

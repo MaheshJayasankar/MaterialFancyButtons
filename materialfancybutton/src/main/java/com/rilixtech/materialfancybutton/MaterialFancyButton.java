@@ -1,9 +1,9 @@
-package com.applibgroup.materialfancybutton;
+package com.rilixtech.materialfancybutton;
 
-import com.applibgroup.materialfancybutton.typeface.IIcon;
-import com.applibgroup.materialfancybutton.typeface.ITypeface;
-import com.applibgroup.materialfancybutton.utils.FontUtil;
-import com.applibgroup.materialfancybutton.utils.TextUtils;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
+import com.rilixtech.materialfancybutton.utils.TextUtils;
 import ohos.agp.colors.RgbColor;
 import ohos.agp.components.*;
 import ohos.agp.components.element.Element;

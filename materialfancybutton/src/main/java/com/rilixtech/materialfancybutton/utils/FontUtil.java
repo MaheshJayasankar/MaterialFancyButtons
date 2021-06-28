@@ -1,4 +1,4 @@
-package com.applibgroup.materialfancybutton.utils;
+package com.rilixtech.materialfancybutton.utils;
 
 import ohos.agp.components.AttrHelper;
 import ohos.agp.text.Font;
@@ -7,7 +7,6 @@ import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

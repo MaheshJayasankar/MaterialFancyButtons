@@ -15,7 +15,7 @@
   "deviceConfig": {
   },
   "module": {
-    "package": "com.applibgroup.materialfancybutton",
+    "package": "com.rilixtech.materialfancybutton",
     "deviceType": [
       "phone"
     ],

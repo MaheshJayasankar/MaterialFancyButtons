@@ -1,8 +1,8 @@
-package com.applibgroup.materialfancybutton;
+package com.rilixtech.materialfancybutton;
 
-import com.applibgroup.materialfancybutton.typeface.IIcon;
-import com.applibgroup.materialfancybutton.typeface.ITypeface;
-import com.applibgroup.materialfancybutton.utils.GenericsUtil;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.GenericsUtil;
 import ohos.app.Context;
 
 import java.util.Collection;

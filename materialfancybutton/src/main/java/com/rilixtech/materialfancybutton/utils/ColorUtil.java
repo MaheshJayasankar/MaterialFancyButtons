@@ -1,4 +1,4 @@
-package com.applibgroup.materialfancybutton.utils;
+package com.rilixtech.materialfancybutton.utils;
 
 
 import ohos.agp.utils.Color;

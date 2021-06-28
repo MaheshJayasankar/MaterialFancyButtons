@@ -1,4 +1,4 @@
-package com.applibgroup.materialfancybutton;
+package com.rilixtech.materialfancybutton;
 
 import org.junit.Test;
 

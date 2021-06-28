@@ -1,4 +1,4 @@
-package com.applibgroup.materialfancybuttons;
+package com.rilixtech.materialfancybuttons;
 
 import ohos.aafwk.ability.AbilityPackage;
 

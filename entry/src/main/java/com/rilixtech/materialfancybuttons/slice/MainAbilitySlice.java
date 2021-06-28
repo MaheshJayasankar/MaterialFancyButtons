@@ -1,6 +1,6 @@
-package com.applibgroup.materialfancybuttons.slice;
+package com.rilixtech.materialfancybuttons.slice;
 
-import com.applibgroup.materialfancybuttons.ResourceTable;
+import com.rilixtech.materialfancybuttons.ResourceTable;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 
