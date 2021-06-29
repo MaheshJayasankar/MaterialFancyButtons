@@ -1,4 +1,4 @@
-include ':entry', ':materialfancybutton', ':devicon_typeface',
+include ':entry', ':materialfancybutton', ':devicon_typeface', ':ionicons_typeface', ':material_design_iconic_typeface',
         ':dripicons_typeface', ':foundation_icons_typeface',
         ':glyphicons_halflings_typeface', ':google_material_typeface',
         ':community_material_typeface', ':entypo_typeface', ':fontawesome_typeface'

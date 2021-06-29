@@ -20,6 +20,8 @@
             <option value="$PROJECT_DIR$/foundation_icons_typeface" />
             <option value="$PROJECT_DIR$/glyphicons_halflings_typeface" />
             <option value="$PROJECT_DIR$/google_material_typeface" />
+            <option value="$PROJECT_DIR$/ionicons_typeface" />
+            <option value="$PROJECT_DIR$/material_design_iconic_typeface" />
             <option value="$PROJECT_DIR$/materialfancybutton" />
           </set>
         </option>
