@@ -7,7 +7,7 @@
         <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="D:\Program Files\Huawei\DevEco Studio 2.1.0.303\tools\gradle" />
+        <option name="gradleHome" value="C:\Program Files\Huawei\DevEco Studio 2.1.0.303\tools\gradle" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -23,6 +23,8 @@
             <option value="$PROJECT_DIR$/ionicons_typeface" />
             <option value="$PROJECT_DIR$/material_design_iconic_typeface" />
             <option value="$PROJECT_DIR$/materialfancybutton" />
+            <option value="$PROJECT_DIR$/meteocons_typeface" />
+            <option value="$PROJECT_DIR$/mfglabs_iconset_typeface" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
