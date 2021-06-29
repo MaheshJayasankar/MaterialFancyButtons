@@ -1,7 +1,7 @@
 {
   "app": {
-    "bundleName": "com.applibgroup.materialfancybuttons",
-    "vendor": "applibgroup",
+    "bundleName": "com.rilixtech.materialfancybuttons",
+    "vendor": "rilixtech",
     "version": {
       "code": 1000000,
       "name": "1.0.0"
