@@ -2,9 +2,11 @@ package com.rilixtech.materialfancybutton;
 
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.AttrEnumUtil;
 import com.rilixtech.materialfancybutton.utils.FontUtil;
 import com.rilixtech.materialfancybutton.utils.TextUtils;
 import ohos.agp.colors.RgbColor;
+import ohos.agp.colors.RgbPalette;
 import ohos.agp.components.*;
 import ohos.agp.components.element.Element;
 import ohos.agp.components.element.ShapeElement;
@@ -37,14 +39,14 @@ public class MaterialFancyButton extends DirectionalLayout {
   private int mDefaultTextColor = Color.WHITE.getValue();
   private int mDefaultIconColor = Color.WHITE.getValue();
   //private int mTextPosition = 1;
-  private int mTextSize = FontUtil.spToPx(getContext(), 15);
+  private int mTextSize = FontUtil.spToPx(getContext(), 40);
   private int mTextGravity; // Gravity.CENTER
   private String mText = null;
   private int mTextStyle;
 
   // # Icon Attributes
   private Element mIconResource = null;
-  private int mFontIconSize = FontUtil.spToPx(getContext(), 15);
+  private int mFontIconSize = FontUtil.spToPx(getContext(), 40);
   private String mFontIcon = null;
   private int mIconPosition = 1;
   private String mIcon = null;
@@ -254,8 +256,14 @@ public class MaterialFancyButton extends DirectionalLayout {
 
     // INTEGER ATTRIBUTES
     mTextStyle = getIntegerAttribute(attrSet, "mfb_textStyle", Font.REGULAR);
-    mTextGravity = getIntegerAttribute(attrSet, "mfb_textGravity", TextAlignment.CENTER);
-    mIconPosition = getIntegerAttribute(attrSet, "mfb_iconPosition", mIconPosition);
+
+    // ENUM ATTRIBUTES
+    mTextGravity = getEnumAttribute(
+            attrSet, "mfb_textGravity", AttrEnumUtil.MfbTextGravity.class,
+            AttrEnumUtil.MfbTextGravity.center).value;
+    mIconPosition = getEnumAttribute(
+            attrSet, "mfb_iconPosition", AttrEnumUtil.MfbIconPosition.class,
+            AttrEnumUtil.MfbIconPosition.labelOfValue(mIconPosition)).value;
 
     // STRING ATTRIBUTES
     // // mText
@@ -297,7 +305,12 @@ public class MaterialFancyButton extends DirectionalLayout {
 
   private int getColorAttribute(AttrSet attrSet, String attrName, int defaultValue){
     if (attrSet.getAttr(attrName).isPresent()){
-      return attrSet.getAttr(attrName).get().getColorValue().getValue();
+      Color color = attrSet.getAttr(attrName).get().getColorValue();
+      if (color != null)
+        return color.getValue();
+      else{
+        return defaultValue;
+      }
     }
     else{
       return defaultValue;
@@ -340,6 +353,20 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
   }
 
+  private <E extends java.lang.Enum<E>> E getEnumAttribute(AttrSet attrSet, String attrName, Class<E> enumType, E defaultValue){
+      if (attrSet.getAttr(attrName).isPresent()){
+          String stringValue = attrSet.getAttr(attrName).get().getStringValue();
+          try{
+              return E.valueOf(enumType, stringValue);
+          }catch (IllegalArgumentException e){
+              return defaultValue;
+          }
+      }
+      else{
+          return defaultValue;
+      }
+  }
+
   private void setupBackground() {
     ShapeElement defaultDrawable = new ShapeElement();
     defaultDrawable.setCornerRadius(mRadius);
@@ -351,10 +378,11 @@ public class MaterialFancyButton extends DirectionalLayout {
 
     if (mGhost) {
       // Hollow Background
-      defaultDrawable.setRgbColor(new RgbColor(Color.TRANSPARENT.getValue()));
+      defaultDrawable.setRgbColor(RgbColor.fromArgbInt(Color.TRANSPARENT.getValue()));
 
     } else {
-      defaultDrawable.setRgbColor(new RgbColor(mDefaultBackgroundColor));
+
+      defaultDrawable.setRgbColor(RgbColor.fromArgbInt(mDefaultBackgroundColor));
     }
 
     ShapeElement focusDrawable = new ShapeElement();
@@ -364,7 +392,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         mRadiusTopLeft, mRadiusTopLeft, mRadiusTopRight, mRadiusTopRight, mRadiusBottomRight, mRadiusBottomRight,
         mRadiusBottomLeft, mRadiusBottomLeft
     });
-    focusDrawable.setRgbColor(new RgbColor(mFocusBackgroundColor));
+    focusDrawable.setRgbColor(RgbColor.fromArgbInt(mFocusBackgroundColor));
 
     // Disabled Drawable
     //if(disabledDrawable == null) {
@@ -375,17 +403,17 @@ public class MaterialFancyButton extends DirectionalLayout {
         mRadiusTopLeft, mRadiusTopLeft, mRadiusTopRight, mRadiusTopRight, mRadiusBottomRight, mRadiusBottomRight,
         mRadiusBottomLeft, mRadiusBottomLeft
     });
-    disabledDrawable.setRgbColor(new RgbColor(mDisabledBackgroundColor));
-    disabledDrawable.setStroke(mBorderWidth, new RgbColor(mDisabledBorderColor));
+    disabledDrawable.setRgbColor(RgbColor.fromArgbInt(mDisabledBackgroundColor));
+    disabledDrawable.setStroke(mBorderWidth, RgbColor.fromArgbInt(mDisabledBorderColor));
 
     // Handle Border
-    if (mBorderColor != 0) defaultDrawable.setStroke(mBorderWidth, new RgbColor(mBorderColor));
+    if (mBorderColor != 0) defaultDrawable.setStroke(mBorderWidth, RgbColor.fromArgbInt(mBorderColor));
 
     // Handle disabled border color
     if (!mEnabled) {
-      defaultDrawable.setStroke(mBorderWidth, new RgbColor(mDisabledBorderColor));
+      defaultDrawable.setStroke(mBorderWidth, RgbColor.fromArgbInt(mDisabledBorderColor));
       if (mGhost) {
-          disabledDrawable.setRgbColor(new RgbColor(Color.TRANSPARENT.getValue()));
+          disabledDrawable.setRgbColor(RgbColor.fromArgbInt(Color.TRANSPARENT.getValue()));
       }
     }
 
@@ -404,22 +432,22 @@ public class MaterialFancyButton extends DirectionalLayout {
         mRadiusBottomLeft, mRadiusBottomLeft
     });
     if (mGhost) {
-      drawable2.setRgbColor(new RgbColor(Color.TRANSPARENT.getValue())); // No focus color
+      drawable2.setRgbColor(RgbColor.fromArgbInt(Color.TRANSPARENT.getValue())); // No focus color
     } else {
-      drawable2.setRgbColor(new RgbColor(mFocusBackgroundColor));
+      drawable2.setRgbColor(RgbColor.fromArgbInt(mFocusBackgroundColor));
     }
 
     // Handle Button Border
     if (mBorderColor != 0) {
       if (mGhost) {
-        drawable2.setStroke(mBorderWidth, new RgbColor(mFocusBackgroundColor)); // Border is the main part of button now
+        drawable2.setStroke(mBorderWidth, RgbColor.fromArgbInt(mFocusBackgroundColor)); // Border is the main part of button now
       } else {
-        drawable2.setStroke(mBorderWidth, new RgbColor(mBorderColor));
+        drawable2.setStroke(mBorderWidth, RgbColor.fromArgbInt(mBorderColor));
       }
     }
 
     if (!mEnabled) {
-      drawable2.setStroke(mBorderWidth, new RgbColor(mDisabledBorderColor));
+      drawable2.setStroke(mBorderWidth, RgbColor.fromArgbInt(mDisabledBorderColor));
     }
 
     if (mFocusBackgroundColor != 0) {

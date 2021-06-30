@@ -1,6 +1,8 @@
 package com.rilixtech.materialfancybutton.utils;
 
 
+import ohos.agp.colors.ColorConverter;
+import ohos.agp.colors.RgbColor;
 import ohos.agp.utils.Color;
 
 public class ColorUtil {
@@ -26,6 +28,10 @@ public class ColorUtil {
 		return Color.argb(a, r, g, b);
 	}
 
+	public static RgbColor convertToRgbColor(Color color){
+		return RgbColor.fromArgbInt(color.getValue());
+	}
+
 	// TODO: Write tests for following 3 functions
 	private static int getRedComponent(int color)
 	{
@@ -40,7 +46,9 @@ public class ColorUtil {
 		return color& 0xFF;
 	}
 
+
 	public static int getColor(int baseColor, float alphaPercent){
+
 		int alpha = Math.round(Color.alpha(baseColor) * alphaPercent);
 
 		return (baseColor & 0x00FFFFFF) | (alpha << 24);

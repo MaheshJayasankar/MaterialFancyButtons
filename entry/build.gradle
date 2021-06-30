@@ -18,6 +18,15 @@ ohos {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
+    implementation project(path: ':materialfancybutton')
+    implementation project(path: ':fontawesome_typeface')
+    implementation project(path: ':community_material_typeface')
+    implementation project(path: ':devicon_typeface')
+    implementation project(path: ':dripicons_typeface')
+    implementation project(path: ':entypo_typeface')
+    implementation project(path: ':foundation_icons_typeface')
+    implementation project(path: ':glyphicons_halflings_typeface')
+    implementation project(path: ':google_material_typeface')
     testImplementation 'junit:junit:4.13'
     ohosTestImplementation 'com.huawei.ohos.testkit:runner:1.0.0.100'
 }

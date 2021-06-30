@@ -7,7 +7,7 @@ public class GenericsUtil {
 
   public static String[] supportedFontClassNames = new String[]{
           "com.rilixtech.community_material_typeface.CommunityMaterial",
-          "com.rilixtech.devicon_typeface.DevIcon",
+          "com.rilixtech.devicon_typeface.Devicon",
           "com.rilixtech.dripicons_typeface.Dripicons",
           "com.rilixtech.entypo_typeface.Entypo",
           "com.rilixtech.fontawesome_typeface.FontAwesome",

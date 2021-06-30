@@ -11,6 +11,114 @@
     {
       "name": "mainability_HelloWorld",
       "value": "Hello World"
+    },
+    {
+      "name": "title",
+      "value": "Lite Lib: LiteGo"
+    },
+    {
+      "name": "sub_title",
+      "value": "see more via code and log."
+    },
+    {
+      "name": "list_item_default_text",
+      "value": "List Item Default Text"
+    },
+    {
+      "name": "action_settings",
+      "value": "Settings"
+    },
+    {
+      "name": "title_xml_buttons",
+      "value": "XmlButtons"
+    },
+    {
+      "name": "title_program_buttons",
+      "value": "ProgramButtons"
+    },
+    {
+      "name": "title_community_material_buttons",
+      "value": "Community Material Buttons"
+    },
+    {
+      "name": "title_devicon_buttons",
+      "value": "Devicon Buttons"
+    },
+    {
+      "name": "title_dripicons_buttons",
+      "value": "Dripicons Buttons"
+    },
+    {
+      "name": "title_entypo",
+      "value": "Entypo Buttons"
+    },
+    {
+      "name": "title_fontawesome",
+      "value": "Fontawesome Buttons"
+    },
+    {
+      "name": "title_foundation_icons",
+      "value": "Foundation Icons Buttons"
+    },
+    {
+      "name": "title_activity_glyphicons_halflings",
+      "value": "Glyphicons Halflings Buttons"
+    },
+    {
+      "name": "title_google_material",
+      "value": "Google Material Buttons"
+    },
+    {
+      "name": "title_ionicons",
+      "value": "Ionicons Buttons"
+    },
+    {
+      "name": "title_mfglabs",
+      "value": "MFGLabs Iconset Buttons"
+    },
+    {
+      "name": "title_material_design_iconic",
+      "value": "Material Design Iconic Buttons"
+    },
+    {
+      "name": "title_meteocons",
+      "value": "Meteocons Buttons"
+    },
+    {
+      "name": "title_mobiriseicons",
+      "value": "Mobirise Buttons"
+    },
+    {
+      "name": "title_octicons",
+      "value": "Octicons Buttons"
+    },
+    {
+      "name": "title_openiconic",
+      "value": "Open Iconic Buttons"
+    },
+    {
+      "name": "title_picol",
+      "value": "PICOL Icons Buttons"
+    },
+    {
+      "name": "title_pixeden7",
+      "value": "Pixeden 7 Stroke Buttons"
+    },
+    {
+      "name": "title_themify_icons",
+      "value": "Themify Icons Buttons"
+    },
+    {
+      "name": "title_typicons",
+      "value": "Typicons Buttons"
+    },
+    {
+      "name": "title_vaadin_icons",
+      "value": "Vaadin Icons Buttons"
+    },
+    {
+      "name": "title_weather_icons",
+      "value": "Weather Icons Buttons"
     }
   ]
 }
