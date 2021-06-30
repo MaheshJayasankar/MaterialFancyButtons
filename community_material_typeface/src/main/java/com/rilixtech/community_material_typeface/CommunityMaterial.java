@@ -5,6 +5,7 @@ import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.Context;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -96,7 +97,7 @@ public class CommunityMaterial implements ITypeface {
     public Font getTypeface(Context context) {
         if (typeface == null) {
             try {
-                typeface = new Font.Builder("fonts/" + TTF_FILE);
+                typeface = new Font.Builder(new File("C:\\Users\\Administrator\\Downloads\\MaterialFancyButtonsHMOS\\community_material_typeface\\src\\main\\assets\\fonts\\"+ TTF_FILE));
             } catch (Exception e) {
                 return null;
             }
