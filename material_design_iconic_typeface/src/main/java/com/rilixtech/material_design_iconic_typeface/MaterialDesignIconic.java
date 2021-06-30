@@ -1,4 +1,4 @@
-package com.example.material_design_iconic_typeface;
+package com.rilixtech.material_design_iconic_typeface;
 
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;

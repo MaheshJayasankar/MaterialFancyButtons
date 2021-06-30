@@ -1,4 +1,4 @@
-package com.example.mfglabs_iconset_typeface;
+package com.rilixtech.mfglabs_iconset_typeface;
 
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;

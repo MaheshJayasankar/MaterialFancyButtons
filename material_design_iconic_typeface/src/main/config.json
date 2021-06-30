@@ -1,6 +1,6 @@
 {
   "app": {
-    "bundleName": "com.applibgroup.materialfancybuttons",
+    "bundleName": "com.rilixtech.materialfancybuttons",
     "vendor": "example",
     "version": {
       "code": 1000000,
@@ -15,7 +15,7 @@
   "deviceConfig": {
   },
   "module": {
-    "package": "com.example.material_design_iconic_typeface",
+    "package": "com.rilixtech.material_design_iconic_typeface",
     "deviceType": [
       "phone"
     ],

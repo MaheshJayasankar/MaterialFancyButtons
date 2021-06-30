@@ -1,4 +1,4 @@
-package com.example.meteocons_typeface;
+package com.rilixtech.meteocons_typeface;
 
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;

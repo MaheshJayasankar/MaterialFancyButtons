@@ -1,4 +1,4 @@
-package com.example.ionicons_typeface;
+package com.rilixtech.ionicons_typeface;
 
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
