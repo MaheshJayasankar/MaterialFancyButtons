@@ -51,14 +51,15 @@ public class FontUtil {
     if (cachedFontMap.containsKey(fontName)) {
       return cachedFontMap.get(fontName);
     } else {
+
+      // default font directory for the font
+      final String defaultParentDir = String.format("%s/resources/rawfile/", LIBRARY_NAME);
       try {
         Font loadedFont = getFont(context, fontName, fontParentDir);
         if (loadedFont != null) {
           cachedFontMap.put(fontName, loadedFont);
           return loadedFont;
         } else {
-        // Search in the default font directory for the font
-        final String defaultParentDir = String.format("%s/resources/rawfile/", LIBRARY_NAME);
         loadedFont = getFont(context, fontName, defaultParentDir);
         if (loadedFont != null)
         {
@@ -77,6 +78,9 @@ public class FontUtil {
       } catch (Exception e) {
         HiLog.error(LABEL,
             "Unable to find %{public}s font. Using Font.DEFAULT instead.", fontName);
+        HiLog.error(LABEL,
+                "Searched in %{public}s, %{public}s, %{public}s", fontParentDir, defaultParentDir, defaultFontPath);
+
         cachedFontMap.put(fontName, Font.DEFAULT);
         return Font.DEFAULT;
       }
@@ -86,9 +90,11 @@ public class FontUtil {
   private static Font getFont(Context context, String fontId, String parentDirectory) {
     final int BUFFER_LENGTH = 8192;
     final int DEFAULT_ERROR = -1;
-    String path = new File(parentDirectory, fontId).getPath();
-    File file = new File(context.getDataDir(), fontId);
-    try (OutputStream outputStream = new FileOutputStream(file);
+    File fontFile = new File(parentDirectory, fontId);
+    String path = fontFile.getPath();
+    HiLog.debug(LABEL, "Font exist at %{public}s? %{public}s", path, fontFile.exists());
+    File outputFile = new File(context.getDataDir(), fontId);
+    try (OutputStream outputStream = new FileOutputStream(outputFile);
          InputStream inputStream = context.getResourceManager().getRawFileEntry(path).openRawFile()) {
       byte[] buffer = new byte[BUFFER_LENGTH];
       int bytesRead = inputStream.read(buffer, 0, BUFFER_LENGTH);
@@ -99,6 +105,6 @@ public class FontUtil {
     } catch (IOException exception) {
       return null;
     }
-    return Optional.of(new Font.Builder(file).build()).get();
+    return Optional.of(new Font.Builder(outputFile).build()).get();
   }
 }

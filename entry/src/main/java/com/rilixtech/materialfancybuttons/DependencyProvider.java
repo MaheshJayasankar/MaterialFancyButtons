@@ -8,6 +8,10 @@ import com.rilixtech.fontawesome_typeface.FontAwesome;
 import com.rilixtech.foundation_icons_typeface.FoundationIcons;
 import com.rilixtech.glyphicons_halflings_typeface.GlyphiconsHalflings;
 import com.rilixtech.google_material_typeface.GoogleMaterial;
+import com.rilixtech.ionicons_typeface.Ionicons;
+import com.rilixtech.material_design_iconic_typeface.MaterialDesignIconic;
+import com.rilixtech.meteocons_typeface.Meteocons;
+import com.rilixtech.mfglabs_iconset_typeface.MFGLabsIconset;
 
 public class DependencyProvider {
     CommunityMaterial cmb;
@@ -18,4 +22,8 @@ public class DependencyProvider {
     FoundationIcons fib;
     GlyphiconsHalflings ghb;
     GoogleMaterial gmb;
+    Ionicons iob;
+    MaterialDesignIconic mdib;
+    Meteocons mtb;
+    MFGLabsIconset mfgb;
 }

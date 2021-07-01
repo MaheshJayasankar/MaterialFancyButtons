@@ -27,6 +27,10 @@ dependencies {
     implementation project(path: ':foundation_icons_typeface')
     implementation project(path: ':glyphicons_halflings_typeface')
     implementation project(path: ':google_material_typeface')
+    implementation project(path: ':ionicons_typeface')
+    implementation project(path: ':material_design_iconic_typeface')
+    implementation project(path: ':meteocons_typeface')
+    implementation project(path: ':mfglabs_iconset_typeface')
     testImplementation 'junit:junit:4.13'
     ohosTestImplementation 'com.huawei.ohos.testkit:runner:1.0.0.100'
 }
