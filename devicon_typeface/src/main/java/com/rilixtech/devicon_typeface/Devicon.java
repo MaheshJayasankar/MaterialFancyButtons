@@ -91,7 +91,8 @@ public class Devicon implements ITypeface{
     public Font getTypeface(Context context) {
         if (typeface == null) {
             try {
-                typeface = new Font.Builder(new File( "C:\\Users\\Administrator\\Downloads\\MaterialFancyButtonsHMOS\\devicon_typeface\\src\\main\\assets\\fonts\\"+ TTF_FILE));
+                File file = new File(context.getDataDir(), TTF_FILE);
+                typeface = new Font.Builder(file);
             } catch (Exception e) {
                 return null;
             }
