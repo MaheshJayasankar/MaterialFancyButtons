@@ -199,6 +199,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         params.alignment = LayoutAlignment.CENTER;
       } else {
         params.alignment = LayoutAlignment.START;
+
       }
     }
     mIconView.setLayoutConfig(params);
@@ -281,8 +282,9 @@ public class MaterialFancyButton extends DirectionalLayout {
     HiLog.debug(LABEL, "mIcon = %{public}s", mIcon);
 
     // DRAWABLE ATTRIBUTE
-    if (attrSet.getAttr("mfb_iconResource").isPresent())
+    if (attrSet.getAttr("mfb_iconResource").isPresent()) {
       mIconResource = attrSet.getAttr("mfb_iconResource").get().getElement();
+    }
 
     // Resolve Temporary Attribute Variables
     if (fontIcon != null) mFontIcon = fontIcon;

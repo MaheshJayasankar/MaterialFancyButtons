@@ -101,6 +101,7 @@
                 ohos:height="match_parent"
                 ohos:bottom_margin="15vp"
                 ohos:alignment="center"
+                ohos:orientation="horizontal"
                 >
 
                 <com.rilixtech.materialfancybutton.MaterialFancyButton
@@ -109,18 +110,16 @@
                     ohos:height="64vp"
                     ohos:right_margin="10vp"
                     ohos:end_margin="10vp"
-                    ohos:padding="10vp"
+                    ohos:padding="20vp"
                     fancy:mfb_defaultColor="#55acee"
                     fancy:mfb_focusColor="#313131"
                     fancy:mfb_iconPaddingLeft="0vp"
                     fancy:mfb_iconPaddingRight="0vp"
-                    fancy:mfb_iconResource="@drawable/twitter"
+                    fancy:mfb_iconResource="$media:twitter"
                     fancy:mfb_textColor="#FFFFFF"
                     fancy:mfb_radius="64vp"
-                    fancy:mfb_iconPosition="right"
-                    ohos:text="sss"
+                    ohos:text=""
                     />
-
                 <com.rilixtech.materialfancybutton.MaterialFancyButton
                     ohos:id="$+id:btn_dropbox"
                     ohos:width="64vp"
@@ -131,8 +130,9 @@
                     fancy:mfb_focusColor="#313131"
                     fancy:mfb_iconPaddingLeft="0vp"
                     fancy:mfb_iconPaddingRight="0vp"
-                    fancy:mfb_iconResource="@drawable/dropbox"
+                    fancy:mfb_iconResource="$media:dropbox"
                     fancy:mfb_radius="64vp"
+                    ohos:text=""
                     >
                 </com.rilixtech.materialfancybutton.MaterialFancyButton>
             </DirectionalLayout>
@@ -156,8 +156,9 @@
                     fancy:mfb_focusColor="#313131"
                     fancy:mfb_iconPaddingLeft="0vp"
                     fancy:mfb_iconPaddingRight="0vp"
-                    fancy:mfb_iconResource="@drawable/instagram"
+                    fancy:mfb_iconResource="$media:instagram"
                     fancy:mfb_radius="64vp"
+                    ohos:text=""
                     >
                 </com.rilixtech.materialfancybutton.MaterialFancyButton>
 
@@ -171,8 +172,9 @@
                     fancy:mfb_focusColor="#313131"
                     fancy:mfb_iconPaddingLeft="0vp"
                     fancy:mfb_iconPaddingRight="0vp"
-                    fancy:mfb_iconResource="@drawable/soundcloud"
+                    fancy:mfb_iconResource="$media:soundcloud"
                     fancy:mfb_radius="64vp"
+                    ohos:text=""
                     >
                 </com.rilixtech.materialfancybutton.MaterialFancyButton>
             </DirectionalLayout>
@@ -195,8 +197,9 @@
                     fancy:mfb_focusColor="#313131"
                     fancy:mfb_iconPaddingLeft="0vp"
                     fancy:mfb_iconPaddingRight="0vp"
-                    fancy:mfb_iconResource="@drawable/gplus"
+                    fancy:mfb_iconResource="$media:gplus"
                     fancy:mfb_radius="64vp"
+                    ohos:text=""
                     >
                 </com.rilixtech.materialfancybutton.MaterialFancyButton>
 
@@ -210,8 +213,9 @@
                     fancy:mfb_focusColor="#313131"
                     fancy:mfb_iconPaddingLeft="0vp"
                     fancy:mfb_iconPaddingRight="0vp"
-                    fancy:mfb_iconResource="@drawable/github"
+                    fancy:mfb_iconResource="$media:github"
                     fancy:mfb_radius="64vp"
+                    ohos:text=""
                     >
                 </com.rilixtech.materialfancybutton.MaterialFancyButton>
             </DirectionalLayout>
