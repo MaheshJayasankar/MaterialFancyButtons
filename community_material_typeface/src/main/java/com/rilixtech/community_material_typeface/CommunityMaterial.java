@@ -1,9 +1,14 @@
 package com.rilixtech.community_material_typeface;
 
+import com.rilixtech.materialfancybutton.ResourceTable;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import ohos.aafwk.ability.AbilitySlice;
 import ohos.agp.text.Font;
 import ohos.app.Context;
+import ohos.global.resource.RawFileDescriptor;
+import ohos.global.resource.RawFileEntry;
+import ohos.global.resource.Resource;
 
 import java.io.File;
 import java.util.Collection;
@@ -97,13 +102,15 @@ public class CommunityMaterial implements ITypeface {
     public Font getTypeface(Context context) {
         if (typeface == null) {
             try {
-                typeface = new Font.Builder(new File("C:\\Users\\Administrator\\Downloads\\MaterialFancyButtonsHMOS\\community_material_typeface\\src\\main\\assets\\fonts\\"+ TTF_FILE));
+                File file = new File(context.getDataDir(), TTF_FILE);
+                typeface = new Font.Builder(file);
             } catch (Exception e) {
                 return null;
             }
         }
         return typeface.build();
     }
+
 
     public enum Icon implements IIcon {
         // Material design icons (v1.9.32)
