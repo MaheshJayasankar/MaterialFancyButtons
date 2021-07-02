@@ -14,7 +14,7 @@
   },
   "deviceConfig": {},
   "module": {
-    "package": "com.applibgroup.font_test_module",
+    "package": "com.rilixtech.font_test_module",
     "name": ".MyApplication",
     "deviceType": [
       "phone"
@@ -29,7 +29,7 @@
       {
         "orientation": "unspecified",
         "visible": true,
-        "name": "com.applibgroup.font_test_module.FontTestAbility",
+        "name": "com.rilixtech.font_test_module.FontTestAbility",
         "icon": "$media:icon",
         "description": "$string:fonttestability_description",
         "label": "$string:app_name",

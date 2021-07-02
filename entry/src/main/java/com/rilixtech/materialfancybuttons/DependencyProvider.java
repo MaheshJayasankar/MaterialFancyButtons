@@ -12,6 +12,14 @@ import com.rilixtech.ionicons_typeface.Ionicons;
 import com.rilixtech.material_design_iconic_typeface.MaterialDesignIconic;
 import com.rilixtech.meteocons_typeface.Meteocons;
 import com.rilixtech.mfglabs_iconset_typeface.MFGLabsIconset;
+import com.rilixtech.octicons_typeface.Octicons;
+import com.rilixtech.open_iconic_typeface.OpenIconic;
+import com.rilixtech.picol_typeface.Picol;
+import com.rilixtech.pixeden_7_stroke_typeface.Pixeden7Stroke;
+import com.rilixtech.themify_icons_typeface.ThemifyIcons;
+import com.rilixtech.typicons_typeface.Typicons;
+import com.rilixtech.vaadin_icons_typeface.VaadinIcons;
+import com.rilixtech.weather_icons_typeface.WeatherIcons;
 
 public class DependencyProvider {
     CommunityMaterial cmb;
@@ -26,4 +34,12 @@ public class DependencyProvider {
     MaterialDesignIconic mdib;
     Meteocons mtb;
     MFGLabsIconset mfgb;
+    Octicons ocb;
+    OpenIconic opb;
+    Picol pcb;
+    Pixeden7Stroke p7b;
+    ThemifyIcons thb;
+    Typicons tyb;
+    VaadinIcons vab;
+    WeatherIcons web;
 }

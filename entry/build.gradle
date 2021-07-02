@@ -31,6 +31,14 @@ dependencies {
     implementation project(path: ':material_design_iconic_typeface')
     implementation project(path: ':meteocons_typeface')
     implementation project(path: ':mfglabs_iconset_typeface')
+    implementation project(path: ':octicons_typeface')
+    implementation project(path: ':open_iconic_typeface')
+    implementation project(path: ':picol_typeface')
+    implementation project(path: ':pixeden_7_stroke_typeface')
+    implementation project(path: ':themify_icons_typeface')
+    implementation project(path: ':typicons_typeface')
+    implementation project(path: ':vaadin_icons_typeface')
+    implementation project(path: ':weather_icons_typeface')
     testImplementation 'junit:junit:4.13'
     ohosTestImplementation 'com.huawei.ohos.testkit:runner:1.0.0.100'
 }

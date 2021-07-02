@@ -26,6 +26,15 @@
             <option value="$PROJECT_DIR$/materialfancybutton" />
             <option value="$PROJECT_DIR$/meteocons_typeface" />
             <option value="$PROJECT_DIR$/mfglabs_iconset_typeface" />
+            <option value="$PROJECT_DIR$/mobirise_icons_typeface" />
+            <option value="$PROJECT_DIR$/octicons_typeface" />
+            <option value="$PROJECT_DIR$/open_iconic_typeface" />
+            <option value="$PROJECT_DIR$/picol_typeface" />
+            <option value="$PROJECT_DIR$/pixeden_7_stroke_typeface" />
+            <option value="$PROJECT_DIR$/themify_icons_typeface" />
+            <option value="$PROJECT_DIR$/typicons_typeface" />
+            <option value="$PROJECT_DIR$/vaadin_icons_typeface" />
+            <option value="$PROJECT_DIR$/weather_icons_typeface" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

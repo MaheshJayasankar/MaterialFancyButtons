@@ -1,4 +1,4 @@
-include ':entry', ':materialfancybutton', ':devicon_typeface', ':ionicons_typeface', ':material_design_iconic_typeface', ':meteocons_typeface', ':mfglabs_iconset_typeface', ':font_test_module',
+include ':entry', ':materialfancybutton', ':devicon_typeface', ':ionicons_typeface', ':material_design_iconic_typeface', ':meteocons_typeface', ':mfglabs_iconset_typeface', ':font_test_module', ':mobirise_icons_typeface', ':octicons_typeface', ':open_iconic_typeface', ':picol_typeface', ':pixeden_7_stroke_typeface', ':themify_icons_typeface', ':typicons_typeface', ':vaadin_icons_typeface', ':weather_icons_typeface',
         ':dripicons_typeface', ':foundation_icons_typeface',
         ':glyphicons_halflings_typeface', ':google_material_typeface',
         ':community_material_typeface', ':entypo_typeface', ':fontawesome_typeface'
