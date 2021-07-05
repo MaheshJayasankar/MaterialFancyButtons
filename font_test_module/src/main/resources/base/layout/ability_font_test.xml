@@ -9,7 +9,8 @@
         ohos:id="$+id:textField1"
         ohos:height="match_content"
         ohos:width="match_parent"
-        ohos:layout_alignment="center"
+        ohos:top_margin="20vp"
+        ohos:layout_alignment="horizontal_center"
         ohos:text_size="20vp"
         ohos:text_color="$ohos:color:id_color_badge_red_dark"/>
 

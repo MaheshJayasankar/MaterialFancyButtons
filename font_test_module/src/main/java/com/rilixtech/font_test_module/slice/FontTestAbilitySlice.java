@@ -24,7 +24,7 @@ public class FontTestAbilitySlice extends AbilitySlice {
         super.setUIContent(ResourceTable.Layout_ability_font_test);
 
         RawFileEntry rawFileEntry = getResourceManager()
-                .getRawFileEntry("font_test_module/resources/rawfile/communitymaterial-font-v1.9.32.ttf");
+                .getRawFileEntry("resources/rawfile/"+TTF_FILE);
         tf1 = (TextField) findComponentById(ResourceTable.Id_textField1);
 
         if(rawFileEntry!=null){
@@ -35,11 +35,13 @@ public class FontTestAbilitySlice extends AbilitySlice {
                 if(typeface!=null){
                     tf1.setText(typeface.build().toString());
                 }
+                else{
+                    tf1.setText("null typeface");
+                }
             }
             catch (Exception e){
                 tf1.setText(e.toString());
             }
-
         }
 
     }
