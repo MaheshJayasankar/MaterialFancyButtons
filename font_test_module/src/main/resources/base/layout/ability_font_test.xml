@@ -5,14 +5,14 @@
     ohos:width="match_parent"
     ohos:orientation="vertical">
 
-    <Text
-        ohos:id="$+id:text_helloworld"
+    <TextField
+        ohos:id="$+id:textField1"
         ohos:height="match_content"
-        ohos:width="match_content"
-        ohos:background_element="$graphic:background_ability_font_test"
-        ohos:layout_alignment="horizontal_center"
-        ohos:text="$string:fonttestability_HelloWorld"
-        ohos:text_size="50px"
-        />
+        ohos:width="match_parent"
+        ohos:layout_alignment="center"
+        ohos:text_size="20vp"
+        ohos:text_color="$ohos:color:id_color_badge_red_dark"/>
+
+
 
 </DirectionalLayout>
