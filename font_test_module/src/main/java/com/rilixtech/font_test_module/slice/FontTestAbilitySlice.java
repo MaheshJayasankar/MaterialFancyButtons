@@ -23,26 +23,8 @@ public class FontTestAbilitySlice extends AbilitySlice {
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_ability_font_test);
 
-        RawFileEntry rawFileEntry = getResourceManager()
-                .getRawFileEntry("resources/rawfile/"+TTF_FILE);
         tf1 = (TextField) findComponentById(ResourceTable.Id_textField1);
-
-        if(rawFileEntry!=null){
-            try {
-                File file = getFileFromRawFile(rawFileEntry,"file_"+TTF_FILE);
-//                BufferedReader bfreader = new BufferedReader(new FileReader(file));
-                Font.Builder typeface = new Font.Builder(file);
-                if(typeface!=null){
-                    tf1.setText(typeface.build().toString());
-                }
-                else{
-                    tf1.setText("null typeface");
-                }
-            }
-            catch (Exception e){
-                tf1.setText(e.toString());
-            }
-        }
+        tf1.setText(getFontFromName(TTF_FILE).toString());
 
     }
 
@@ -56,10 +38,20 @@ public class FontTestAbilitySlice extends AbilitySlice {
         super.onForeground(intent);
     }
 
-    private File getFileFromRawFile(RawFileEntry rawFileEntry, String filename) {
+    public Font getFontFromName(String name){ RawFileEntry rawFileEntry = getResourceManager()
+                .getRawFileEntry("resources/rawfile/"+name);
+
+        try{ File file = getFileFromRawFile(rawFileEntry,"file_"+name);
+            Font.Builder typeface = new Font.Builder(file);
+            return typeface.build();
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public File getFileFromRawFile(RawFileEntry rawFileEntry, String filename) {
         byte[] buf = null;
-        try {
-            File file = new File(getCacheDir(), filename);
+        try{ File file = new File(getCacheDir(), filename);
             Resource resource = rawFileEntry.openRawFile();
             buf = new byte[(int) rawFileEntry.openRawFileDescriptor().getFileSize()];
             int bytesRead = resource.read(buf);
