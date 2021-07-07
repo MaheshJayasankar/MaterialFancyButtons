@@ -2,6 +2,7 @@ package com.rilixtech.materialfancybutton.typeface;
 
 
 import ohos.agp.text.Font;
+import ohos.app.AbilityContext;
 import ohos.app.Context;
 
 import java.util.Collection;
@@ -42,6 +43,6 @@ public interface ITypeface {
 
     public String getLicenseUrl();
 
-    public Font getTypeface(Context ctx);
+    public Font getTypeface(AbilityContext ctx);
 
 }

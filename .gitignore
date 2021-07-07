@@ -14,3 +14,6 @@
 .externalNativeBuild
 /entry/.preview
 .cxx
+
+.idea/sonarlint
+.idea/checkstyle-idea.xml

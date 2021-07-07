@@ -3,6 +3,7 @@ package com.rilixtech.glyphicons_halflings_typeface;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
+import ohos.app.AbilityContext;
 import ohos.app.Context;
 
 import java.util.Collection;
@@ -80,7 +81,7 @@ public class GlyphiconsHalflings implements ITypeface {
         return "https://opensource.org/licenses/MIT";
     }
 
-    @Override public Font getTypeface(Context context) {
+    @Override public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
             try {
                 typeface = new Font.Builder("fonts/" + TTF_FILE);

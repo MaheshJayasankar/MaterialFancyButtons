@@ -17,8 +17,6 @@ public class FontUtil {
   private static final int DOMAIN = 0xD000100;
   private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, DOMAIN, TAG);
 
-  private static final String LIBRARY_NAME = "materialfancybutton";
-
   private static Map<String, Font> cachedFontMap = new HashMap<>();
 
   public static int pxToSp(final Context context, final float px) {
@@ -51,18 +49,9 @@ public class FontUtil {
     if (cachedFontMap.containsKey(fontName)) {
       return cachedFontMap.get(fontName);
     } else {
-
-      // default font directory for the font
-      final String defaultParentDir = String.format("%s/resources/rawfile/", LIBRARY_NAME);
       try {
         Font loadedFont = getFont(context, fontName, fontParentDir);
         if (loadedFont != null) {
-          cachedFontMap.put(fontName, loadedFont);
-          return loadedFont;
-        } else {
-        loadedFont = getFont(context, fontName, defaultParentDir);
-        if (loadedFont != null)
-        {
           cachedFontMap.put(fontName, loadedFont);
           return loadedFont;
         } else {
@@ -75,11 +64,11 @@ public class FontUtil {
         else {
           throw new FileNotFoundException();
         }}}
-      } catch (Exception e) {
+       catch (Exception e) {
         HiLog.error(LABEL,
             "Unable to find %{public}s font. Using Font.DEFAULT instead.", fontName);
         HiLog.error(LABEL,
-                "Searched in %{public}s, %{public}s, %{public}s", fontParentDir, defaultParentDir, defaultFontPath);
+                "Searched in %{public}s, %{public}s", fontParentDir, defaultFontPath);
 
         cachedFontMap.put(fontName, Font.DEFAULT);
         return Font.DEFAULT;

@@ -4,6 +4,7 @@ package com.rilixtech.google_material_typeface;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
+import ohos.app.AbilityContext;
 import ohos.app.Context;
 
 import java.util.Collection;
@@ -77,7 +78,7 @@ public class GoogleMaterial implements ITypeface {
         return "http://creativecommons.org/licenses/by/4.0/";
     }
 
-    @Override public Font getTypeface(Context context) {
+    @Override public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
             try {
                 typeface = new Font.Builder( "fonts/" + TTF_FILE);

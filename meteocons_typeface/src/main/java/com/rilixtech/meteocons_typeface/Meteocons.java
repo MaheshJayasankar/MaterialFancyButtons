@@ -3,6 +3,7 @@ package com.rilixtech.meteocons_typeface;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
+import ohos.app.AbilityContext;
 import ohos.app.Context;
 
 import java.util.Collection;
@@ -95,7 +96,7 @@ public class Meteocons implements ITypeface {
     }
 
     @Override
-    public Font getTypeface(Context context) {
+    public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
             try {
                 typeface = new Font.Builder( "fonts/" + TTF_FILE);

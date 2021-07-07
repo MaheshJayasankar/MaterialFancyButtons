@@ -15,6 +15,7 @@ import ohos.agp.text.Font;
 import ohos.agp.utils.Color;
 import ohos.agp.utils.LayoutAlignment;
 import ohos.agp.utils.TextAlignment;
+import ohos.app.AbilityContext;
 import ohos.app.Context;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
@@ -691,7 +692,12 @@ public class MaterialFancyButton extends DirectionalLayout {
   public void setIcon(IIcon icon) {
     ITypeface typeface = icon.getTypeface();
     HiLog.debug(LABEL, "Typeface = %{public}s", icon.getTypeface().getFontName());
-    mIconTypeFace = typeface.getTypeface(getContext().getApplicationContext());
+
+    // TODO Change Context to AbilityContext
+    // mIconTypeFace = typeface.getTypeface(getContext().getApplicationContext());
+    AbilityContext context = (AbilityContext) getContext();
+    mIconTypeFace = typeface.getTypeface(context);
+
     setIconResource(String.valueOf(icon.getCharacter()));
   }
 
