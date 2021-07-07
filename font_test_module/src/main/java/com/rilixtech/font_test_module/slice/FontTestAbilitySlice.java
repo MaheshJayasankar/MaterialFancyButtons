@@ -7,6 +7,7 @@ import ohos.agp.components.TextField;
 import ohos.agp.text.Font;
 import ohos.agp.utils.LayoutAlignment;
 import ohos.agp.window.dialog.ToastDialog;
+import ohos.app.AbilityContext;
 import ohos.app.Context;
 import ohos.global.resource.RawFileEntry;
 import ohos.global.resource.Resource;
@@ -49,7 +50,7 @@ public class FontTestAbilitySlice extends AbilitySlice {
         }
     }
 
-    public File getFileFromRawFile(RawFileEntry rawFileEntry, String filename) {
+    public File getFileFromRawFile( RawFileEntry rawFileEntry, String filename) {
         byte[] buf = null;
         try{ File file = new File(getCacheDir(), filename);
             Resource resource = rawFileEntry.openRawFile();

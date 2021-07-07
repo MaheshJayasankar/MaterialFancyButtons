@@ -12,6 +12,8 @@ import ohos.global.resource.RawFileEntry;
 import ohos.global.resource.Resource;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -102,14 +104,35 @@ public class CommunityMaterial implements ITypeface {
     @Override
     public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
+            RawFileEntry rawFileEntry = context.getResourceManager()
+                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
             try {
-                File file = new File(context.getDataDir(), TTF_FILE);
-                typeface = new Font.Builder(file);
+                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
+                Font.Builder typeface = new Font.Builder(file);
+                return typeface.build();
             } catch (Exception e) {
-                return null;
+                throw new IllegalStateException(e);
             }
         }
-        return typeface.build();
+        return  typeface.build();
+    }
+
+    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
+        byte[] buf = null;
+        try{ File file = new File(ctx.getCacheDir(), filename);
+            Resource resource = rawFileEntry.openRawFile();
+            buf = new byte[(int) rawFileEntry.openRawFileDescriptor().getFileSize()];
+            int bytesRead = resource.read(buf);
+            if (bytesRead != buf.length) {
+                throw new IOException("Asset read failed");
+            }
+            FileOutputStream output = new FileOutputStream(file);
+            output.write(buf, 0, bytesRead);
+            output.close();
+            return file;
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
 
