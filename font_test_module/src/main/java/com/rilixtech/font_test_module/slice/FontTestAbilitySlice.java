@@ -1,6 +1,8 @@
 package com.rilixtech.font_test_module.slice;
 
+import com.rilixtech.community_material_typeface.CommunityMaterial;
 import com.rilixtech.font_test_module.ResourceTable;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.TextField;
@@ -17,7 +19,7 @@ import java.io.*;
 public class FontTestAbilitySlice extends AbilitySlice {
     private static final String TTF_FILE = "communitymaterial-font-v1.9.32.ttf";
     private static final String RAW_FILE_PATH = "";
-    private static TextField tf1;
+    private TextField tf1;
 
     @Override
     public void onStart(Intent intent) {
@@ -25,7 +27,9 @@ public class FontTestAbilitySlice extends AbilitySlice {
         super.setUIContent(ResourceTable.Layout_ability_font_test);
 
         tf1 = (TextField) findComponentById(ResourceTable.Id_textField1);
-        tf1.setText(getFontFromName(TTF_FILE).toString());
+        Font loadedFont = new CommunityMaterial().getTypeface(this);
+        tf1.setFont(loadedFont);
+        tf1.setText(String.valueOf(CommunityMaterial.Icon.cmdi_clipboard.getCharacter()));
 
     }
 

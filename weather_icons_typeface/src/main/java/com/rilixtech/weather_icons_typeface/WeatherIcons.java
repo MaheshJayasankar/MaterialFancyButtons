@@ -5,8 +5,13 @@ import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
 import ohos.app.Context;
+import ohos.global.resource.RawFileDescriptor;
+import ohos.global.resource.RawFileEntry;
+import ohos.global.resource.Resource;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,7 +20,7 @@ public class WeatherIcons implements ITypeface {
     private static final String TTF_FILE = "weather-icons-v2.0.10.ttf";
     private static final String MAPPING_FONT_PREFIX = "wici";
 
-    private static Font.Builder typeface = null;
+    private static Font typeface = null;
 
     private static HashMap<String, Character> mChars;
 
@@ -84,14 +89,39 @@ public class WeatherIcons implements ITypeface {
     @Override
     public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
+            RawFileEntry rawFileEntry = context.getResourceManager()
+                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
             try {
-                File file = new File(context.getDataDir(), TTF_FILE);
-                typeface = new Font.Builder(file);
+                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
+                Font.Builder newTypeface = new Font.Builder(file);
+                Font builtFont = newTypeface.build();
+                typeface = builtFont;
+                return builtFont;
             } catch (Exception e) {
-                return null;
+                throw new IllegalStateException(e);
             }
         }
-        return typeface.build();
+        return  typeface;
+    }
+
+    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
+        byte[] buf = null;
+        try (Resource resource = rawFileEntry.openRawFile();
+             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor();) {
+            File file = new File(ctx.getCacheDir(), filename);
+
+            buf = new byte[(int) rawFileDescriptor.getFileSize()];
+            int bytesRead = resource.read(buf);
+            if (bytesRead != buf.length) {
+                throw new IOException("Asset read failed");
+            }
+            FileOutputStream output = new FileOutputStream(file);
+            output.write(buf, 0, bytesRead);
+            output.close();
+            return file;
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     public enum Icon implements IIcon {

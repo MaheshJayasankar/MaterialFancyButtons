@@ -2,14 +2,17 @@ package com.rilixtech.materialfancybutton.utils;
 
 import ohos.agp.components.AttrHelper;
 import ohos.agp.text.Font;
+import ohos.app.AbilityContext;
 import ohos.app.Context;
+import ohos.global.resource.RawFileDescriptor;
+import ohos.global.resource.RawFileEntry;
+import ohos.global.resource.Resource;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class FontUtil {
 
@@ -32,68 +35,83 @@ public class FontUtil {
   }
 
   // TODO Workaround to AssetManager. Put fonts in materialfancybutton/resources/rawfile. Test if working
-  public static Font findFont(Context context, String fontPath, String defaultFontPath) {
+  public static Font findFont(AbilityContext context, String fontName, String defaultFontName) {
 
-    if (fontPath == null) {
-      return Font.DEFAULT;
+    Font typeface = null;
+    if (!TextUtils.isEmpty(fontName)) {
+      // Try to load the font from the rawfile directory
+      typeface = loadFontIfExists(context, fontName);
     }
-
-    File fontPathFile = new File(fontPath);
-    String fontName = fontPathFile.getName();
-    String fontParentDir = fontPathFile.getParent();
-    String defaultFontName = "";
-    if (!TextUtils.isEmpty(defaultFontPath)) {
-      defaultFontName = new File(defaultFontPath).getName();
-    }
-
-    if (cachedFontMap.containsKey(fontName)) {
-      return cachedFontMap.get(fontName);
-    } else {
-      try {
-        Font loadedFont = getFont(context, fontName, fontParentDir);
-        if (loadedFont != null) {
-          cachedFontMap.put(fontName, loadedFont);
-          return loadedFont;
-        } else {
-        loadedFont = getFont(context, defaultFontName, defaultFontPath);
-        if (loadedFont != null)
-        {
-          cachedFontMap.put(fontName, loadedFont);
-          return loadedFont;
+    // If Font couldn't be loaded or wasn't specified, fallback to using the default font specified
+    if (typeface == null) {
+      if (!TextUtils.isEmpty(defaultFontName)) {
+        // Try to load the default font form the rawfile directory
+        typeface = loadFontIfExists(context, defaultFontName);
+        if (typeface == null) {
+          // If both font and default font are not able to be loaded, load the system Default font
+          typeface = Font.DEFAULT;
+          updateCacheIfNotEmpty(defaultFontName, typeface);
         }
-        else {
-          throw new FileNotFoundException();
-        }}}
-       catch (Exception e) {
-        HiLog.error(LABEL,
-            "Unable to find %{public}s font. Using Font.DEFAULT instead.", fontName);
-        HiLog.error(LABEL,
-                "Searched in %{public}s, %{public}s", fontParentDir, defaultFontPath);
-
-        cachedFontMap.put(fontName, Font.DEFAULT);
-        return Font.DEFAULT;
+        updateCacheIfNotEmpty(fontName, typeface);
+      } else {
+        // If Font couldn't be loaded, and default font wasn't specified, load the system Default font
+        typeface = Font.DEFAULT;
+        updateCacheIfNotEmpty(fontName, typeface);
       }
+    }
+    return  typeface;
+  }
+
+  private static void updateCacheIfNotEmpty(String key, Font font) {
+    if (!TextUtils.isEmpty(key)) {
+      cachedFontMap.put(key, font);
     }
   }
 
-  private static Font getFont(Context context, String fontId, String parentDirectory) {
-    final int BUFFER_LENGTH = 8192;
-    final int DEFAULT_ERROR = -1;
-    File fontFile = new File(parentDirectory, fontId);
-    String path = fontFile.getPath();
-    HiLog.debug(LABEL, "Font exist at %{public}s? %{public}s", path, fontFile.exists());
-    File outputFile = new File(context.getDataDir(), fontId);
-    try (OutputStream outputStream = new FileOutputStream(outputFile);
-         InputStream inputStream = context.getResourceManager().getRawFileEntry(path).openRawFile()) {
-      byte[] buffer = new byte[BUFFER_LENGTH];
-      int bytesRead = inputStream.read(buffer, 0, BUFFER_LENGTH);
-      while (bytesRead != DEFAULT_ERROR) {
-        outputStream.write(buffer, 0, bytesRead);
-        bytesRead = inputStream.read(buffer, 0, BUFFER_LENGTH);
+  private static Font loadFontIfExists(AbilityContext context, String fontName) {
+    Font typeface;
+    if (!cachedFontMap.containsKey(fontName)) {
+      try {
+        typeface = getFontFromRawFile(context, fontName);
+        cachedFontMap.put(fontName, typeface);
+      } catch (IllegalStateException e) {
+        // File read failed. Return null
+        typeface = null;
       }
-    } catch (IOException exception) {
-      return null;
     }
-    return Optional.of(new Font.Builder(outputFile).build()).get();
+    else {
+      typeface = cachedFontMap.get(fontName);
+    }
+    return typeface;
+  }
+
+  private static Font getFontFromRawFile(AbilityContext context, String fontName) throws IllegalStateException  {
+    Font typeface;
+    RawFileEntry rawFileEntry = context.getResourceManager()
+            .getRawFileEntry("resources/rawfile/" + fontName);
+    File file = getFileFromRawFile(context, rawFileEntry, "file_" + fontName);
+    Font.Builder newTypeface = new Font.Builder(file);
+    typeface = newTypeface.build();
+    return typeface;
+  }
+
+  private static File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) throws IllegalStateException {
+    byte[] buf = null;
+    try (Resource resource = rawFileEntry.openRawFile();
+         RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor();) {
+      File file = new File(ctx.getCacheDir(), filename);
+
+      buf = new byte[(int) rawFileDescriptor.getFileSize()];
+      int bytesRead = resource.read(buf);
+      if (bytesRead != buf.length) {
+        throw new IOException("Asset read failed");
+      }
+      FileOutputStream output = new FileOutputStream(file);
+      output.write(buf, 0, bytesRead);
+      output.close();
+      return file;
+    } catch (IOException ex) {
+      throw new IllegalStateException(ex);
+    }
   }
 }

@@ -119,6 +119,90 @@
     {
       "name": "title_weather_icons",
       "value": "Weather Icons Buttons"
+    },
+    {
+      "name": "font_communitymaterial",
+      "value": "communitymaterial-font-v1.9.32.ttf"
+    },
+    {
+      "name": "font_devicon",
+      "value": "devicon-font-v2.0.0.1.ttf"
+    },
+    {
+      "name": "font_dripicons",
+      "value": "dripicons-v2.ttf"
+    },
+    {
+      "name": "font_entypo",
+      "value": "entypo-font-v1.0.0.1.ttf"
+    },
+    {
+      "name": "font_fontawesome",
+      "value": "fontawesome-font-v4.7.ttf"
+    },
+    {
+      "name": "font_foundation_icons",
+      "value": "foundation-icons-font-v3.0.0.1.ttf"
+    },
+    {
+      "name": "font_glyphicons_halflings",
+      "value": "glyphicons-halflings-regular.ttf"
+    },
+    {
+      "name": "font_google_material",
+      "value": "google-material-font-v3.0.1.0.original.ttf"
+    },
+    {
+      "name": "font_ionicons",
+      "value": "ionicons-font-v2.0.1.1.ttf"
+    },
+    {
+      "name": "font_material_design_iconic",
+      "value": "material-design-iconic-font-v2.2.0.ttf"
+    },
+    {
+      "name": "font_meteocons",
+      "value": "meteocons.ttf"
+    },
+    {
+      "name": "font_mfglabs_iconset",
+      "value": "mfglabsiconset-webfont-1.0.ttf"
+    },
+    {
+      "name": "font_mobirise_icons",
+      "value": "mobirise-icons-v1.0.0.ttf"
+    },
+    {
+      "name": "font_octicons",
+      "value": "octicons-v3.2.0.ttf"
+    },
+    {
+      "name": "font_open_iconic",
+      "value": "open-iconic-1.1.1.ttf"
+    },
+    {
+      "name": "font_picol",
+      "value": "picol-v1.1.ttf"
+    },
+    {
+      "name": "font_pixeden_7_stroke",
+      "value": "pixeden-7-stroke-font-v1.2.0.ttf"
+    },
+    {
+      "name": "font_themify_icons",
+      "value": "themify-icons-v0.1.2.ttf"
+    },
+    {
+      "name": "font_typicons",
+      "value": "typicons-font-v2.0.7.1.ttf"
+    },
+    {
+      "name": "font_vaadin_icons",
+      "value": "vaadin-icons-v4.1.0.ttf"
+    },
+    {
+      "name": "font_weather_icons",
+      "value": "weather-icons-v2.0.10.ttf"
     }
   ]
 }

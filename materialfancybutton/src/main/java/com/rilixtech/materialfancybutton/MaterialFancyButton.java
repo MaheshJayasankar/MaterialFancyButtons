@@ -5,6 +5,7 @@ import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import com.rilixtech.materialfancybutton.utils.AttrEnumUtil;
 import com.rilixtech.materialfancybutton.utils.FontUtil;
 import com.rilixtech.materialfancybutton.utils.TextUtils;
+import ohos.aafwk.ability.Ability;
 import ohos.agp.colors.RgbColor;
 import ohos.agp.colors.RgbPalette;
 import ohos.agp.components.*;
@@ -22,6 +23,7 @@ import ohos.hiviewdfx.HiLogLabel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MaterialFancyButton extends DirectionalLayout {
 
@@ -115,6 +117,10 @@ public class MaterialFancyButton extends DirectionalLayout {
     //this.removeAllViews();
     setupBackground();
 
+    buildComponentContainer();
+  }
+
+  private void buildComponentContainer() {
     List<Component> views = new ArrayList<>();
 
     if (mIconPosition == POSITION_LEFT || mIconPosition == POSITION_TOP) {
@@ -127,6 +133,10 @@ public class MaterialFancyButton extends DirectionalLayout {
       if (mFontIconView != null) views.add(mFontIconView);
     }
 
+    addListOfComponents(views);
+  }
+
+  private void addListOfComponents(List<Component> views) {
     for (Component view : views) {
       addComponent(view);
     }
@@ -283,32 +293,34 @@ public class MaterialFancyButton extends DirectionalLayout {
     HiLog.debug(LABEL, "mIcon = %{public}s", mIcon);
 
     // DRAWABLE ATTRIBUTE
-    if (attrSet.getAttr("mfb_iconResource").isPresent()) {
-      mIconResource = attrSet.getAttr("mfb_iconResource").get().getElement();
-    }
+    Optional<Attr> iconResourceAttr = attrSet.getAttr("mfb_iconResource");
+    iconResourceAttr.ifPresent(attr -> mIconResource = attr.getElement());
 
     // Resolve Temporary Attribute Variables
     if (fontIcon != null) mFontIcon = fontIcon;
 
-    if (mIcon == null){
+    Context callerContext = getContext();
+    if (mIcon == null && callerContext instanceof AbilityContext){
+      AbilityContext abilityContext = (AbilityContext) callerContext;
       if (iconFontFamily == null) {
-        mIconTypeFace = FontUtil.findFont(getContext(), null, null);
+        mIconTypeFace = FontUtil.findFont(abilityContext, null, null);
       } else {
-        mIconTypeFace = FontUtil.findFont(getContext(), iconFontFamily, null);
+        mIconTypeFace = FontUtil.findFont(abilityContext, iconFontFamily, null);
       }
 
       if (textFontFamily == null) {
-        mTextTypeFace = FontUtil.findFont(getContext(), null, null);
+        mTextTypeFace = FontUtil.findFont(abilityContext, null, null);
       } else {
-        mTextTypeFace = FontUtil.findFont(getContext(), textFontFamily, null);
+        mTextTypeFace = FontUtil.findFont(abilityContext, textFontFamily, null);
       }
     }
 
   }
 
   private int getColorAttribute(AttrSet attrSet, String attrName, int defaultValue){
-    if (attrSet.getAttr(attrName).isPresent()){
-      Color color = attrSet.getAttr(attrName).get().getColorValue();
+    Optional<Attr> optionalAttribute = attrSet.getAttr(attrName);
+    if (optionalAttribute.isPresent()){
+      Color color = optionalAttribute.get().getColorValue();
       if (color != null)
         return color.getValue();
       else{
@@ -321,44 +333,29 @@ public class MaterialFancyButton extends DirectionalLayout {
   }
 
   private boolean getBoolAttribute(AttrSet attrSet, String attrName, boolean defaultValue){
-    if (attrSet.getAttr(attrName).isPresent()){
-      return attrSet.getAttr(attrName).get().getBoolValue();
-    }
-    else{
-      return defaultValue;
-    }
+    Optional<Attr> optionalAttribute = attrSet.getAttr(attrName);
+    return optionalAttribute.map(Attr::getBoolValue).orElse(defaultValue);
   }
 
   private int getDimensionAttribute(AttrSet attrSet, String attrName, int defaultValue){
-    if (attrSet.getAttr(attrName).isPresent()){
-      return attrSet.getAttr(attrName).get().getDimensionValue();
-    }
-    else{
-      return defaultValue;
-    }
+    Optional<Attr> optionalAttribute = attrSet.getAttr(attrName);
+    return optionalAttribute.map(Attr::getDimensionValue).orElse(defaultValue);
   }
 
   private int getIntegerAttribute(AttrSet attrSet, String attrName, int defaultValue){
-    if (attrSet.getAttr(attrName).isPresent()){
-      return attrSet.getAttr(attrName).get().getIntegerValue();
-    }
-    else{
-      return defaultValue;
-    }
+    Optional<Attr> optionalAttribute = attrSet.getAttr(attrName);
+    return optionalAttribute.map(Attr::getIntegerValue).orElse(defaultValue);
   }
 
   private String getStringAttribute(AttrSet attrSet, String attrName){
-    if (attrSet.getAttr(attrName).isPresent()){
-      return attrSet.getAttr(attrName).get().getStringValue();
-    }
-    else{
-      return null;
-    }
+    Optional<Attr> optionalAttribute = attrSet.getAttr(attrName);
+    return optionalAttribute.map(Attr::getStringValue).orElse(null);
   }
 
   private <E extends java.lang.Enum<E>> E getEnumAttribute(AttrSet attrSet, String attrName, Class<E> enumType, E defaultValue){
-      if (attrSet.getAttr(attrName).isPresent()){
-          String stringValue = attrSet.getAttr(attrName).get().getStringValue();
+    Optional<Attr> optionalAttribute = attrSet.getAttr(attrName);
+    if (optionalAttribute.isPresent()){
+          String stringValue = optionalAttribute.get().getStringValue();
           try{
               return E.valueOf(enumType, stringValue);
           }catch (IllegalArgumentException e){
@@ -694,10 +691,12 @@ public class MaterialFancyButton extends DirectionalLayout {
     HiLog.debug(LABEL, "Typeface = %{public}s", icon.getTypeface().getFontName());
 
     // TODO Change Context to AbilityContext
-    // mIconTypeFace = typeface.getTypeface(getContext().getApplicationContext());
-    AbilityContext context = (AbilityContext) getContext();
-    mIconTypeFace = typeface.getTypeface(context);
-
+    Context callerContext = getContext();
+    AbilityContext abilityContext;
+    if (callerContext instanceof AbilityContext) {
+      abilityContext = (AbilityContext) callerContext;
+      mIconTypeFace = typeface.getTypeface(abilityContext);
+    }
     setIconResource(String.valueOf(icon.getCharacter()));
   }
 
@@ -824,9 +823,12 @@ public class MaterialFancyButton extends DirectionalLayout {
    * Place your text fonts in assets
    */
   public void setCustomTextFont(String fontName) {
-    mTextTypeFace = FontUtil.findFont(getContext(), fontName, null);
-    setupTextView();
-    mTextView.setFont(mTextTypeFace);
+    Context callerContext = getContext();
+    if (callerContext instanceof AbilityContext) {
+      mTextTypeFace = FontUtil.findFont((AbilityContext)callerContext, fontName, null);
+      setupTextView();
+      mTextView.setFont(mTextTypeFace);
+    }
   }
 
   /**
@@ -836,9 +838,12 @@ public class MaterialFancyButton extends DirectionalLayout {
    * Place your icon fonts in assets
    */
   @SuppressWarnings("unused") public void setIconFont(String fontName) {
-    mIconTypeFace = FontUtil.findFont(getContext(), fontName, null);
-    setupFontIconView();
-    mFontIconView.setFont(mIconTypeFace);
+    Context callerContext = getContext();
+    if (callerContext instanceof AbilityContext) {
+      mIconTypeFace = FontUtil.findFont((AbilityContext) callerContext, fontName, null);
+      setupFontIconView();
+      mFontIconView.setFont(mIconTypeFace);
+    }
   }
 
   /**

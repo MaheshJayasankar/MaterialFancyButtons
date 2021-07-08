@@ -1,12 +1,9 @@
 package com.rilixtech.community_material_typeface;
 
-import com.rilixtech.materialfancybutton.ResourceTable;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
-import ohos.aafwk.ability.AbilitySlice;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.app.Context;
 import ohos.global.resource.RawFileDescriptor;
 import ohos.global.resource.RawFileEntry;
 import ohos.global.resource.Resource;
@@ -22,7 +19,7 @@ public class CommunityMaterial implements ITypeface {
     private static final String TTF_FILE = "communitymaterial-font-v1.9.32.ttf";
     private static final String MAPPING_FONT_PREFIX = "cmdi";
 
-    private static Font.Builder typeface = null;
+    private Font typeface = null;
 
     private static HashMap<String, Character> mChars;
 
@@ -108,20 +105,24 @@ public class CommunityMaterial implements ITypeface {
                     .getRawFileEntry("resources/rawfile/" + TTF_FILE);
             try {
                 File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder typeface = new Font.Builder(file);
-                return typeface.build();
+                Font.Builder newTypeface = new Font.Builder(file);
+                Font builtFont = newTypeface.build();
+                typeface = builtFont;
+                return builtFont;
             } catch (Exception e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface.build();
+        return  typeface;
     }
 
     private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
         byte[] buf = null;
-        try{ File file = new File(ctx.getCacheDir(), filename);
-            Resource resource = rawFileEntry.openRawFile();
-            buf = new byte[(int) rawFileEntry.openRawFileDescriptor().getFileSize()];
+        try (Resource resource = rawFileEntry.openRawFile();
+             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor();) {
+            File file = new File(ctx.getCacheDir(), filename);
+
+            buf = new byte[(int) rawFileDescriptor.getFileSize()];
             int bytesRead = resource.read(buf);
             if (bytesRead != buf.length) {
                 throw new IOException("Asset read failed");

@@ -5,16 +5,23 @@ import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
 import ohos.app.Context;
+import ohos.global.resource.RawFileDescriptor;
+import ohos.global.resource.RawFileEntry;
+import ohos.global.resource.Resource;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Dripicons implements ITypeface {
     private static final String TTF_FILE = "dripicons-v2.ttf";
+    // TODO solve prefix issue
     private static final String MAPPING_FONT_PREFIX = "drpi";
 
-    private static Font.Builder typeface = null;
+    private static Font typeface = null;
 
     private static HashMap<String, Character> mChars;
 
@@ -80,15 +87,42 @@ public class Dripicons implements ITypeface {
         return "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL";
     }
 
-    @Override public Font getTypeface(AbilityContext context) {
+    @Override
+    public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
+            RawFileEntry rawFileEntry = context.getResourceManager()
+                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
             try {
-                typeface = new Font.Builder( "fonts/" + TTF_FILE);
+                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
+                Font.Builder newTypeface = new Font.Builder(file);
+                Font builtFont = newTypeface.build();
+                typeface = builtFont;
+                return builtFont;
             } catch (Exception e) {
-                return null;
+                throw new IllegalStateException(e);
             }
         }
-        return typeface.build();
+        return  typeface;
+    }
+
+    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
+        byte[] buf = null;
+        try (Resource resource = rawFileEntry.openRawFile();
+             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor();) {
+            File file = new File(ctx.getCacheDir(), filename);
+
+            buf = new byte[(int) rawFileDescriptor.getFileSize()];
+            int bytesRead = resource.read(buf);
+            if (bytesRead != buf.length) {
+                throw new IOException("Asset read failed");
+            }
+            FileOutputStream output = new FileOutputStream(file);
+            output.write(buf, 0, bytesRead);
+            output.close();
+            return file;
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     private static final char a = 0x0027;
