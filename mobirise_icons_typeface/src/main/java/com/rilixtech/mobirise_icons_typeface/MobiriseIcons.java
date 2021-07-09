@@ -18,7 +18,6 @@ import java.util.LinkedList;
 
 public class MobiriseIcons implements ITypeface {
   private static final String TTF_FILE = "mobirise-icons-v1.0.0.ttf";
-  // TODO Font loading issue? Upper part working fine lower part
   private static final String MAPPING_FONT_PREFIX = "mbri";
 
   private static Font typeface = null;

@@ -39,6 +39,7 @@ dependencies {
     implementation project(path: ':typicons_typeface')
     implementation project(path: ':vaadin_icons_typeface')
     implementation project(path: ':weather_icons_typeface')
+    implementation project(path: ':mobirise_icons_typeface')
     testImplementation 'junit:junit:4.13'
     ohosTestImplementation 'com.huawei.ohos.testkit:runner:1.0.0.100'
 }

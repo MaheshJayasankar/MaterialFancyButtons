@@ -18,7 +18,6 @@ import java.util.LinkedList;
 
 public class Dripicons implements ITypeface {
     private static final String TTF_FILE = "dripicons-v2.ttf";
-    // TODO solve prefix issue
     private static final String MAPPING_FONT_PREFIX = "drpi";
 
     private static Font typeface = null;

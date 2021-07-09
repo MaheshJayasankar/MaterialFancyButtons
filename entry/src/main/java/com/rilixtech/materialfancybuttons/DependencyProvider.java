@@ -12,6 +12,7 @@ import com.rilixtech.ionicons_typeface.Ionicons;
 import com.rilixtech.material_design_iconic_typeface.MaterialDesignIconic;
 import com.rilixtech.meteocons_typeface.Meteocons;
 import com.rilixtech.mfglabs_iconset_typeface.MFGLabsIconset;
+import com.rilixtech.mobirise_icons_typeface.MobiriseIcons;
 import com.rilixtech.octicons_typeface.Octicons;
 import com.rilixtech.open_iconic_typeface.OpenIconic;
 import com.rilixtech.picol_typeface.Picol;
@@ -33,6 +34,7 @@ public class DependencyProvider {
     Ionicons iob;
     MaterialDesignIconic mdib;
     Meteocons mtb;
+    MobiriseIcons mobb;
     MFGLabsIconset mfgb;
     Octicons ocb;
     OpenIconic opb;

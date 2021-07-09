@@ -692,10 +692,8 @@ public class MaterialFancyButton extends DirectionalLayout {
 
     // TODO Change Context to AbilityContext
     Context callerContext = getContext();
-    AbilityContext abilityContext;
     if (callerContext instanceof AbilityContext) {
-      abilityContext = (AbilityContext) callerContext;
-      mIconTypeFace = typeface.getTypeface(abilityContext);
+      mIconTypeFace = typeface.getTypeface((AbilityContext) callerContext);
     }
     setIconResource(String.valueOf(icon.getCharacter()));
   }
