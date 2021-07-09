@@ -2,34 +2,26 @@ package com.rilixtech.font_test_module.slice;
 
 import com.rilixtech.community_material_typeface.CommunityMaterial;
 import com.rilixtech.font_test_module.ResourceTable;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.google_material_typeface.GoogleMaterial;
+import com.rilixtech.ionicons_typeface.Ionicons;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.TextField;
 import ohos.agp.text.Font;
-import ohos.agp.utils.LayoutAlignment;
-import ohos.agp.window.dialog.ToastDialog;
-import ohos.app.AbilityContext;
-import ohos.app.Context;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.*;
+import ohos.hiviewdfx.HiLog;
+import ohos.hiviewdfx.HiLogLabel;
 
 public class FontTestAbilitySlice extends AbilitySlice {
-    private static final String TTF_FILE = "communitymaterial-font-v1.9.32.ttf";
-    private static final String RAW_FILE_PATH = "";
-    private TextField tf1;
 
     @Override
     public void onStart(Intent intent) {
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_ability_font_test);
 
-        tf1 = (TextField) findComponentById(ResourceTable.Id_textField1);
-        Font loadedFont = new CommunityMaterial().getTypeface(this);
+        TextField tf1 = (TextField) findComponentById(ResourceTable.Id_textField1);
+        Font loadedFont = new Ionicons().getTypeface(this);
         tf1.setFont(loadedFont);
-        tf1.setText(String.valueOf(CommunityMaterial.Icon.cmdi_clipboard.getCharacter()));
+        tf1.setText(String.valueOf(Ionicons.Icon.ioni_alert.getCharacter()));
 
     }
 
@@ -43,32 +35,4 @@ public class FontTestAbilitySlice extends AbilitySlice {
         super.onForeground(intent);
     }
 
-    public Font getFontFromName(String name){ RawFileEntry rawFileEntry = getResourceManager()
-                .getRawFileEntry("resources/rawfile/"+name);
-
-        try{ File file = getFileFromRawFile(rawFileEntry,"file_"+name);
-            Font.Builder typeface = new Font.Builder(file);
-            return typeface.build();
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-    public File getFileFromRawFile( RawFileEntry rawFileEntry, String filename) {
-        byte[] buf = null;
-        try{ File file = new File(getCacheDir(), filename);
-            Resource resource = rawFileEntry.openRawFile();
-            buf = new byte[(int) rawFileEntry.openRawFileDescriptor().getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
 }

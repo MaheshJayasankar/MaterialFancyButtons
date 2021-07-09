@@ -18,7 +18,9 @@ ohos {
 
 dependencies {
     implementation project(path: ':community_material_typeface')
+    implementation project(path: ':google_material_typeface')
     implementation project(path: ':materialfancybutton')
+    implementation project(path: ':ionicons_typeface')
     entryImplementation project(':entry')
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
     testImplementation 'junit:junit:4.13'

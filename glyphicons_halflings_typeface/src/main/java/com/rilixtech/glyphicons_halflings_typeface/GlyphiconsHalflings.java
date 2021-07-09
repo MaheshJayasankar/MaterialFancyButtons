@@ -22,7 +22,6 @@ public class GlyphiconsHalflings implements ITypeface {
     private static final String MAPPING_FONT_PREFIX = "glyi";
 
     private static Font typeface = null;
-
     private static HashMap<String, Character> mChars;
 
     @Override public IIcon getIcon(String key) {

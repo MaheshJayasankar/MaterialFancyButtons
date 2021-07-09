@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Ionicons implements ITypeface{
-    private static final String TTF_FILE = "ionicons-font-v2.0.1.1.ttf";
+    private static final String TTF_FILE = "ionicons.ttf";
     // TODO Font loading issue?
     private static final String MAPPING_FONT_PREFIX = "ioni";
 

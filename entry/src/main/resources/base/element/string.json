@@ -150,11 +150,11 @@
     },
     {
       "name": "font_google_material",
-      "value": "google-material-font-v3.0.1.0.original.ttf"
+      "value": "googlematerial.ttf"
     },
     {
       "name": "font_ionicons",
-      "value": "ionicons-font-v2.0.1.1.ttf"
+      "value": "ionicons.ttf"
     },
     {
       "name": "font_material_design_iconic",

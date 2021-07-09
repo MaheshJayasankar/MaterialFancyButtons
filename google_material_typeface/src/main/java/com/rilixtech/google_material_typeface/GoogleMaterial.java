@@ -1,6 +1,5 @@
 package com.rilixtech.google_material_typeface;
 
-
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
@@ -19,7 +18,7 @@ import java.util.LinkedList;
 
 
 public class GoogleMaterial implements ITypeface {
-    private static final String TTF_FILE = "google-material-font-v3.0.1.0.original.ttf";
+    private static final String TTF_FILE = "googlematerial.ttf";
     // TODO fix prefix issue, potential font loader issue
     private static final String MAPPING_FONT_PREFIX = "gmdi";
 
