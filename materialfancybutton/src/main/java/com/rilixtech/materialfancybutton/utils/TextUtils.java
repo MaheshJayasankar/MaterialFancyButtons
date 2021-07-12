@@ -1,6 +1,8 @@
 package com.rilixtech.materialfancybutton.utils;
 
 public class TextUtils {
+    private TextUtils() {}
+
     /**
      * Returns true if the string is null or 0-length
      * @param string - the string to be examined

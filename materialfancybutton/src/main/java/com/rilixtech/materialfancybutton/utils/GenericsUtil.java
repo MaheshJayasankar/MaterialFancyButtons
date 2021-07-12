@@ -28,8 +28,6 @@ public class GenericsUtil {
           "com.rilixtech.weather_icons_typeface.WeatherIcons"
   };
 
-  //TODO Verify workaround with test
-
   /**
    * Find the full class names for each of the ITypeface classes defined in each typeface module
    */

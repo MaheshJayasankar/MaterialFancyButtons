@@ -674,7 +674,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     try {
       //Log.d(TAG, "icon.substring(0, 3) = " + icon.substring(0, 3));
       ITypeface font =
-          CoreIcon.findFont(getContext().getApplicationContext(), icon.substring(0, CoreIcon.FONT_MAPPING_PREFIX));
+          CoreIcon.findFont(icon.substring(0, CoreIcon.FONT_MAPPING_PREFIX));
       //Log.d(TAG, "Font characters = " + font.getCharacters().size());
       icon = icon.replace("-", "_");
       setIcon(font.getIcon(icon));

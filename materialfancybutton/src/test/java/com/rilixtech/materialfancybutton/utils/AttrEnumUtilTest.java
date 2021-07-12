@@ -1,10 +1,8 @@
 package com.rilixtech.materialfancybutton.utils;
 
-import ohos.agp.utils.TextAlignment;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class AttrEnumUtilTest {
 
