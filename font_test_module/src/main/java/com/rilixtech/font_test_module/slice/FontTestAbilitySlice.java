@@ -1,15 +1,11 @@
 package com.rilixtech.font_test_module.slice;
 
-import com.rilixtech.community_material_typeface.CommunityMaterial;
 import com.rilixtech.font_test_module.ResourceTable;
-import com.rilixtech.google_material_typeface.GoogleMaterial;
 import com.rilixtech.ionicons_typeface.Ionicons;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.TextField;
 import ohos.agp.text.Font;
-import ohos.hiviewdfx.HiLog;
-import ohos.hiviewdfx.HiLogLabel;
 
 public class FontTestAbilitySlice extends AbilitySlice {
 

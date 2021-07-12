@@ -4,7 +4,6 @@ import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.app.Context;
 import ohos.global.resource.RawFileDescriptor;
 import ohos.global.resource.RawFileEntry;
 import ohos.global.resource.Resource;
@@ -18,7 +17,6 @@ import java.util.LinkedList;
 
 public class Ionicons implements ITypeface{
     private static final String TTF_FILE = "ionicons.ttf";
-    // TODO Font loading issue?
     private static final String MAPPING_FONT_PREFIX = "ioni";
 
     private static Font typeface = null;
@@ -30,7 +28,7 @@ public class Ionicons implements ITypeface{
 
     @Override public HashMap<String, Character> getCharacters() {
         if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<String, Character>();
+            HashMap<String, Character> aChars = new HashMap<>();
             for (Icon v : Icon.values()) {
                 aChars.put(v.name(), v.character);
             }
@@ -56,7 +54,7 @@ public class Ionicons implements ITypeface{
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<String>();
+        Collection<String> icons = new LinkedList<>();
         for (Icon value : Icon.values()) {
             icons.add(value.name());
         }
@@ -102,9 +100,9 @@ public class Ionicons implements ITypeface{
     }
 
     private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf = null;
+        byte[] buf;
         try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor();) {
+             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
             File file = new File(ctx.getCacheDir(), filename);
 
             buf = new byte[(int) rawFileDescriptor.getFileSize()];

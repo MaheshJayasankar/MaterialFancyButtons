@@ -3,7 +3,6 @@ package com.rilixtech.materialfancybutton.typeface;
 
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.app.Context;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,9 +12,9 @@ import java.util.HashMap;
  */
 public interface ITypeface {
 
-    public IIcon getIcon(String key);
+    IIcon getIcon(String key);
 
-    public HashMap<String, Character> getCharacters();
+    HashMap<String, Character> getCharacters();
 
     /**
      * The Mapping Prefix to identify this font
@@ -23,26 +22,26 @@ public interface ITypeface {
      *
      * @return mappingPrefix (length = {@code CoreIcon.FONT_MAPPING_PREFIX})
      */
-    public String getMappingPrefix();
+    String getMappingPrefix();
 
-    public String getFontName();
+    String getFontName();
 
-    public String getVersion();
+    String getVersion();
 
-    public int getIconCount();
+    int getIconCount();
 
-    public Collection<String> getIcons();
+    Collection<String> getIcons();
 
-    public String getAuthor();
+    String getAuthor();
 
-    public String getUrl();
+    String getUrl();
 
-    public String getDescription();
+    String getDescription();
 
-    public String getLicense();
+    String getLicense();
 
-    public String getLicenseUrl();
+    String getLicenseUrl();
 
-    public Font getTypeface(AbilityContext ctx);
+    Font getTypeface(AbilityContext ctx);
 
 }

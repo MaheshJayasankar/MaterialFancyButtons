@@ -1,15 +1,20 @@
 package com.rilixtech.materialfancybutton.utils;
 
 import ohos.agp.utils.TextAlignment;
-
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Utility class encapsulating Enum classes used for Attributes of the MaterialFancyButton Components.
+ */
 public class AttrEnumUtil {
 
     private AttrEnumUtil() {}
 
-    public enum MfbIconPosition{
+    /**
+     * Encapsulates the different positions that the Icon of a MaterialFancyButton.
+     */
+    public enum MfbIconPosition {
         left(1),
         right(2),
         top(3),
@@ -18,22 +23,26 @@ public class AttrEnumUtil {
         private static final Map<Integer, MfbIconPosition> BY_VALUE = new HashMap<>();
 
         static {
-            for (MfbIconPosition e: values()) {
+            for (MfbIconPosition e : values()) {
                 BY_VALUE.put(e.value, e);
             }
         }
 
         public final int value;
 
-        MfbIconPosition(int value){
+        MfbIconPosition(int value) {
             this.value = value;
         }
 
-        public static MfbIconPosition labelOfValue(int value){
+        public static MfbIconPosition labelOfValue(int value) {
             return BY_VALUE.get(value);
         }
     }
-    public enum MfbTextGravity{
+
+    /**
+     * Encapsulates the alignment values that the Text component of the MaterialFancyButton can take.
+     */
+    public enum MfbTextGravity {
         top(TextAlignment.TOP),
         bottom(TextAlignment.BOTTOM),
         left(TextAlignment.LEFT),
@@ -46,7 +55,7 @@ public class AttrEnumUtil {
 
         private int value;
 
-        MfbTextGravity(int value){
+        MfbTextGravity(int value) {
             this.setValue(value);
         }
 

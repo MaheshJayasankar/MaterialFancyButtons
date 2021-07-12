@@ -1,18 +1,14 @@
 package com.rilixtech.materialfancybuttons.slice;
 
 import com.rilixtech.materialfancybuttons.ListItemProvider;
-import com.rilixtech.materialfancybuttons.MainAbility;
 import com.rilixtech.materialfancybuttons.ResourceTable;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.ListContainer;
 import ohos.agp.components.Text;
-import ohos.hiviewdfx.HiLog;
-import ohos.hiviewdfx.HiLogLabel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MainAbilitySlice extends AbilitySlice {
 

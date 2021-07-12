@@ -13,102 +13,125 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Utility class for Font related functionality.
+ */
 public class FontUtil {
+    private FontUtil() {}
 
-  private FontUtil() {}
+    private static final Map<String, Font> cachedFontMap = new HashMap<>();
 
-  private static final Map<String, Font> cachedFontMap = new HashMap<>();
-
-  public static int pxToFp(final Context context, final float px) {
-    // TODO: Mapping not confirmed. Need to test
-    // return Math.round(px / context.getResources().getDisplayMetrics().scaledDensity);
-    return Math.round(px / AttrHelper.getFontRatio(context));
-  }
-
-  public static int fpToPx(final Context context, final float sp) {
-    // TODO: Mapping not confirmed. Need to test
-    // return Math.round(sp * context.getResources().getDisplayMetrics().scaledDensity);
-    return Math.round(sp * AttrHelper.getFontRatio(context));
-  }
-
-  // TODO Workaround to AssetManager. Put fonts in materialfancybutton/resources/rawfile. Test if working
-  public static Font findFont(AbilityContext context, String fontName, String defaultFontName) {
-
-    Font typeface = null;
-    if (!TextUtils.isEmpty(fontName)) {
-      // Try to load the font from the rawfile directory
-      typeface = loadFontIfExists(context, fontName);
+    /**
+     * Converts a pixel value to the corresponding fp equivalent.
+     *
+     * @param context The context in which the conversion is required.
+     * @param px The pixel value.
+     * @return The converted value in fp.
+     */
+    public static int pxToFp(final Context context, final float px) {
+        // TODO: Mapping not confirmed. Need to test
+        return Math.round(px / AttrHelper.getFontRatio(context));
     }
-    // If Font couldn't be loaded or wasn't specified, fallback to using the default font specified
-    if (typeface == null) {
-      if (!TextUtils.isEmpty(defaultFontName)) {
-        // Try to load the default font form the rawfile directory
-        typeface = loadFontIfExists(context, defaultFontName);
-        if (typeface == null) {
-          // If both font and default font are not able to be loaded, load the system Default font
-          typeface = Font.DEFAULT;
-          updateCacheIfNotEmpty(defaultFontName, typeface);
+
+    /**
+     * Converts a fp value to the corresponding px equivalent.
+     *
+     * @param context The context in which the conversion is required.
+     * @param fp The fp value.
+     * @return The converted value in px.
+     */
+    public static int fpToPx(final Context context, final float fp) {
+        // TODO: Mapping not confirmed. Need to test
+        return Math.round(fp * AttrHelper.getFontRatio(context));
+    }
+
+    /**
+     * Tries to load the specified font name from the rawfile directory of the current HAP.
+     * In the case the font name wasn't found, the default font is loaded instead.
+     *
+     * @param context The {@link AbilityContext} of the Ability from which the font is to be loaded.
+     * @param fontName The name of the font file to be loaded. Can be {@code null}.
+     * @param defaultFontName The name of the default font file to be used in case the font couldn't be loaded.
+     *                         Can be {@code null}.
+     * @return {@link Font} object of the loaded font, or loaded default font if the font coulnd't be loaded.
+     *         Returns {@code null} in case both the font and default font couoldn't be loaded.
+     */
+    public static Font findFont(AbilityContext context, String fontName, String defaultFontName) {
+
+        Font typeface = null;
+        if (!TextUtils.isEmpty(fontName)) {
+            // Try to load the font from the rawfile directory
+            typeface = loadFontIfExists(context, fontName);
         }
-        updateCacheIfNotEmpty(fontName, typeface);
-      } else {
-        // If Font couldn't be loaded, and default font wasn't specified, load the system Default font
-        typeface = Font.DEFAULT;
-        updateCacheIfNotEmpty(fontName, typeface);
-      }
+        // If Font couldn't be loaded or wasn't specified, fallback to using the default font specified
+        if (typeface == null) {
+            if (!TextUtils.isEmpty(defaultFontName)) {
+                // Try to load the default font form the rawfile directory
+                typeface = loadFontIfExists(context, defaultFontName);
+                if (typeface == null) {
+                    // If both font and default font are not able to be loaded, load the system Default font
+                    typeface = Font.DEFAULT;
+                    updateCacheIfNotEmpty(defaultFontName, typeface);
+                }
+            } else {
+                // If Font couldn't be loaded, and default font wasn't specified, load the system Default font
+                typeface = Font.DEFAULT;
+            }
+            updateCacheIfNotEmpty(fontName, typeface);
+        }
+        return  typeface;
     }
-    return  typeface;
-  }
 
-  private static void updateCacheIfNotEmpty(String key, Font font) {
-    if (!TextUtils.isEmpty(key)) {
-      cachedFontMap.put(key, font);
+    private static void updateCacheIfNotEmpty(String key, Font font) {
+        if (!TextUtils.isEmpty(key)) {
+            cachedFontMap.put(key, font);
+        }
     }
-  }
 
-  private static Font loadFontIfExists(AbilityContext context, String fontName) {
-    Font typeface;
-    if (!cachedFontMap.containsKey(fontName)) {
-      try {
-        typeface = getFontFromRawFile(context, fontName);
-        cachedFontMap.put(fontName, typeface);
-      } catch (IllegalStateException e) {
-        // File read failed. Return null
-        typeface = null;
-      }
+    private static Font loadFontIfExists(AbilityContext context, String fontName) {
+        Font typeface;
+        if (!cachedFontMap.containsKey(fontName)) {
+            try {
+                typeface = getFontFromRawFile(context, fontName);
+                cachedFontMap.put(fontName, typeface);
+            } catch (IllegalStateException e) {
+                // File read failed. Return null
+                typeface = null;
+            }
+        } else {
+            typeface = cachedFontMap.get(fontName);
+        }
+        return typeface;
     }
-    else {
-      typeface = cachedFontMap.get(fontName);
+
+    private static Font getFontFromRawFile(AbilityContext context, String fontName) throws IllegalStateException  {
+        Font typeface;
+        RawFileEntry rawFileEntry = context.getResourceManager()
+                .getRawFileEntry("resources/rawfile/" + fontName);
+        File file = getFileFromRawFile(context, rawFileEntry, "file_" + fontName);
+        Font.Builder newTypeface = new Font.Builder(file);
+        typeface = newTypeface.build();
+        return typeface;
     }
-    return typeface;
-  }
 
-  private static Font getFontFromRawFile(AbilityContext context, String fontName) throws IllegalStateException  {
-    Font typeface;
-    RawFileEntry rawFileEntry = context.getResourceManager()
-            .getRawFileEntry("resources/rawfile/" + fontName);
-    File file = getFileFromRawFile(context, rawFileEntry, "file_" + fontName);
-    Font.Builder newTypeface = new Font.Builder(file);
-    typeface = newTypeface.build();
-    return typeface;
-  }
+    private static File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename)
+            throws IllegalStateException {
+        byte[] buf;
+        try (Resource resource = rawFileEntry.openRawFile();
+             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
+            File file = new File(ctx.getCacheDir(), filename);
 
-  private static File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) throws IllegalStateException {
-    byte[] buf = null;
-    try (Resource resource = rawFileEntry.openRawFile();
-         RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor();) {
-      File file = new File(ctx.getCacheDir(), filename);
-
-      buf = new byte[(int) rawFileDescriptor.getFileSize()];
-      int bytesRead = resource.read(buf);
-      if (bytesRead != buf.length) {
-        throw new IOException("Asset read failed");
-      }
-      FileOutputStream output = new FileOutputStream(file);
-      output.write(buf, 0, bytesRead);
-      output.close();
-      return file;
-    } catch (IOException ex) {
-      throw new IllegalStateException(ex);
+            buf = new byte[(int) rawFileDescriptor.getFileSize()];
+            int bytesRead = resource.read(buf);
+            if (bytesRead != buf.length) {
+                throw new IOException("Asset read failed");
+            }
+            FileOutputStream output = new FileOutputStream(file);
+            output.write(buf, 0, bytesRead);
+            output.close();
+            return file;
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
-  }
 }

@@ -1,22 +1,11 @@
 package com.rilixtech.community_material_typeface;
 
-import com.rilixtech.community_material_typeface.CommunityMaterial.*;
 import ohos.agp.text.Font;
-import ohos.app.Context;
-import ohos.global.resource.Resource;
-import ohos.global.resource.RawFileDescriptor;
 import org.junit.Test;
-import org.junit.runner.manipulation.Ordering;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.util.Optional;
 
-import static java.security.AccessController.getContext;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 
 public class ExampleTest {
