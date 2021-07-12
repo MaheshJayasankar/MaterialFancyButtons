@@ -28,7 +28,7 @@ public final class CoreIcon {
    */
   public static void init(Context ctx) {
     if (!INIT_DONE) {
-      String[] fonts = GenericsUtil.getFields(ctx);
+      String[] fonts = GenericsUtil.getFields();
       for (String fontsClassPath : fonts) {
         try {
           ITypeface typeface = (ITypeface) Class.forName(fontsClassPath).newInstance();

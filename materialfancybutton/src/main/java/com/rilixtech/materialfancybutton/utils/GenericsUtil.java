@@ -1,11 +1,10 @@
 package com.rilixtech.materialfancybutton.utils;
 
-
-import ohos.app.Context;
-
 public class GenericsUtil {
 
-  public static String[] supportedFontClassNames = new String[]{
+  private GenericsUtil() {}
+
+  private static final String[] SUPPORTED_FONT_CLASSES = new String[]{
           "com.rilixtech.community_material_typeface.CommunityMaterial",
           "com.rilixtech.devicon_typeface.Devicon",
           "com.rilixtech.dripicons_typeface.Dripicons",
@@ -34,7 +33,7 @@ public class GenericsUtil {
   /**
    * Find the full class names for each of the ITypeface classes defined in each typeface module
    */
-  public static String[] getFields(Context ctx) {
-    return supportedFontClassNames;
+  public static String[] getFields() {
+    return SUPPORTED_FONT_CLASSES;
   }
 }

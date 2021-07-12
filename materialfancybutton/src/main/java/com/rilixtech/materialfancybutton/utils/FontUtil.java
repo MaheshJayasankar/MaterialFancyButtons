@@ -7,28 +7,25 @@ import ohos.app.Context;
 import ohos.global.resource.RawFileDescriptor;
 import ohos.global.resource.RawFileEntry;
 import ohos.global.resource.Resource;
-import ohos.hiviewdfx.HiLog;
-import ohos.hiviewdfx.HiLogLabel;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FontUtil {
 
-  private static final String TAG = FontUtil.class.getSimpleName();
-  private static final int DOMAIN = 0xD000100;
-  private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, DOMAIN, TAG);
+  private FontUtil() {}
 
-  private static Map<String, Font> cachedFontMap = new HashMap<>();
+  private static final Map<String, Font> cachedFontMap = new HashMap<>();
 
-  public static int pxToSp(final Context context, final float px) {
+  public static int pxToFp(final Context context, final float px) {
     // TODO: Mapping not confirmed. Need to test
     // return Math.round(px / context.getResources().getDisplayMetrics().scaledDensity);
     return Math.round(px / AttrHelper.getFontRatio(context));
   }
 
-  public static int spToPx(final Context context, final float sp) {
+  public static int fpToPx(final Context context, final float sp) {
     // TODO: Mapping not confirmed. Need to test
     // return Math.round(sp * context.getResources().getDisplayMetrics().scaledDensity);
     return Math.round(sp * AttrHelper.getFontRatio(context));

@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AttrEnumUtil {
+
+    private AttrEnumUtil() {}
+
     public enum MfbIconPosition{
         left(1),
         right(2),
@@ -41,9 +44,17 @@ public class AttrEnumUtil {
         end(TextAlignment.END),
         center(TextAlignment.CENTER);
 
-        public int value;
+        private int value;
 
         MfbTextGravity(int value){
+            this.setValue(value);
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        private void setValue(int value) {
             this.value = value;
         }
     }

@@ -5,9 +5,7 @@ import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import com.rilixtech.materialfancybutton.utils.AttrEnumUtil;
 import com.rilixtech.materialfancybutton.utils.FontUtil;
 import com.rilixtech.materialfancybutton.utils.TextUtils;
-import ohos.aafwk.ability.Ability;
 import ohos.agp.colors.RgbColor;
-import ohos.agp.colors.RgbPalette;
 import ohos.agp.components.*;
 import ohos.agp.components.element.Element;
 import ohos.agp.components.element.ShapeElement;
@@ -42,14 +40,14 @@ public class MaterialFancyButton extends DirectionalLayout {
   private int mDefaultTextColor = Color.WHITE.getValue();
   private int mDefaultIconColor = Color.WHITE.getValue();
   //private int mTextPosition = 1;
-  private int mTextSize = FontUtil.spToPx(getContext(), 40);
+  private int mTextSize = FontUtil.fpToPx(getContext(), 40);
   private int mTextGravity; // Gravity.CENTER
   private String mText = null;
   private int mTextStyle;
 
   // # Icon Attributes
   private Element mIconResource = null;
-  private int mFontIconSize = FontUtil.spToPx(getContext(), 40);
+  private int mFontIconSize = FontUtil.fpToPx(getContext(), 40);
   private String mFontIcon = null;
   private int mIconPosition = 1;
   private String mIcon = null;
@@ -154,7 +152,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     mTextView.setText(mText);
     mTextView.setTextAlignment(mTextGravity);
     mTextView.setTextColor(new Color(mEnabled ? mDefaultTextColor : mDisabledTextColor));
-    mTextView.setTextSize(FontUtil.pxToSp(getContext(), mTextSize));
+    mTextView.setTextSize(FontUtil.pxToFp(getContext(), mTextSize));
     mTextView.setLayoutConfig(new LayoutConfig(LayoutConfig.MATCH_CONTENT, LayoutConfig.MATCH_CONTENT));
     // TODO How to set font style?
     mTextView.setFont(mTextView.getFont());
@@ -188,7 +186,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     mFontIconView.setLayoutConfig(params);
-    mFontIconView.setTextSize(FontUtil.pxToSp(getContext(), mFontIconSize));
+    mFontIconView.setTextSize(FontUtil.pxToFp(getContext(), mFontIconSize));
     mFontIconView.setText(mFontIcon);
     mFontIconView.setFont(mIconTypeFace);
     HiLog.debug(LABEL, "setupFontIconView mIconTypeFace  =  %{public}s", mIconTypeFace.toString());
@@ -272,7 +270,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     // ENUM ATTRIBUTES
     mTextGravity = getEnumAttribute(
             attrSet, "mfb_textGravity", AttrEnumUtil.MfbTextGravity.class,
-            AttrEnumUtil.MfbTextGravity.center).value;
+            AttrEnumUtil.MfbTextGravity.center).getValue();
     mIconPosition = getEnumAttribute(
             attrSet, "mfb_iconPosition", AttrEnumUtil.MfbIconPosition.class,
             AttrEnumUtil.MfbIconPosition.labelOfValue(mIconPosition)).value;
@@ -609,7 +607,7 @@ public class MaterialFancyButton extends DirectionalLayout {
    * @param textSize : Text Size
    */
   public void setTextSize(int textSize) {
-    mTextSize = FontUtil.spToPx(getContext(), textSize);
+    mTextSize = FontUtil.fpToPx(getContext(), textSize);
     if (mTextView != null) mTextView.setTextSize(textSize);
   }
 
@@ -704,7 +702,7 @@ public class MaterialFancyButton extends DirectionalLayout {
    * @param iconSize : Icon Size
    */
   public void setFontIconSize(int iconSize) {
-    mFontIconSize = FontUtil.spToPx(getContext(), iconSize);
+    mFontIconSize = FontUtil.fpToPx(getContext(), iconSize);
     if (mFontIconView != null) mFontIconView.setTextSize(iconSize);
   }
 
