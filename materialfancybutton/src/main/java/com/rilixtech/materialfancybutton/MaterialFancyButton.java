@@ -731,7 +731,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set a font icon to the button (eg FFontAwesome or Entypo...)
+     * Set a font icon to the button (eg FontAwesome or Entypo...)
      *
      * @param icon : Icon value eg : \uf082
      */
@@ -752,11 +752,12 @@ public class MaterialFancyButton extends DirectionalLayout {
      *             the {@link IIcon} should match with the prefix of the icon key.
      */
     public void setIcon(String icon) {
+        String modifiedIcon;
         try {
             ITypeface font =
                     CoreIcon.findFont(icon.substring(0, CoreIcon.FONT_MAPPING_PREFIX));
-            icon = icon.replace("-", "_");
-            setIcon(font.getIcon(icon));
+            modifiedIcon = icon.replace("-", "_");
+            setIcon(font.getIcon(modifiedIcon));
         } catch (Exception ex) {
             HiLog.error(LABEL, "Wrong icon name: %{public}s", icon);
         }
