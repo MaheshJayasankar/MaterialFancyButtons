@@ -84,11 +84,20 @@ public class MaterialFancyButton extends DirectionalLayout {
     private Font mIconTypeFace = null;
 
     /**
-     * Tags to identify icon position.
+     * Icon positioned to the left of the button.
      */
     public static final int POSITION_LEFT = 1;
+    /**
+     * Icon positioned to the right of the button.
+     */
     public static final int POSITION_RIGHT = 2;
+    /**
+     * Icon positioned to the top of the button.
+     */
     public static final int POSITION_TOP = 3;
+    /**
+     * Icon positioned to the bottom of the button.
+     */
     public static final int POSITION_BOTTOM = 4;
 
     private Image mIconView;
@@ -97,13 +106,21 @@ public class MaterialFancyButton extends DirectionalLayout {
 
     private boolean mGhost = false; // Default is a solid button !
 
+    /**
+     * Used to define a MaterialFancyButton Component.
+     * This constructor uses the default attributes defined for the MaterialFancyButton.
+     * To change the attributes after instantiation, refer to the setter methods of this class.
+     *
+     * @param context The context in which this Component is being instantiated.
+     */
     public MaterialFancyButton(Context context) {
         super(context);
         initializeMaterialFancyButton();
     }
 
     /**
-     * The default constructor for this class.
+     * Used to define a MaterialFancyButton Component using the AttrSet provided. This constructor is called
+     * when defining the button using XML code.
      *
      * @param context The context in which this Component is being instantiated.
      * @param attrs The set of Attributes, both standard attributes and custom attributes, used for defining the
@@ -263,9 +280,9 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Initialize Attributes arrays.
+     * Initialize Attributes from the AttrSet.
      *
-     * @param attrSet : Attributes array
+     * @param attrSet : Attribute set containing the style attributes of the button.
      */
     private void initAttributes(AttrSet attrSet) {
         // COLOR ATTRIBUTES
@@ -275,7 +292,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         mDisabledTextColor = getColorAttribute(attrSet, "mfb_disabledTextColor", mDisabledTextColor);
         mDisabledBorderColor = getColorAttribute(attrSet, "mfb_disabledBorderColor", mDisabledBorderColor);
         mDefaultTextColor = getColorAttribute(attrSet, "mfb_textColor", mDefaultTextColor);
-        // if default color is set then the icon's color is the same (the default for icon's color)
+        // Text color is the default color for the icon
         mDefaultIconColor = getColorAttribute(attrSet, "mfb_iconColor", mDefaultTextColor);
         mBorderColor = getColorAttribute(attrSet, "mfb_borderColor", mBorderColor);
 
@@ -333,7 +350,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         mIcon = getStringAttribute(attrSet, "mfb_icon");
         HiLog.debug(LABEL, "mIcon = %{public}s", mIcon);
 
-        // DRAWABLE ATTRIBUTE
+        // ELEMENT ATTRIBUTE
         Optional<Attr> iconResourceAttr = attrSet.getAttr("mfb_iconResource");
         iconResourceAttr.ifPresent(attr -> mIconResource = attr.getElement());
 
@@ -522,7 +539,7 @@ public class MaterialFancyButton extends DirectionalLayout {
                 && getPaddingTop() == 0
                 && getPaddingBottom() == 0) {
 
-            //fix for all version of androids and screens
+            // fix for all version of devices and screens
             setPadding(20, 0, 20, 0);
         }
     }
@@ -592,8 +609,9 @@ public class MaterialFancyButton extends DirectionalLayout {
         if (mTextView == null) {
             setupTextView();
         }
-        // TODO: How to set font style?
+        // TODO: How to set font style? Update: Maybe use setFontVariations?
         mTextView.setFont(mTextView.getFont());
+
     }
 
     /**
@@ -611,17 +629,18 @@ public class MaterialFancyButton extends DirectionalLayout {
     /**
      * Set Background color of the button.
      *
-     * @param color : use Color.parse('#code')
+     * @param color : use Color.getIntColor('#code')
      */
     public void setBackgroundColor(int color) {
         mDefaultBackgroundColor = color;
         setupView();
     }
 
+
     /**
      * Set Focus color of the button.
      *
-     * @param color : use Color.parse('#code')
+     * @param color : use Color.getIntColor('#code')
      */
     public void setFocusBackgroundColor(int color) {
         mFocusBackgroundColor = color;
@@ -631,7 +650,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     /**
      * Set Disabled state color of the button.
      *
-     * @param color : use Color.parse('#code')
+     * @param color : use Color.getIntColor('#code')
      */
     @SuppressWarnings("unused")
     public void setDisableBackgroundColor(int color) {
@@ -642,7 +661,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     /**
      * Set Disabled state color of the button text.
      *
-     * @param color : use Color.parse('#code')
+     * @param color : use Color.getIntColor('#code')
      */
     @SuppressWarnings("unused")
     public void setDisableTextColor(int color) {
@@ -656,7 +675,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     /**
      * Set Disabled state color of the button border.
      *
-     * @param color : use Color.parse('#code')
+     * @param color : use Color.getIntColor('#code')
      */
     @SuppressWarnings("unused")
     public void setDisableBorderColor(int color) {
@@ -667,7 +686,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set the size of Text in sp.
+     * Set the size of Text in fp.
      *
      * @param textSize : Text Size
      */
@@ -714,9 +733,9 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set a drawable to the button.
+     * Set a drawable-icon to the button.
      *
-     * @param drawable : Drawable resource
+     * @param drawable : Element resource to be used as the icon
      */
     @SuppressWarnings("unused")
     public void setIconResource(Element drawable) {
@@ -731,7 +750,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set a font icon to the button (eg FontAwesome or Entypo...)
+     * Set a font-icon to the button (eg FontAwesome or Entypo...)
      *
      * @param icon : Icon value eg : \uf082
      */
@@ -746,7 +765,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Sets the icon of the button by finding an icon with the given key.
+     * Sets the font-icon of the button by finding an font-icon with the given key.
      *
      * @param icon The key of the button icon to be set. Must correspond to a {@link IIcon} field, and the prefix of
      *             the {@link IIcon} should match with the prefix of the icon key.
@@ -764,7 +783,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Sets the icon of the button to the given {@link IIcon}.
+     * Sets the font-icon of the button to the given {@link IIcon}.
      *
      * @param icon The {@link IIcon} to be used as the icon of the button.
      */
@@ -780,7 +799,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set Icon size of the button (for only font icons) in fp.
+     * Set Icon size of the button (for only font-icons) in fp.
      *
      * @param iconSize : Icon Size
      */
@@ -792,11 +811,16 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set Icon Position
-     * Use the global variables (FancyButton.POSITION_LEFT, FancyButton.POSITION_RIGHT,
-     * FancyButton.POSITION_TOP, FancyButton.POSITION_BOTTOM)
+     * Set Icon Position.
+     * Use the global variables:
+     * <ul>
+     *     <li>MaterialFancyButton.POSITION_LEFT</li>
+     *     <li>MaterialFancyButton.POSITION_RIGHT</li>
+     *     <li>MaterialFancyButton.POSITION_TOP</li>
+     *     <li>MaterialFancyButton.POSITION_BOTTOM</li>
+     * </ul>
      *
-     * @param position : Position
+     * @param position : Icon Position.
      */
     public void setIconPosition(int position) {
         if (position > 0 && position < 5) {
@@ -996,7 +1020,13 @@ public class MaterialFancyButton extends DirectionalLayout {
         return mIconView;
     }
 
-    public int getmTextStyle() {
+    /**
+     * Get the text style.
+     *
+     * @return Text Style
+     */
+    @SuppressWarnings("unused")
+    public int getTextStyle() {
         return mTextStyle;
     }
 }

@@ -14,12 +14,4 @@ public class ExampleOhosTest {
         final String actualBundleName = AbilityDelegatorRegistry.getArguments().getTestBundleName();
         assertEquals("com.rilixtech.materialfancybuttons", actualBundleName);
     }
-    @Test
-    public void testColorStuff(){
-        Color utilColor = Color.BLACK;
-        RgbColor util2Rgb = RgbColor.fromArgbInt(utilColor.getValue());
-        RgbColor rgbColor = RgbPalette.BLACK;
-
-        assertEquals(rgbColor.asArgbInt(), util2Rgb.asArgbInt());
-    }
 }
