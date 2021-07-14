@@ -545,6 +545,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Used by the Attribute setter functions to refresh the button Components after changes.
+     */
+    private void setupView() {
+        setupFontIconView();
+        setupTextView();
+        setupBackground();
+    }
+
+    /**
      * Set Text of the button.
      *
      * @param text : Text
@@ -575,6 +584,16 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Return the Text of the button as it is displayed on the UI.
+     *
+     * @return {@code String} containing the button Text, or an empty {@code String} if it doesn't contain any text.
+     */
+    @SuppressWarnings("unused")
+    public CharSequence getText() {
+        return mTextView != null ? mTextView.getText() : "";
+    }
+
+    /**
      * Set the capitalization of text.
      *
      * @param textAllCaps : is text to be capitalized
@@ -583,6 +602,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     public void setTextAllCaps(boolean textAllCaps) {
         mTextAllCaps = textAllCaps;
         setText(mText);
+    }
+
+    /**
+     * Get the capitalization of text.
+     *
+     * @return If text is capitalized or not
+     */
+    public boolean isTextAllCaps() {
+        return mTextAllCaps;
     }
 
     /**
@@ -597,6 +625,15 @@ public class MaterialFancyButton extends DirectionalLayout {
             setupTextView();
         }
         mTextView.setTextColor(new Color(color));
+    }
+
+    /**
+     * Get the color of text.
+     *
+     * @return The integer value of the color.
+     */
+    public int getTextColor() {
+        return mDefaultTextColor;
     }
 
     /**
@@ -627,6 +664,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Get the Color of the font-icon.
+     *
+     * @return The integer value of the color.
+     */
+    public int getIconColor() {
+        return mFontIconView.getTextColor().getValue();
+    }
+
+    /**
      * Set Background color of the button.
      *
      * @param color : use Color.getIntColor('#code')
@@ -636,6 +682,14 @@ public class MaterialFancyButton extends DirectionalLayout {
         setupView();
     }
 
+    /**
+     * Get the Background color of the button.
+     *
+     * @return The integer value of the color.
+     */
+    public int getBackgroundColor() {
+        return mDefaultBackgroundColor;
+    }
 
     /**
      * Set Focus color of the button.
@@ -648,6 +702,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Get the Focus color of the button.
+     *
+     * @return The integer value of the color.
+     */
+    public int getFocusBackgroundColor() {
+        return mFocusBackgroundColor;
+    }
+
+    /**
      * Set Disabled state color of the button.
      *
      * @param color : use Color.getIntColor('#code')
@@ -656,6 +719,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     public void setDisableBackgroundColor(int color) {
         mDisabledBackgroundColor = color;
         setupView();
+    }
+
+    /**
+     * Get the Disabled state color of the button.
+     *
+     * @return The integer value of the color.
+     */
+    public int getDisableBackgroundColor() {
+        return mDisabledBackgroundColor;
     }
 
     /**
@@ -673,6 +745,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Get the Disabled state color of the button text.
+     *
+     * @return The integer value of the color.
+     */
+    public int getDisableTextColor() {
+        return mDisabledTextColor;
+    }
+
+    /**
      * Set Disabled state color of the button border.
      *
      * @param color : use Color.getIntColor('#code')
@@ -684,6 +765,16 @@ public class MaterialFancyButton extends DirectionalLayout {
             setupBackground();
         }
     }
+
+    /**
+     * Get the Disabled state color of the button border.
+     *
+     * @return The integer value of the color.
+     */
+    public int getDisableBorderColor() {
+        return mDisabledBorderColor;
+    }
+
 
     /**
      * Set the size of Text in fp.
@@ -698,9 +789,18 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set the gravity of Text.
+     * Get the the size of Text in fp.
      *
-     * @param gravity : Text Gravity
+     * @return Text Size
+     */
+    public int getTextSize() {
+        return mTextSize;
+    }
+
+    /**
+     * Set the alignment of the Text.
+     *
+     * @param gravity : Text Alignment
      */
     @SuppressWarnings("unused")
     public void setTextGravity(int gravity) {
@@ -711,18 +811,35 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Get the alignment of the Text.
+     *
+     * @return {@link TextAlignment} integer value
+     */
+    public int getTextGravity() {
+        return mTextView.getTextAlignment();
+    }
+
+    /**
      * Set Padding for mIconView and mFontIconSize.
      *
-     * @param paddingLeft : Padding Left
-     * @param paddingTop : Padding Top
-     * @param paddingRight : Padding Right
-     * @param paddingBottom : Padding Bottom
+     * @param paddingLeft : Padding Left. If given as {@code null}, the value is unchanged.
+     * @param paddingTop : Padding Top. If given as {@code null}, the value is unchanged.
+     * @param paddingRight : Padding Right. If given as {@code null}, the value is unchanged.
+     * @param paddingBottom : Padding Bottom. If given as {@code null}, the value is unchanged.
      */
-    public void setIconPadding(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom) {
-        this.mIconPaddingLeft = paddingLeft;
-        this.mIconPaddingTop = paddingTop;
-        this.mIconPaddingRight = paddingRight;
-        this.mIconPaddingBottom = paddingBottom;
+    public void setIconPadding(Integer paddingLeft, Integer paddingTop, Integer paddingRight, Integer paddingBottom) {
+        if (paddingLeft != null) {
+            this.mIconPaddingLeft = paddingLeft;
+        }
+        if (paddingTop != null) {
+            this.mIconPaddingTop = paddingTop;
+        }
+        if (paddingRight != null) {
+            this.mIconPaddingRight = paddingRight;
+        }
+        if (paddingBottom != null) {
+            this.mIconPaddingBottom = paddingBottom;
+        }
         if (mIconView != null) {
             mIconView.setPadding(this.mIconPaddingLeft, this.mIconPaddingTop, this.mIconPaddingRight,
                     this.mIconPaddingBottom);
@@ -730,6 +847,42 @@ public class MaterialFancyButton extends DirectionalLayout {
         if (mFontIconView != null) {
             mFontIconView.setPadding(mIconPaddingLeft, mIconPaddingTop, mIconPaddingRight, mIconPaddingBottom);
         }
+    }
+
+    /**
+     * Gets the left padding of the icon.
+     *
+     * @return The left padding of the icon.
+     */
+    public int getIconPaddingLeft() {
+        return mIconPaddingLeft;
+    }
+
+    /**
+     * Gets the top padding of the icon.
+     *
+     * @return The top padding of the icon.
+     */
+    public int getIconPaddingTop() {
+        return mIconPaddingTop;
+    }
+
+    /**
+     * Gets the right padding of the icon.
+     *
+     * @return The right padding of the icon.
+     */
+    public int getIconPaddingRight() {
+        return mIconPaddingRight;
+    }
+
+    /**
+     * Gets the bottom padding of the icon.
+     *
+     * @return The bottom padding of the icon.
+     */
+    public int getIconPaddingBottom() {
+        return mIconPaddingBottom;
     }
 
     /**
@@ -760,6 +913,26 @@ public class MaterialFancyButton extends DirectionalLayout {
         setupView();
     }
 
+    /**
+     * Gets the Element resource being used as the drawable-icon for this button.
+     *
+     * @return The Element used as the drawable-icon, {@code null} if no drawable-icon is being used.
+     */
+    public Element getElementIconResource() {
+        return mIconResource;
+    }
+
+    /**
+     * Gets the String value being used as the font-icon for this button.
+     *
+     * @return The String used for the font-icon, {@code null} if no font-icon is being used.
+     */
+
+    public String getFontIconResource() {
+        return mFontIcon;
+    }
+
+    // TODO This function will not work as intended. Should we remove it?
     public void setIcon(Character icon) {
         setIcon(icon.toString());
     }
@@ -811,6 +984,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Get Icon size of the button (for only font-icons) in fp.
+     *
+     * @return Icon size of the font-icon
+     */
+    public int getFontIconSize() {
+        return mFontIconSize;
+    }
+
+    /**
      * Set Icon Position.
      * Use the global variables:
      * <ul>
@@ -832,6 +1014,22 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Get Icon Position.
+     * Can be any of the global variables:
+     * <ul>
+     *     <li>MaterialFancyButton.POSITION_LEFT</li>
+     *     <li>MaterialFancyButton.POSITION_RIGHT</li>
+     *     <li>MaterialFancyButton.POSITION_TOP</li>
+     *     <li>MaterialFancyButton.POSITION_BOTTOM</li>
+     * </ul>
+     *
+     * @return Icon Position.
+     */
+    public int getIconPosition() {
+        return mIconPosition;
+    }
+
+    /**
      * Set color of the button border.
      *
      * @param color : use Color.getIntColor('#code')
@@ -843,7 +1041,16 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set Width of the button.
+     * Get color of the button border.
+     *
+     * @return The integer value of the color.
+     */
+    public int getBorderColor() {
+        return mBorderColor;
+    }
+
+    /**
+     * Set Width of the button border.
      *
      * @param width : Width in px.
      */
@@ -853,10 +1060,13 @@ public class MaterialFancyButton extends DirectionalLayout {
         setupView();
     }
 
-    private void setupView() {
-        setupFontIconView();
-        setupTextView();
-        setupBackground();
+    /**
+     * Get Width of the button border.
+     *
+     * @return Border Width in px
+     */
+    public int getBorderWidth() {
+        return mBorderWidth;
     }
 
     /**
@@ -901,6 +1111,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Get border radius top left of the button.
+     *
+     * @return radius top left of the button
+     */
+    public int getRadiusTopLeft() {
+        return mRadiusTopLeft;
+    }
+
+    /**
      * Set border radius top right of the button.
      *
      * @param radiusTopRight radius top right of the button
@@ -908,6 +1127,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     public void setRadiusTopRight(int radiusTopRight) {
         mRadiusTopRight = radiusTopRight;
         setupView();
+    }
+
+    /**
+     * Get border radius top right of the button.
+     *
+     * @return radius top right of the button
+     */
+    public int getRadiusTopRight() {
+        return mRadiusTopRight;
     }
 
     /**
@@ -921,6 +1149,15 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
+     * Get border radius bottom left of the button.
+     *
+     * @return radius bottom left of the button
+     */
+    public int getRadiusBottomLeft() {
+        return mRadiusBottomLeft;
+    }
+
+    /**
      * Set border radius bottom right of the button.
      *
      * @param radiusBottomRight radius bottom right of the button
@@ -931,7 +1168,16 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set custom font for button Text.
+     * Get border radius bottom right of the button.
+     *
+     * @return radius bottom right of the button
+     */
+    public int getRadiusBottomRight() {
+        return mRadiusBottomRight;
+    }
+
+    /**
+     * Set custom font for button Text from a font file.
      *
      * @param fontName : Name of the font file. It should be placed in the rawfile directory of the HAP using the font.
      */
@@ -945,7 +1191,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set Custom font for button icon.
+     * Set Custom font for button icon from a font file.
      *
      * @param fontName : Name of the font file. It should be placed in the rawfile directory of the HAP using the font.
      */
@@ -960,7 +1206,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Override setEnabled and rebuild the fancybutton view.
+     * Override setEnabled and rebuild the MaterialFancyButton Component.
      * To redraw the button according to the state : enabled or disabled
      */
     @Override public void setEnabled(boolean value) {
@@ -981,13 +1227,12 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Return Text of the button.
+     * Whether the button is hollow (ghost) or solid.
      *
-     * @return {@code String} containing the button Text, or an empty {@code String} if it doesn't contain any text.
+     * @return {@code true} if the button is hollow.
      */
-    @SuppressWarnings("unused")
-    public CharSequence getText() {
-        return mTextView != null ? mTextView.getText() : "";
+    public boolean isGhost() {
+        return mGhost;
     }
 
     /**
@@ -1020,6 +1265,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         return mIconView;
     }
 
+    // TODO Verify if text style attribute can be used, otherwise remove this method
     /**
      * Get the text style.
      *

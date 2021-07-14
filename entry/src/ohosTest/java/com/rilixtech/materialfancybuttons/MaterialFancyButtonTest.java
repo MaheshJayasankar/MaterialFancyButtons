@@ -42,13 +42,23 @@ public class MaterialFancyButtonTest {
         colorAttrs.put("mfb_focusColor", Color.BLACK);
         colorAttrs.put("mfb_disabledColor", Color.BLUE);
         colorAttrs.put("mfb_disabledTextColor", Color.CYAN);
-        colorAttrs.put("mfb_disabledBorderCOlor", Color.DKGRAY);
+        colorAttrs.put("mfb_disabledBorderColor", Color.DKGRAY);
         colorAttrs.put("mfb_textColor", Color.GRAY);
         colorAttrs.put("mfb_iconColor", Color.GREEN);
         colorAttrs.put("mfb_borderColor", Color.RED);
 
         TestAttrSet attrSet = new TestAttrSet(null, null, null, colorAttrs, null, null);
-        MaterialFancyButton materialFancyButton = new MaterialFancyButton(context, attrSet);
+        MaterialFancyButton mfb = new MaterialFancyButton(context, attrSet);
+
+        assertEquals(colorAttrs.get("mfb_defaultColor").getValue(), mfb.getBackgroundColor());
+        assertEquals(colorAttrs.get("mfb_focusColor").getValue(), mfb.getFocusBackgroundColor());
+        assertEquals(colorAttrs.get("mfb_disabledColor").getValue(), mfb.getDisableBackgroundColor());
+        assertEquals(colorAttrs.get("mfb_disabledTextColor").getValue(), mfb.getDisableTextColor());
+        assertEquals(colorAttrs.get("mfb_disabledBorderColor").getValue(), mfb.getDisableBorderColor());
+        assertEquals(colorAttrs.get("mfb_textColor").getValue(), mfb.getTextColor());
+        assertEquals(colorAttrs.get("mfb_iconColor").getValue(), mfb.getIconColor());
+        assertEquals(colorAttrs.get("mfb_borderColor").getValue(), mfb.getBorderColor());
+
     }
 
     private static class TestAttrSet implements AttrSet {
