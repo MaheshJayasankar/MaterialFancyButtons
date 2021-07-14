@@ -322,6 +322,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         mIconPaddingBottom = getDimensionAttribute(attrSet, "mfb_iconPaddingBottom", mIconPaddingBottom);
 
         // INTEGER ATTRIBUTES
+        // TODO This attribute may have to be removed based on the decision to retain or remove TextStyle attribute.
         mTextStyle = getIntegerAttribute(attrSet, "mfb_textStyle", Font.REGULAR);
 
         // ENUM ATTRIBUTES
@@ -658,6 +659,7 @@ public class MaterialFancyButton extends DirectionalLayout {
      */
     @SuppressWarnings("unused")
     public void setIconColor(int color) {
+        mDefaultIconColor = color;
         if (mFontIconView != null) {
             mFontIconView.setTextColor(new Color(color));
         }
@@ -669,7 +671,7 @@ public class MaterialFancyButton extends DirectionalLayout {
      * @return The integer value of the color.
      */
     public int getIconColor() {
-        return mFontIconView.getTextColor().getValue();
+        return mDefaultIconColor;
     }
 
     /**

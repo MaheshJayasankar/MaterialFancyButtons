@@ -1,6 +1,7 @@
 package com.rilixtech.materialfancybuttons;
 
 import com.rilixtech.materialfancybutton.MaterialFancyButton;
+import com.rilixtech.materialfancybutton.utils.AttrEnumUtil;
 import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
 import ohos.agp.components.Attr;
 import ohos.agp.components.AttrSet;
@@ -26,15 +27,18 @@ public class MaterialFancyButtonTest {
     public void initMaterialFancyButton() {
         defaultMaterialFancyButton = new MaterialFancyButton(context, dummyAttrSet);
     }
+
     @Test
     public void testInitBasic() {
         assertNotNull(defaultMaterialFancyButton);
     }
+
     @Test
     public void testInitWithoutAttrs() {
         MaterialFancyButton materialFancyButton = new MaterialFancyButton(context);
         assertNotNull(materialFancyButton);
     }
+
     @Test
     public void testColorAttrs() {
         HashMap<String, Color> colorAttrs = new HashMap<>();
@@ -48,17 +52,98 @@ public class MaterialFancyButtonTest {
         colorAttrs.put("mfb_borderColor", Color.RED);
 
         TestAttrSet attrSet = new TestAttrSet(null, null, null, colorAttrs, null, null);
+        MaterialFancyButton materialFancyButton = new MaterialFancyButton(context, attrSet);
+
+        assertEquals(colorAttrs.get("mfb_defaultColor").getValue(), materialFancyButton.getBackgroundColor());
+        assertEquals(colorAttrs.get("mfb_focusColor").getValue(), materialFancyButton.getFocusBackgroundColor());
+        assertEquals(colorAttrs.get("mfb_disabledColor").getValue(), materialFancyButton.getDisableBackgroundColor());
+        assertEquals(colorAttrs.get("mfb_disabledTextColor").getValue(), materialFancyButton.getDisableTextColor());
+        assertEquals(colorAttrs.get("mfb_disabledBorderColor").getValue(), materialFancyButton.getDisableBorderColor());
+        assertEquals(colorAttrs.get("mfb_textColor").getValue(), materialFancyButton.getTextColor());
+        assertEquals(colorAttrs.get("mfb_iconColor").getValue(), materialFancyButton.getIconColor());
+        assertEquals(colorAttrs.get("mfb_borderColor").getValue(), materialFancyButton.getBorderColor());
+    }
+
+    @Test
+    public void testStringAttrs() {
+        HashMap<String, String> stringAttrs = new HashMap<>();
+        stringAttrs.put("mfb_text", "Test Button Text");
+
+        TestAttrSet attrSet = new TestAttrSet(stringAttrs, null, null, null, null, null);
+        MaterialFancyButton materialFancyButton = new MaterialFancyButton(context, attrSet);
+
+        assertEquals(stringAttrs.get("mfb_text"), materialFancyButton.getText());
+    }
+
+    @Test
+    public void testBoolAttrs() {
+        HashMap<String, Boolean> boolAttrs = new HashMap<>();
+        boolAttrs.put("enabled", true);
+        boolAttrs.put("mfb_textAllCaps", true);
+        boolAttrs.put("mfb_ghost", true);
+
+        TestAttrSet attrSet = new TestAttrSet(null, null, boolAttrs, null, null, null);
+        MaterialFancyButton materialFancyButton = new MaterialFancyButton(context, attrSet);
+
+        assertEquals(boolAttrs.get("enabled"), materialFancyButton.isEnabled());
+        assertEquals(boolAttrs.get("mfb_textAllCaps"), materialFancyButton.isTextAllCaps());
+        assertEquals(boolAttrs.get("mfb_ghost"), materialFancyButton.isGhost());
+    }
+    @Test
+    public void testDimensionAttrs() {
+        HashMap<String, String> dimensionAttrs = new HashMap<>();
+        int textSize = 16;
+        dimensionAttrs.put("mfb_textSize", textSize + "fp");
+        int borderWidth = 8;
+        dimensionAttrs.put("mfb_borderWidth", borderWidth + "vp");
+        int radiusTopLeft = 4;
+        dimensionAttrs.put("mfb_radiusTopLeft", radiusTopLeft + "px");
+        int radiusTopRight = 6;
+        dimensionAttrs.put("mfb_radiusTopRight", radiusTopRight + "px");
+        int radiusBottomLeft = 9;
+        dimensionAttrs.put("mfb_radiusBottomLeft", radiusBottomLeft + "px");
+        int radiusBottomRight = 20;
+        dimensionAttrs.put("mfb_radiusBottomRight",  radiusBottomRight + "px");
+        int fontIconSize = 4;
+        dimensionAttrs.put("mfb_fontIconSize", fontIconSize + "fp");
+        int iconPaddingLeft = 30;
+        dimensionAttrs.put("mfb_iconPaddingLeft", iconPaddingLeft + "vp");
+        int iconPaddingRight = 80;
+        dimensionAttrs.put("mfb_iconPaddingRight", iconPaddingRight + "vp");
+        int iconPaddingTop = 40;
+        dimensionAttrs.put("mfb_iconPaddingTop", iconPaddingTop + "vp");
+        int iconPaddingBottom = 64;
+        dimensionAttrs.put("mfb_iconPaddingBottom", iconPaddingBottom + "vp");
+
+        TestAttrSet attrSet = new TestAttrSet(null, dimensionAttrs, null, null, null, null);
         MaterialFancyButton mfb = new MaterialFancyButton(context, attrSet);
 
-        assertEquals(colorAttrs.get("mfb_defaultColor").getValue(), mfb.getBackgroundColor());
-        assertEquals(colorAttrs.get("mfb_focusColor").getValue(), mfb.getFocusBackgroundColor());
-        assertEquals(colorAttrs.get("mfb_disabledColor").getValue(), mfb.getDisableBackgroundColor());
-        assertEquals(colorAttrs.get("mfb_disabledTextColor").getValue(), mfb.getDisableTextColor());
-        assertEquals(colorAttrs.get("mfb_disabledBorderColor").getValue(), mfb.getDisableBorderColor());
-        assertEquals(colorAttrs.get("mfb_textColor").getValue(), mfb.getTextColor());
-        assertEquals(colorAttrs.get("mfb_iconColor").getValue(), mfb.getIconColor());
-        assertEquals(colorAttrs.get("mfb_borderColor").getValue(), mfb.getBorderColor());
+        assertEquals(textSize, mfb.getTextSize());
+        assertEquals(borderWidth, mfb.getBorderWidth());
+        assertEquals(radiusTopLeft, mfb.getRadiusTopLeft());
+        assertEquals(radiusTopRight, mfb.getRadiusTopRight());
+        assertEquals(radiusBottomLeft, mfb.getRadiusBottomLeft());
+        assertEquals(radiusBottomRight, mfb.getRadiusBottomRight());
+        assertEquals(fontIconSize, mfb.getFontIconSize());
+        assertEquals(iconPaddingLeft, mfb.getIconPaddingLeft());
+        assertEquals(iconPaddingRight, mfb.getIconPaddingRight());
+        assertEquals(iconPaddingTop, mfb.getIconPaddingTop());
+        assertEquals(iconPaddingBottom, mfb.getIconPaddingBottom());
+    }
 
+    @Test
+    public void testEnumAttrs() {
+        HashMap<String, String> enumAttrs = new HashMap<>();
+        AttrEnumUtil.MfbTextGravity textGravityStart = AttrEnumUtil.MfbTextGravity.start;
+        enumAttrs.put("mfb_textGravity", textGravityStart.name());
+        AttrEnumUtil.MfbIconPosition iconPositionRight = AttrEnumUtil.MfbIconPosition.right;
+        enumAttrs.put("mfb_iconPosition", iconPositionRight.name());
+
+        TestAttrSet attrSet = new TestAttrSet(null, null, null, null, enumAttrs, null);
+        MaterialFancyButton materialFancyButton = new MaterialFancyButton(context, attrSet);
+
+        assertEquals(textGravityStart.getValue(), materialFancyButton.getTextGravity());
+        assertEquals(iconPositionRight.value, materialFancyButton.getIconPosition());
     }
 
     private static class TestAttrSet implements AttrSet {
@@ -70,19 +155,22 @@ public class MaterialFancyButtonTest {
         }
 
         public TestAttrSet(Map<String, String> stringAttrs,
-                                                         Map<String, Integer> integerAttrs,
-                                                         Map<String, Boolean> boolAttrs,
-                                                         Map<String, Color> colorAttrs,
-                                                         Map<String, String> enumAttrs,
-                                                         Map<String, Element> elementAttrs) {
+                           Map<String, String> dimensionAttrs,
+                           Map<String, Boolean> boolAttrs,
+                           Map<String, Color> colorAttrs,
+                           Map<String, String> enumAttrs,
+                           Map<String, Element> elementAttrs) {
             super();
             if (stringAttrs != null)
                 for (String strKey : stringAttrs.keySet()) {
                     attrMap.put(strKey, Optional.of(new TestAttr(strKey, stringAttrs.get(strKey))));
                 }
-            if (integerAttrs != null)
-                for (String strKey : integerAttrs.keySet()) {
-                    attrMap.put(strKey, Optional.of(new TestAttr(strKey, integerAttrs.get(strKey))));
+            if (dimensionAttrs != null)
+                for (String strKey : dimensionAttrs.keySet()) {
+                    TestAttr dimensionAttr = TestAttr.createDimensionAttr(strKey, dimensionAttrs.get(strKey));
+                    if (dimensionAttr != null) {
+                        attrMap.put(strKey, Optional.of(dimensionAttr));
+                    }
                 }
             if (boolAttrs != null)
                 for (String strKey : boolAttrs.keySet()) {
@@ -129,7 +217,7 @@ public class MaterialFancyButtonTest {
 
         private final String name;
         private String stringValue = null;
-        private int integerValue = 0;
+        private int dimensionValue = 0;
         private boolean boolValue = false;
         private Color colorValue = null;
         private Element elementValue = null;
@@ -142,10 +230,7 @@ public class MaterialFancyButtonTest {
             this(name);
             this.stringValue = value;
         }
-        public TestAttr(String name, int value) {
-            this(name);
-            this.integerValue = value;
-        }
+
         public TestAttr(String name, boolean value) {
             this(name);
             this.boolValue = value;
@@ -157,6 +242,22 @@ public class MaterialFancyButtonTest {
         public TestAttr(String name, Element value) {
             this(name);
             this.elementValue = value;
+        }
+
+        public static TestAttr createDimensionAttr(String name, String dimensionValue) {
+            TestAttr testAttr = new TestAttr(name);
+            try {
+                if (dimensionValue.endsWith("fp") || dimensionValue.endsWith("vp") || dimensionValue.endsWith("px")) {
+                    String integerPortionOfString = dimensionValue.split("[^0-9]")[0];
+                    testAttr.dimensionValue = Integer.parseInt(integerPortionOfString);
+                    return testAttr;
+                }
+                else {
+                    return null;
+                }
+            } catch (IllegalArgumentException | IndexOutOfBoundsException ex) {
+                return null;
+            }
         }
 
         @Override
@@ -171,7 +272,7 @@ public class MaterialFancyButtonTest {
 
         @Override
         public int getIntegerValue() {
-            return integerValue;
+            return 0;
         }
 
         @Override
@@ -196,7 +297,7 @@ public class MaterialFancyButtonTest {
 
         @Override
         public int getDimensionValue() {
-            return 0;
+            return dimensionValue;
         }
 
         @Override
