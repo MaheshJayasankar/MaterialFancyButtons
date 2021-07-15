@@ -1,12 +1,16 @@
 package com.rilixtech.materialfancybuttons;
 
+import com.rilixtech.community_material_typeface.CommunityMaterial;
 import com.rilixtech.materialfancybutton.MaterialFancyButton;
+import com.rilixtech.materialfancybutton.ResourceTable;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.utils.AttrEnumUtil;
 import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
 import ohos.agp.components.Attr;
 import ohos.agp.components.AttrSet;
 import ohos.agp.components.element.Element;
 import ohos.agp.utils.Color;
+import ohos.agp.utils.TextAlignment;
 import ohos.app.Context;
 import org.junit.Before;
 import org.junit.Test;
@@ -116,19 +120,19 @@ public class MaterialFancyButtonTest {
         dimensionAttrs.put("mfb_iconPaddingBottom", iconPaddingBottom + "vp");
 
         TestAttrSet attrSet = new TestAttrSet(null, dimensionAttrs, null, null, null, null);
-        MaterialFancyButton mfb = new MaterialFancyButton(context, attrSet);
+        MaterialFancyButton materialFancyButton = new MaterialFancyButton(context, attrSet);
 
-        assertEquals(textSize, mfb.getTextSize());
-        assertEquals(borderWidth, mfb.getBorderWidth());
-        assertEquals(radiusTopLeft, mfb.getRadiusTopLeft());
-        assertEquals(radiusTopRight, mfb.getRadiusTopRight());
-        assertEquals(radiusBottomLeft, mfb.getRadiusBottomLeft());
-        assertEquals(radiusBottomRight, mfb.getRadiusBottomRight());
-        assertEquals(fontIconSize, mfb.getFontIconSize());
-        assertEquals(iconPaddingLeft, mfb.getIconPaddingLeft());
-        assertEquals(iconPaddingRight, mfb.getIconPaddingRight());
-        assertEquals(iconPaddingTop, mfb.getIconPaddingTop());
-        assertEquals(iconPaddingBottom, mfb.getIconPaddingBottom());
+        assertEquals(textSize, materialFancyButton.getTextSize());
+        assertEquals(borderWidth, materialFancyButton.getBorderWidth());
+        assertEquals(radiusTopLeft, materialFancyButton.getRadiusTopLeft());
+        assertEquals(radiusTopRight, materialFancyButton.getRadiusTopRight());
+        assertEquals(radiusBottomLeft, materialFancyButton.getRadiusBottomLeft());
+        assertEquals(radiusBottomRight, materialFancyButton.getRadiusBottomRight());
+        assertEquals(fontIconSize, materialFancyButton.getFontIconSize());
+        assertEquals(iconPaddingLeft, materialFancyButton.getIconPaddingLeft());
+        assertEquals(iconPaddingRight, materialFancyButton.getIconPaddingRight());
+        assertEquals(iconPaddingTop, materialFancyButton.getIconPaddingTop());
+        assertEquals(iconPaddingBottom, materialFancyButton.getIconPaddingBottom());
     }
 
     @Test
@@ -144,6 +148,242 @@ public class MaterialFancyButtonTest {
 
         assertEquals(textGravityStart.getValue(), materialFancyButton.getTextGravity());
         assertEquals(iconPositionRight.value, materialFancyButton.getIconPosition());
+    }
+
+    @Test
+    public void testSetText() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        String testSetText = "Test Set Text";
+        mfb.setText(testSetText);
+        assertEquals(testSetText, mfb.getText());
+    }
+
+    @Test
+    public void testSetText2() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int textId = ResourceTable.String_app_name;
+        mfb.setText(textId);
+        assertEquals(context.getString(textId), mfb.getText());
+    }
+
+    @Test
+    public void testSetTextAllCaps() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        mfb.setTextAllCaps(true);
+        assertTrue(mfb.isTextAllCaps());
+    }
+
+    @Test
+    public void testSetTextColor() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newColor = Color.BLUE.getValue();
+        mfb.setTextColor(newColor);
+        assertEquals(newColor, mfb.getTextColor());
+    }
+
+    @Test
+    public void testSetTextStyle() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int textStyle = 2;
+        mfb.setTextStyle(textStyle);
+        assertEquals(textStyle, mfb.getTextStyle());
+    }
+
+    @Test
+    public void testSetIconColor() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newColor = Color.BLUE.getValue();
+        mfb.setIconColor(newColor);
+        assertEquals(newColor, mfb.getIconColor());
+    }
+
+    @Test
+    public void testSetBackgroundColor() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newColor = Color.BLUE.getValue();
+        mfb.setBackgroundColor(newColor);
+        assertEquals(newColor, mfb.getBackgroundColor());
+
+    }
+
+    @Test
+    public void testSetFocusBackgroundColor() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newColor = Color.BLUE.getValue();
+        mfb.setFocusBackgroundColor(newColor);
+        assertEquals(newColor, mfb.getFocusBackgroundColor());
+    }
+
+    @Test
+    public void testSetDisableBackgroundColor() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newColor = Color.BLUE.getValue();
+        mfb.setDisableBackgroundColor(newColor);
+        assertEquals(newColor, mfb.getDisableBackgroundColor());
+    }
+
+    @Test
+    public void testSetDisableTextColor() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newColor = Color.BLUE.getValue();
+        mfb.setDisableTextColor(newColor);
+        assertEquals(newColor, mfb.getDisableTextColor());
+    }
+
+    @Test
+    public void testSetDisableBorderColor() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newColor = Color.BLUE.getValue();
+        mfb.setDisableBorderColor(newColor);
+        assertEquals(newColor, mfb.getDisableBorderColor());
+    }
+
+    @Test
+    public void testSetTextSize() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newTextSize = 24;
+        mfb.setTextSize(newTextSize);
+        assertEquals(newTextSize, mfb.getTextSize());
+    }
+
+    @Test
+    public void testSetTextGravity() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newTextGravity = TextAlignment.CENTER;
+        mfb.setTextGravity(newTextGravity);
+        assertEquals(newTextGravity, mfb.getTextGravity());
+    }
+
+    @Test
+    public void testSetIconPadding() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newPaddingLeft = 8;
+        int newPaddingTop = 24;
+        int newPaddingRight = 16;
+        int newPaddingBottom = 32;
+        mfb.setIconPadding(newPaddingLeft, newPaddingTop, newPaddingRight, newPaddingBottom);
+        assertEquals(newPaddingLeft, mfb.getIconPaddingLeft());
+        assertEquals(newPaddingTop, mfb.getIconPaddingTop());
+        assertEquals(newPaddingRight, mfb.getIconPaddingRight());
+        assertEquals(newPaddingBottom, mfb.getIconPaddingBottom());
+    }
+
+    @Test
+    public void testSetIconResource() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        String iconResourceValue = "test_icon_resource_value";
+        assertThrows(IllegalArgumentException.class, () -> mfb.setIconResource(iconResourceValue));
+    }
+
+    @Test
+    public void testSetIcon() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        String iconResourceValue = "test_icon_resource_value";
+        mfb.setIcon(iconResourceValue);
+        assertNull(mfb.getFontIconResource());
+    }
+
+    @Test
+    public void testSetFontIconSize() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int iconSize = 16;
+        mfb.setFontIconSize(iconSize);
+        assertEquals(iconSize, mfb.getFontIconSize());
+    }
+
+    @Test
+    public void testSetIconPosition() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int iconPosition = MaterialFancyButton.POSITION_RIGHT;
+        mfb.setIconPosition(iconPosition);
+        assertEquals(iconPosition, mfb.getIconPosition());
+    }
+
+    @Test
+    public void testSetBorderColor() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int newColor = Color.BLUE.getValue();
+        mfb.setBorderColor(newColor);
+        assertEquals(newColor, mfb.getBorderColor());
+    }
+
+    @Test
+    public void testSetBorderWidth() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int borderWidth = 16;
+        mfb.setBorderWidth(borderWidth);
+        assertEquals(borderWidth, mfb.getBorderWidth());
+    }
+
+    @Test
+    public void testSetRadius() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int radius = 32;
+        mfb.setRadius(radius);
+        assertEquals(radius ,mfb.getRadiusTopLeft());
+        assertEquals(radius ,mfb.getRadiusTopRight());
+        assertEquals(radius ,mfb.getRadiusBottomLeft());
+        assertEquals(radius ,mfb.getRadiusBottomRight());
+    }
+
+    @Test
+    public void testSetRadius2() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int topLeftRadius = 8;
+        int topRightRadius = 16;
+        int bottomLeftRadius = 24;
+        int bottomRightRadius = 32;
+        mfb.setRadius(topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius);
+        assertEquals(topLeftRadius ,mfb.getRadiusTopLeft());
+        assertEquals(topRightRadius ,mfb.getRadiusTopRight());
+        assertEquals(bottomLeftRadius ,mfb.getRadiusBottomLeft());
+        assertEquals(bottomRightRadius ,mfb.getRadiusBottomRight());
+    }
+
+    @Test
+    public void testSetRadiusTopLeft() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int topLeftRadius = 8;
+        mfb.setRadiusTopLeft(topLeftRadius);
+        assertEquals(topLeftRadius ,mfb.getRadiusTopLeft());
+    }
+
+    @Test
+    public void testSetRadiusTopRight() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int topRightRadius = 16;
+        mfb.setRadiusTopRight(topRightRadius);
+        assertEquals(topRightRadius ,mfb.getRadiusTopRight());
+    }
+
+    @Test
+    public void testSetRadiusBottomLeft() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int bottomLeftRadius = 24;
+        mfb.setRadiusBottomLeft(bottomLeftRadius);
+        assertEquals(bottomLeftRadius ,mfb.getRadiusBottomLeft());
+    }
+
+    @Test
+    public void testSetRadiusBottomRight() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        int bottomRightRadius = 32;
+        mfb.setRadiusBottomRight(bottomRightRadius);
+        assertEquals(bottomRightRadius ,mfb.getRadiusBottomRight());
+    }
+
+    @Test
+    public void testSetEnabled() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        mfb.setEnabled(false);
+        assertFalse(mfb.isEnabled());
+    }
+
+    @Test
+    public void testSetGhost() {
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        mfb.setGhost(true);
+        assertTrue(mfb.isGhost());
     }
 
     private static class TestAttrSet implements AttrSet {
@@ -212,6 +452,8 @@ public class MaterialFancyButtonTest {
             return Optional.empty();
         }
     }
+
+
 
     private static class TestAttr implements Attr {
 

@@ -643,7 +643,7 @@ public class MaterialFancyButton extends DirectionalLayout {
      * @param style The style of text to be set.
      */
     public void setTextStyle(/*@Typeface.Style*/ int style) {
-        mTextSize = style;
+        mTextStyle = style;
         if (mTextView == null) {
             setupTextView();
         }
@@ -824,24 +824,18 @@ public class MaterialFancyButton extends DirectionalLayout {
     /**
      * Set Padding for mIconView and mFontIconSize.
      *
-     * @param paddingLeft : Padding Left. If given as {@code null}, the value is unchanged.
-     * @param paddingTop : Padding Top. If given as {@code null}, the value is unchanged.
-     * @param paddingRight : Padding Right. If given as {@code null}, the value is unchanged.
-     * @param paddingBottom : Padding Bottom. If given as {@code null}, the value is unchanged.
+     * @param paddingLeft : Padding Left.
+     * @param paddingTop : Padding Top.
+     * @param paddingRight : Padding Right.
+     * @param paddingBottom : Padding Bottom.
      */
-    public void setIconPadding(Integer paddingLeft, Integer paddingTop, Integer paddingRight, Integer paddingBottom) {
-        if (paddingLeft != null) {
-            this.mIconPaddingLeft = paddingLeft;
-        }
-        if (paddingTop != null) {
-            this.mIconPaddingTop = paddingTop;
-        }
-        if (paddingRight != null) {
-            this.mIconPaddingRight = paddingRight;
-        }
-        if (paddingBottom != null) {
-            this.mIconPaddingBottom = paddingBottom;
-        }
+    public void setIconPadding(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom) {
+
+        this.mIconPaddingLeft = paddingLeft;
+        this.mIconPaddingTop = paddingTop;
+        this.mIconPaddingRight = paddingRight;
+        this.mIconPaddingBottom = paddingBottom;
+
         if (mIconView != null) {
             mIconView.setPadding(this.mIconPaddingLeft, this.mIconPaddingTop, this.mIconPaddingRight,
                     this.mIconPaddingBottom);
@@ -946,12 +940,12 @@ public class MaterialFancyButton extends DirectionalLayout {
      *             the {@link IIcon} should match with the prefix of the icon key.
      */
     public void setIcon(String icon) {
-        String modifiedIcon;
+        String modifiedIconKey;
         try {
             ITypeface font =
                     CoreIcon.findFont(icon.substring(0, CoreIcon.FONT_MAPPING_PREFIX));
-            modifiedIcon = icon.replace("-", "_");
-            setIcon(font.getIcon(modifiedIcon));
+            modifiedIconKey = icon.replace("-", "_");
+            setIcon(font.getIcon(modifiedIconKey));
         } catch (Exception ex) {
             HiLog.error(LABEL, "Wrong icon name: %{public}s", icon);
         }
