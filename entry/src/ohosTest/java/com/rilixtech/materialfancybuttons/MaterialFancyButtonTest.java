@@ -130,9 +130,9 @@ public class MaterialFancyButtonTest {
     @Test
     public void testEnumAttrs() {
         HashMap<String, String> enumAttrs = new HashMap<>();
-        AttrEnumUtil.MfbTextGravity textGravityStart = AttrEnumUtil.MfbTextGravity.start;
+        AttrEnumUtil.MfbTextGravity textGravityStart = AttrEnumUtil.MfbTextGravity.START;
         enumAttrs.put("mfb_textGravity", textGravityStart.name());
-        AttrEnumUtil.MfbIconPosition iconPositionRight = AttrEnumUtil.MfbIconPosition.right;
+        AttrEnumUtil.MfbIconPosition iconPositionRight = AttrEnumUtil.MfbIconPosition.RIGHT;
         enumAttrs.put("mfb_iconPosition", iconPositionRight.name());
 
         TestAttrSet attrSet = new TestAttrSet(null, null, null, null, enumAttrs, null);
@@ -420,32 +420,27 @@ public class MaterialFancyButtonTest {
                            Map<String, Element> elementAttrs) {
             super();
             if (stringAttrs != null)
-                for (String strKey : stringAttrs.keySet()) {
-                    attrMap.put(strKey, Optional.of(new TestAttr(strKey, stringAttrs.get(strKey))));
-                }
+                stringAttrs.keySet().forEach(
+                        strKey -> attrMap.put(strKey, Optional.of(new TestAttr(strKey, stringAttrs.get(strKey)))));
             if (dimensionAttrs != null)
-                for (String strKey : dimensionAttrs.keySet()) {
+                dimensionAttrs.keySet().forEach(strKey -> {
                     TestAttr dimensionAttr = TestAttr.createDimensionAttr(strKey, dimensionAttrs.get(strKey));
                     if (dimensionAttr != null) {
                         attrMap.put(strKey, Optional.of(dimensionAttr));
                     }
-                }
+                });
             if (boolAttrs != null)
-                for (String strKey : boolAttrs.keySet()) {
-                    attrMap.put(strKey, Optional.of(new TestAttr(strKey, boolAttrs.get(strKey))));
-                }
+                boolAttrs.keySet().forEach(
+                        strKey -> attrMap.put(strKey, Optional.of(new TestAttr(strKey, boolAttrs.get(strKey)))));
             if (colorAttrs != null)
-                for (String strKey : colorAttrs.keySet()) {
-                    attrMap.put(strKey, Optional.of(new TestAttr(strKey, colorAttrs.get(strKey))));
-                }
+                colorAttrs.keySet().forEach(
+                        strKey -> attrMap.put(strKey, Optional.of(new TestAttr(strKey, colorAttrs.get(strKey)))));
             if (enumAttrs != null)
-                for (String strKey : enumAttrs.keySet()) {
-                    attrMap.put(strKey, Optional.of(new TestAttr(strKey, enumAttrs.get(strKey))));
-                }
+                enumAttrs.keySet().forEach(
+                        strKey -> attrMap.put(strKey, Optional.of(new TestAttr(strKey, enumAttrs.get(strKey)))));
             if (elementAttrs != null)
-                for (String strKey : elementAttrs.keySet()) {
-                    attrMap.put(strKey, Optional.of(new TestAttr(strKey, elementAttrs.get(strKey))));
-                }
+                elementAttrs.keySet().forEach(
+                        strKey -> attrMap.put(strKey, Optional.of(new TestAttr(strKey, elementAttrs.get(strKey)))));
         }
 
         @Override

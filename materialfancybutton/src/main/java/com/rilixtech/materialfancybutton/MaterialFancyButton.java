@@ -328,7 +328,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         // ENUM ATTRIBUTES
         mTextGravity = getEnumAttribute(
                 attrSet, "mfb_textGravity", AttrEnumUtil.MfbTextGravity.class,
-                AttrEnumUtil.MfbTextGravity.center).getValue();
+                AttrEnumUtil.MfbTextGravity.CENTER).getValue();
         mIconPosition = getEnumAttribute(
                 attrSet, "mfb_iconPosition", AttrEnumUtil.MfbIconPosition.class,
                 AttrEnumUtil.MfbIconPosition.labelOfValue(mIconPosition)).value;
@@ -418,7 +418,9 @@ public class MaterialFancyButton extends DirectionalLayout {
         if (optionalAttribute.isPresent()) {
             String stringValue = optionalAttribute.get().getStringValue();
             try {
-                return E.valueOf(enumType, stringValue);
+                // TODO toUpperCase is a temporary measure to convert lowercase attributes to uppercase.
+                // Must change all enum calls of this type to upper case when possible (look through XML files)
+                return E.valueOf(enumType, stringValue.toUpperCase());
             } catch (IllegalArgumentException e) {
                 return defaultValue;
             }

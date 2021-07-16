@@ -8,11 +8,11 @@ public class AttrEnumUtilTest {
 
     @Test
     public void testMfbIconPositionLabelOfValue() {
-        assertEquals(AttrEnumUtil.MfbIconPosition.left, AttrEnumUtil.MfbIconPosition.labelOfValue(1));
+        assertEquals(AttrEnumUtil.MfbIconPosition.LEFT, AttrEnumUtil.MfbIconPosition.labelOfValue(1));
     }
 
     @Test
     public void testMfbIconPositionValues() {
-        assertEquals(1, AttrEnumUtil.MfbIconPosition.left.value);
+        assertEquals(1, AttrEnumUtil.MfbIconPosition.LEFT.value);
     }
 }

@@ -16,12 +16,10 @@ public class MainAbilitySlice extends AbilitySlice {
 
     public static class NameLayout {
         String name;
-        //Class clazz;
         int layoutId;
 
         NameLayout(String name, int layoutId) {
             this.name = name;
-            //this.clazz = clazz;
             this.layoutId = layoutId;
         }
         public String getName(){

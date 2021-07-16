@@ -7,6 +7,7 @@ import ohos.app.AbilityContext;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -65,7 +66,7 @@ public class CoreIconTest {
 
             @Override
             public Collection<String> getIcons() {
-                return null;
+                return new ArrayList<>();
             }
 
             @Override
