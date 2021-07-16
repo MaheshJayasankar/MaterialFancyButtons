@@ -22,7 +22,7 @@ public class MainAbilitySlice extends AbilitySlice {
             this.name = name;
             this.layoutId = layoutId;
         }
-        public String getName(){
+        public String getName() {
             return name;
         }
     }

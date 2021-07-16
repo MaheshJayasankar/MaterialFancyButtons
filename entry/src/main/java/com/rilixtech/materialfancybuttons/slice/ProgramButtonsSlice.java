@@ -7,6 +7,8 @@ import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.DirectionalLayout;
 
+import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_CONTENT;
+
 public class ProgramButtonsSlice extends AbilitySlice {
 
     @Override
@@ -15,14 +17,14 @@ public class ProgramButtonsSlice extends AbilitySlice {
         super.setUIContent(ResourceTable.Layout_ability_program_buttons);
 
         MaterialFancyButton fontAwesomeBtn = new MaterialFancyButton(this);
-        fontAwesomeBtn.setIcon(FontAwesome.Icon.fawi_address_book);
+        fontAwesomeBtn.setIcon(FontAwesome.Icon.FAWI_ADDRESS_BOOK);
         fontAwesomeBtn.setRadius(30);
 
 
         DirectionalLayout.LayoutConfig fabLayoutConfig =
-                new DirectionalLayout.LayoutConfig(DirectionalLayout.LayoutConfig.MATCH_CONTENT,
-                        DirectionalLayout.LayoutConfig.MATCH_CONTENT);
-        DirectionalLayout container = (DirectionalLayout)findComponentById(ResourceTable.Id_programbuttons_container);
+                new DirectionalLayout.LayoutConfig(MATCH_CONTENT,
+                        MATCH_CONTENT);
+        DirectionalLayout container = (DirectionalLayout) findComponentById(ResourceTable.Id_programbuttons_container);
         container.addComponent(fontAwesomeBtn, fabLayoutConfig);
     }
 

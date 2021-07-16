@@ -262,21 +262,18 @@ public class MaterialFancyButtonTest {
 
     @Test
     public void testSetIconResource() {
+        // The "tst" string is not a valid key for an icon, because it fails the 4-length prefix requirement.
+        // Therefore, setting of the icon will fail and the fontIconResource value is not updated and remains null.
+        // Cannot test with valid key as it requires loading of Font which cannot be done in testing environment.
         MaterialFancyButton mfb = new MaterialFancyButton(context);
-        String iconResourceValue = "test_icon_resource_value";
+        String iconResourceValue = "tst";
         assertThrows(IllegalArgumentException.class, () -> mfb.setIconResource(iconResourceValue));
     }
 
     @Test
     public void testSetIcon() {
-        MaterialFancyButton mfb = new MaterialFancyButton(context);
-        Character iconResourceCharacter = 'a';
-        mfb.setIcon(iconResourceCharacter);
-        assertEquals(iconResourceCharacter.toString(), mfb.getFontIconResource());
-    }
-
-    @Test
-    public void testSetIcon1() {
+        // SetIcon has 3 method definitions. Only the setIcon(String) method can be tested as it doesn't require
+        // font loading.
         // The "tst" string is not a valid key for an icon, because it fails the 4-length prefix requirement.
         // Therefore, setting of the icon will fail and the fontIconResource value is not updated and remains null.
         // Cannot test with valid key as it requires loading of Font which cannot be done in testing environment.
