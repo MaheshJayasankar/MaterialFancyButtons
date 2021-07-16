@@ -1,13 +1,12 @@
 package com.rilixtech.community_material_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
 import ohos.global.resource.RawFileDescriptor;
 import ohos.global.resource.RawFileEntry;
 import ohos.global.resource.Resource;
-
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,6 +14,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the Community Material Design font. It supports a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class CommunityMaterial implements ITypeface {
     private static final String TTF_FILE = "communitymaterial-font-v1.9.32.ttf";
     private static final String MAPPING_FONT_PREFIX = "cmdi";
@@ -31,15 +34,19 @@ public class CommunityMaterial implements ITypeface {
     @Override
     public HashMap<String, Character> getCharacters() {
         if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(),
+                characterHashMap.put(v.name(),
                         v.character);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
 
         return mChars;
+    }
+
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        mChars = characterHashMap;
     }
 
     @Override
@@ -85,12 +92,14 @@ public class CommunityMaterial implements ITypeface {
 
     @Override
     public String getDescription() {
-        return "Material Design Icons are the official open-source icons featured in the Google Material Design specification.";
+        return "Material Design Icons are the official open-source icons featured in the Google Material Design"
+                + " specification.";
     }
 
     @Override
     public String getLicense() {
-        return "Templates - Free, Community Icons - SIL Open Font License 1.1, Google Material Design Icons: Attribution 4.0 International";
+        return "Templates - Free, Community Icons - SIL Open Font License 1.1, Google Material Design Icons:"
+                + " Attribution 4.0 International";
     }
 
     @Override
@@ -136,7 +145,9 @@ public class CommunityMaterial implements ITypeface {
         }
     }
 
-
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by this ITypeface.
+     */
     public enum Icon implements IIcon {
         // Material design icons (v1.9.32)
         cmdi_access_point('\uF002'),
@@ -2094,11 +2105,19 @@ public class CommunityMaterial implements ITypeface {
         // remember the typeface so we can use it later
         private static ITypeface typeface;
 
+        /** Gets the ITypeface corresponding to this IIcon.
+         *
+         * @return ITypeface object corresponding to this IIcon.
+         */
         public ITypeface getTypeface() {
             if (typeface == null) {
-                typeface = new CommunityMaterial();
+                setTypeface(new CommunityMaterial());
             }
             return typeface;
+        }
+
+        private static void setTypeface(CommunityMaterial typeface) {
+            Icon.typeface = typeface;
         }
     }
 }

@@ -928,9 +928,14 @@ public class MaterialFancyButton extends DirectionalLayout {
         return mFontIcon;
     }
 
-    // TODO This function will not work as intended. Should we remove it?
+    /**
+     * Sets the font-icon of the button to the specified Character.
+     * Note that the Font of the font-icon remains unchanged.
+     *
+     * @param icon The Character to set the icon to.
+     */
     public void setIcon(Character icon) {
-        setIcon(icon.toString());
+        setIconResource(String.valueOf(icon));
     }
 
     /**

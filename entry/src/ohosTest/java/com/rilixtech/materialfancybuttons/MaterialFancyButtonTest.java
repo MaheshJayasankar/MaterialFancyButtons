@@ -1,18 +1,15 @@
 package com.rilixtech.materialfancybuttons;
 
-import com.rilixtech.community_material_typeface.CommunityMaterial;
-import com.rilixtech.materialfancybutton.MaterialFancyButton;
-import com.rilixtech.materialfancybutton.ResourceTable;
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.utils.AttrEnumUtil;
-import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
 import ohos.agp.components.Attr;
 import ohos.agp.components.AttrSet;
 import ohos.agp.components.element.Element;
 import ohos.agp.utils.Color;
 import ohos.agp.utils.TextAlignment;
 import ohos.app.Context;
-import org.junit.Before;
+import com.rilixtech.materialfancybutton.MaterialFancyButton;
+import com.rilixtech.materialfancybutton.ResourceTable;
+import com.rilixtech.materialfancybutton.utils.AttrEnumUtil;
+import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -25,15 +22,10 @@ public class MaterialFancyButtonTest {
 
     private final AttrSet dummyAttrSet = new TestAttrSet();
     private final Context context = AbilityDelegatorRegistry.getAbilityDelegator().getAppContext();
-    private MaterialFancyButton defaultMaterialFancyButton;
-
-    @Before
-    public void initMaterialFancyButton() {
-        defaultMaterialFancyButton = new MaterialFancyButton(context, dummyAttrSet);
-    }
 
     @Test
     public void testInitBasic() {
+        MaterialFancyButton defaultMaterialFancyButton = new MaterialFancyButton(context, dummyAttrSet);
         assertNotNull(defaultMaterialFancyButton);
     }
 
@@ -278,7 +270,18 @@ public class MaterialFancyButtonTest {
     @Test
     public void testSetIcon() {
         MaterialFancyButton mfb = new MaterialFancyButton(context);
-        String iconResourceValue = "test_icon_resource_value";
+        Character iconResourceCharacter = 'a';
+        mfb.setIcon(iconResourceCharacter);
+        assertEquals(iconResourceCharacter.toString(), mfb.getFontIconResource());
+    }
+
+    @Test
+    public void testSetIcon1() {
+        // The "tst" string is not a valid key for an icon, because it fails the 4-length prefix requirement.
+        // Therefore, setting of the icon will fail and the fontIconResource value is not updated and remains null.
+        // Cannot test with valid key as it requires loading of Font which cannot be done in testing environment.
+        MaterialFancyButton mfb = new MaterialFancyButton(context);
+        String iconResourceValue = "tst";
         mfb.setIcon(iconResourceValue);
         assertNull(mfb.getFontIconResource());
     }
@@ -386,14 +389,29 @@ public class MaterialFancyButtonTest {
         assertTrue(mfb.isGhost());
     }
 
+    /**
+     * Basic implementation of AttrSet for use in testing.
+     */
     private static class TestAttrSet implements AttrSet {
 
         Map<String, Optional<Attr>> attrMap= new HashMap<>();
 
+        /**
+         * Empty AttrSet holding no attribute values, for use in testing.
+         */
         public TestAttrSet() {
             super();
         }
 
+        /**
+         * AttrSet holding the specified attributes. null parameter implies no attributes of that particular type.
+         * @param stringAttrs Key-value pairs used for String Attributes.
+         * @param dimensionAttrs Key-value pairs used for Dimension Attributes.
+         * @param boolAttrs Key-value pairs used for Boolean Attributes.
+         * @param colorAttrs Key-value pairs used for color Attributes.
+         * @param enumAttrs Key-value pairs used for enum Attributes (identical to String Attributes).
+         * @param elementAttrs Key-value pairs used for Element Attributes.
+         */
         public TestAttrSet(Map<String, String> stringAttrs,
                            Map<String, String> dimensionAttrs,
                            Map<String, Boolean> boolAttrs,
@@ -453,8 +471,9 @@ public class MaterialFancyButtonTest {
         }
     }
 
-
-
+    /**
+     * Basic implementation of Attr for use in testing.
+     */
     private static class TestAttr implements Attr {
 
         private final String name;
@@ -486,6 +505,13 @@ public class MaterialFancyButtonTest {
             this.elementValue = value;
         }
 
+        /**
+         * Initializer for an Attr variable holding a dimension value.
+         * @param name Name of the attribute.
+         * @param dimensionValue A String containing an integer value ending with "px", "vp" or "fp". Any String not
+         *                       conforming to this format will result in a null attribute.
+         * @return An Attr object holding a dimension value, or null if the parameter wasn't passed as per format.
+         */
         public static TestAttr createDimensionAttr(String name, String dimensionValue) {
             TestAttr testAttr = new TestAttr(name);
             try {
