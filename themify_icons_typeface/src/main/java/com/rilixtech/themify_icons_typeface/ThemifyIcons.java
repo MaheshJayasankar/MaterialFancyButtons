@@ -16,493 +16,493 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class ThemifyIcons implements ITypeface {
-  private static final String TTF_FILE = "themify-icons-v0.1.2.ttf";
-  private static final String MAPPING_FONT_PREFIX = "thei";
+    private static final String TTF_FILE = "themify-icons-v0.1.2.ttf";
+    private static final String MAPPING_FONT_PREFIX = "THEI";
 
-  private static Font typeface = null;
+    private static Font typeface = null;
 
-  private static HashMap<String, Character> mChars;
+    private static HashMap<String, Character> mChars;
 
-  @Override public IIcon getIcon(String key) {
-    return Icon.valueOf(key);
-  }
-
-  @Override public HashMap<String, Character> getCharacters() {
-    if (mChars == null) {
-      HashMap<String, Character> aChars = new HashMap<>();
-      for (Icon v : Icon.values()) {
-        aChars.put(v.name(), v.character);
-      }
-      mChars = aChars;
+    @Override public IIcon getIcon(String key) {
+        return Icon.valueOf(key);
     }
 
-    return mChars;
-  }
+    @Override public HashMap<String, Character> getCharacters() {
+        if (mChars == null) {
+            HashMap<String, Character> aChars = new HashMap<>();
+            for (Icon v : Icon.values()) {
+                aChars.put(v.name(), v.character);
+            }
+            mChars = aChars;
+        }
 
-  @Override public String getMappingPrefix() {
-    return MAPPING_FONT_PREFIX;
-  }
-
-  @Override public String getFontName() {
-    return "Themify Icons";
-  }
-
-  @Override public String getVersion() {
-    return "0.1.2";
-  }
-
-  @Override public int getIconCount() {
-    return mChars.size();
-  }
-
-  @Override public Collection<String> getIcons() {
-    Collection<String> icons = new LinkedList<>();
-
-    for (Icon value : Icon.values()) {
-      icons.add(value.name());
+        return mChars;
     }
 
-    return icons;
-  }
-
-  @Override public String getAuthor() {
-    return "Lally Elias";
-  }
-
-  @Override public String getUrl() {
-    return "http://themify.me/themify-icons";
-  }
-
-  @Override public String getDescription() {
-    return "Themify Icons is a complete set of icons for use in web design and apps, consisting of 320+ pixel-perfect, hand-crafted icons that draw inspiration from Apple iOS 7.";
-  }
-
-  @Override public String getLicense() {
-    return "SIL Open Font License (OFL)";
-  }
-
-  @Override public String getLicenseUrl() {
-    return "http://scripts.sil.org/OFL";
-  }
-
-  @Override
-  public Font getTypeface(AbilityContext context) {
-    if (typeface == null) {
-      RawFileEntry rawFileEntry = context.getResourceManager()
-              .getRawFileEntry("resources/rawfile/" + TTF_FILE);
-      try {
-        File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-        Font.Builder newTypeface = new Font.Builder(file);
-        Font builtFont = newTypeface.build();
-        typeface = builtFont;
-        return builtFont;
-      } catch (Exception e) {
-        throw new IllegalStateException(e);
-      }
-    }
-    return  typeface;
-  }
-
-  private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-    byte[] buf;
-    try (Resource resource = rawFileEntry.openRawFile();
-         RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-      File file = new File(ctx.getCacheDir(), filename);
-
-      buf = new byte[(int) rawFileDescriptor.getFileSize()];
-      int bytesRead = resource.read(buf);
-      if (bytesRead != buf.length) {
-        throw new IOException("Asset read failed");
-      }
-      FileOutputStream output = new FileOutputStream(file);
-      output.write(buf, 0, bytesRead);
-      output.close();
-      return file;
-    } catch (IOException ex) {
-      throw new IllegalStateException(ex);
-    }
-  }
-
-  public enum Icon implements IIcon {
-    thei_wand('\ue600'),
-    thei_volume('\ue601'),
-    thei_user('\ue602'),
-    thei_unlock('\ue603'),
-    thei_unlink('\ue604'),
-    thei_trash('\ue605'),
-    thei_thought('\ue606'),
-    thei_target('\ue607'),
-    thei_tag('\ue608'),
-    thei_tablet('\ue609'),
-    thei_star('\ue60a'),
-    thei_spray('\ue60b'),
-    thei_signal('\ue60c'),
-    thei_shopping_cart('\ue60d'),
-    thei_shopping_cart_full('\ue60e'),
-    thei_settings('\ue60f'),
-    thei_search('\ue610'),
-    thei_zoom_in('\ue611'),
-    thei_zoom_out('\ue612'),
-    thei_cut('\ue613'),
-    thei_ruler('\ue614'),
-    thei_ruler_pencil('\ue615'),
-    thei_ruler_alt('\ue616'),
-    thei_bookmark('\ue617'),
-    thei_bookmark_alt('\ue618'),
-    thei_reload('\ue619'),
-    thei_plus('\ue61a'),
-    thei_pin('\ue61b'),
-    thei_pencil('\ue61c'),
-    thei_pencil_alt('\ue61d'),
-    thei_paint_roller('\ue61e'),
-    thei_paint_bucket('\ue61f'),
-    thei_na('\ue620'),
-    thei_mobile('\ue621'),
-    thei_minus('\ue622'),
-    thei_medall('\ue623'),
-    thei_medall_alt('\ue624'),
-    thei_marker('\ue625'),
-    thei_marker_alt('\ue626'),
-    thei_arrow_up('\ue627'),
-    thei_arrow_right('\ue628'),
-    thei_arrow_left('\ue629'),
-    thei_arrow_down('\ue62a'),
-    thei_lock('\ue62b'),
-    thei_location_arrow('\ue62c'),
-    thei_link('\ue62d'),
-    thei_layout('\ue62e'),
-    thei_layers('\ue62f'),
-    thei_layers_alt('\ue630'),
-    thei_key('\ue631'),
-    thei_import('\ue632'),
-    thei_image('\ue633'),
-    thei_heart('\ue634'),
-    thei_heart_broken('\ue635'),
-    thei_hand_stop('\ue636'),
-    thei_hand_open('\ue637'),
-    thei_hand_drag('\ue638'),
-    thei_folder('\ue639'),
-    thei_flag('\ue63a'),
-    thei_flag_alt('\ue63b'),
-    thei_flag_alt_2('\ue63c'),
-    thei_eye('\ue63d'),
-    thei_export('\ue63e'),
-    thei_exchange_vertical('\ue63f'),
-    thei_desktop('\ue640'),
-    thei_cup('\ue641'),
-    thei_crown('\ue642'),
-    thei_comments('\ue643'),
-    thei_comment('\ue644'),
-    thei_comment_alt('\ue645'),
-    thei_close('\ue646'),
-    thei_clip('\ue647'),
-    thei_angle_up('\ue648'),
-    thei_angle_right('\ue649'),
-    thei_angle_left('\ue64a'),
-    thei_angle_down('\ue64b'),
-    thei_check('\ue64c'),
-    thei_check_box('\ue64d'),
-    thei_camera('\ue64e'),
-    thei_announcement('\ue64f'),
-    thei_brush('\ue650'),
-    thei_briefcase('\ue651'),
-    thei_bolt('\ue652'),
-    thei_bolt_alt('\ue653'),
-    thei_blackboard('\ue654'),
-    thei_bag('\ue655'),
-    thei_move('\ue656'),
-    thei_arrows_vertical('\ue657'),
-    thei_arrows_horizontal('\ue658'),
-    thei_fullscreen('\ue659'),
-    thei_arrow_top_right('\ue65a'),
-    thei_arrow_top_left('\ue65b'),
-    thei_arrow_circle_up('\ue65c'),
-    thei_arrow_circle_right('\ue65d'),
-    thei_arrow_circle_left('\ue65e'),
-    thei_arrow_circle_down('\ue65f'),
-    thei_angle_double_up('\ue660'),
-    thei_angle_double_right('\ue661'),
-    thei_angle_double_left('\ue662'),
-    thei_angle_double_down('\ue663'),
-    thei_zip('\ue664'),
-    thei_world('\ue665'),
-    thei_wheelchair('\ue666'),
-    thei_view_list('\ue667'),
-    thei_view_list_alt('\ue668'),
-    thei_view_grid('\ue669'),
-    thei_uppercase('\ue66a'),
-    thei_upload('\ue66b'),
-    thei_underline('\ue66c'),
-    thei_truck('\ue66d'),
-    thei_timer('\ue66e'),
-    thei_ticket('\ue66f'),
-    thei_thumb_up('\ue670'),
-    thei_thumb_down('\ue671'),
-    thei_text('\ue672'),
-    thei_stats_up('\ue673'),
-    thei_stats_down('\ue674'),
-    thei_split_v('\ue675'),
-    thei_split_h('\ue676'),
-    thei_smallcap('\ue677'),
-    thei_shine('\ue678'),
-    thei_shift_right('\ue679'),
-    thei_shift_left('\ue67a'),
-    thei_shield('\ue67b'),
-    thei_notepad('\ue67c'),
-    thei_server('\ue67d'),
-    thei_quote_right('\ue67e'),
-    thei_quote_left('\ue67f'),
-    thei_pulse('\ue680'),
-    thei_printer('\ue681'),
-    thei_power_off('\ue682'),
-    thei_plug('\ue683'),
-    thei_pie_chart('\ue684'),
-    thei_paragraph('\ue685'),
-    thei_panel('\ue686'),
-    thei_package('\ue687'),
-    thei_music('\ue688'),
-    thei_music_alt('\ue689'),
-    thei_mouse('\ue68a'),
-    thei_mouse_alt('\ue68b'),
-    thei_money('\ue68c'),
-    thei_microphone('\ue68d'),
-    thei_menu('\ue68e'),
-    thei_menu_alt('\ue68f'),
-    thei_map('\ue690'),
-    thei_map_alt('\ue691'),
-    thei_loop('\ue692'),
-    thei_location_pin('\ue693'),
-    thei_list('\ue694'),
-    thei_light_bulb('\ue695'),
-    thei_Italic('\ue696'),
-    thei_info('\ue697'),
-    thei_infinite('\ue698'),
-    thei_id_badge('\ue699'),
-    thei_hummer('\ue69a'),
-    thei_home('\ue69b'),
-    thei_help('\ue69c'),
-    thei_headphone('\ue69d'),
-    thei_harddrives('\ue69e'),
-    thei_harddrive('\ue69f'),
-    thei_gift('\ue6a0'),
-    thei_game('\ue6a1'),
-    thei_filter('\ue6a2'),
-    thei_files('\ue6a3'),
-    thei_file('\ue6a4'),
-    thei_eraser('\ue6a5'),
-    thei_envelope('\ue6a6'),
-    thei_download('\ue6a7'),
-    thei_direction('\ue6a8'),
-    thei_direction_alt('\ue6a9'),
-    thei_dashboard('\ue6aa'),
-    thei_control_stop('\ue6ab'),
-    thei_control_shuffle('\ue6ac'),
-    thei_control_play('\ue6ad'),
-    thei_control_pause('\ue6ae'),
-    thei_control_forward('\ue6af'),
-    thei_control_backward('\ue6b0'),
-    thei_cloud('\ue6b1'),
-    thei_cloud_up('\ue6b2'),
-    thei_cloud_down('\ue6b3'),
-    thei_clipboard('\ue6b4'),
-    thei_car('\ue6b5'),
-    thei_calendar('\ue6b6'),
-    thei_book('\ue6b7'),
-    thei_bell('\ue6b8'),
-    thei_basketball('\ue6b9'),
-    thei_bar_chart('\ue6ba'),
-    thei_bar_chart_alt('\ue6bb'),
-    thei_back_right('\ue6bc'),
-    thei_back_left('\ue6bd'),
-    thei_arrows_corner('\ue6be'),
-    thei_archive('\ue6bf'),
-    thei_anchor('\ue6c0'),
-    thei_align_right('\ue6c1'),
-    thei_align_left('\ue6c2'),
-    thei_align_justify('\ue6c3'),
-    thei_align_center('\ue6c4'),
-    thei_alert('\ue6c5'),
-    thei_alarm_clock('\ue6c6'),
-    thei_agenda('\ue6c7'),
-    thei_write('\ue6c8'),
-    thei_window('\ue6c9'),
-    thei_widgetized('\ue6ca'),
-    thei_widget('\ue6cb'),
-    thei_widget_alt('\ue6cc'),
-    thei_wallet('\ue6cd'),
-    thei_video_clapper('\ue6ce'),
-    thei_video_camera('\ue6cf'),
-    thei_vector('\ue6d0'),
-    thei_themify_logo('\ue6d1'),
-    thei_themify_favicon('\ue6d2'),
-    thei_themify_favicon_alt('\ue6d3'),
-    thei_support('\ue6d4'),
-    thei_stamp('\ue6d5'),
-    thei_split_v_alt('\ue6d6'),
-    thei_slice('\ue6d7'),
-    thei_shortcode('\ue6d8'),
-    thei_shift_right_alt('\ue6d9'),
-    thei_shift_left_alt('\ue6da'),
-    thei_ruler_alt_2('\ue6db'),
-    thei_receipt('\ue6dc'),
-    thei_pin2('\ue6dd'),
-    thei_pin_alt('\ue6de'),
-    thei_pencil_alt2('\ue6df'),
-    thei_palette('\ue6e0'),
-    thei_more('\ue6e1'),
-    thei_more_alt('\ue6e2'),
-    thei_microphone_alt('\ue6e3'),
-    thei_magnet('\ue6e4'),
-    thei_line_double('\ue6e5'),
-    thei_line_dotted('\ue6e6'),
-    thei_line_dashed('\ue6e7'),
-    thei_layout_width_full('\ue6e8'),
-    thei_layout_width_default('\ue6e9'),
-    thei_layout_width_default_alt('\ue6ea'),
-    thei_layout_tab('\ue6eb'),
-    thei_layout_tab_window('\ue6ec'),
-    thei_layout_tab_v('\ue6ed'),
-    thei_layout_tab_min('\ue6ee'),
-    thei_layout_slider('\ue6ef'),
-    thei_layout_slider_alt('\ue6f0'),
-    thei_layout_sidebar_right('\ue6f1'),
-    thei_layout_sidebar_none('\ue6f2'),
-    thei_layout_sidebar_left('\ue6f3'),
-    thei_layout_placeholder('\ue6f4'),
-    thei_layout_menu('\ue6f5'),
-    thei_layout_menu_v('\ue6f6'),
-    thei_layout_menu_separated('\ue6f7'),
-    thei_layout_menu_full('\ue6f8'),
-    thei_layout_media_right_alt('\ue6f9'),
-    thei_layout_media_right('\ue6fa'),
-    thei_layout_media_overlay('\ue6fb'),
-    thei_layout_media_overlay_alt('\ue6fc'),
-    thei_layout_media_overlay_alt_2('\ue6fd'),
-    thei_layout_media_left_alt('\ue6fe'),
-    thei_layout_media_left('\ue6ff'),
-    thei_layout_media_center_alt('\ue700'),
-    thei_layout_media_center('\ue701'),
-    thei_layout_list_thumb('\ue702'),
-    thei_layout_list_thumb_alt('\ue703'),
-    thei_layout_list_post('\ue704'),
-    thei_layout_list_large_image('\ue705'),
-    thei_layout_line_solid('\ue706'),
-    thei_layout_grid4('\ue707'),
-    thei_layout_grid3('\ue708'),
-    thei_layout_grid2('\ue709'),
-    thei_layout_grid2_thumb('\ue70a'),
-    thei_layout_cta_right('\ue70b'),
-    thei_layout_cta_left('\ue70c'),
-    thei_layout_cta_center('\ue70d'),
-    thei_layout_cta_btn_right('\ue70e'),
-    thei_layout_cta_btn_left('\ue70f'),
-    thei_layout_column4('\ue710'),
-    thei_layout_column3('\ue711'),
-    thei_layout_column2('\ue712'),
-    thei_layout_accordion_separated('\ue713'),
-    thei_layout_accordion_merged('\ue714'),
-    thei_layout_accordion_list('\ue715'),
-    thei_ink_pen('\ue716'),
-    thei_info_alt('\ue717'),
-    thei_help_alt('\ue718'),
-    thei_headphone_alt('\ue719'),
-    thei_hand_point_up('\ue71a'),
-    thei_hand_point_right('\ue71b'),
-    thei_hand_point_left('\ue71c'),
-    thei_hand_point_down('\ue71d'),
-    thei_gallery('\ue71e'),
-    thei_face_smile('\ue71f'),
-    thei_face_sad('\ue720'),
-    thei_credit_card('\ue721'),
-    thei_control_skip_forward('\ue722'),
-    thei_control_skip_backward('\ue723'),
-    thei_control_record('\ue724'),
-    thei_control_eject('\ue725'),
-    thei_comments_smiley('\ue726'),
-    thei_brush_alt('\ue727'),
-    thei_youtube('\ue728'),
-    thei_vimeo('\ue729'),
-    thei_twitter('\ue72a'),
-    thei_time('\ue72b'),
-    thei_tumblr('\ue72c'),
-    thei_skype('\ue72d'),
-    thei_share('\ue72e'),
-    thei_share_alt('\ue72f'),
-    thei_rocket('\ue730'),
-    thei_pinterest('\ue731'),
-    thei_new_window('\ue732'),
-    thei_microsoft('\ue733'),
-    thei_list_ol('\ue734'),
-    thei_linkedin('\ue735'),
-    thei_layout_sidebar_2('\ue736'),
-    thei_layout_grid4_alt('\ue737'),
-    thei_layout_grid3_alt('\ue738'),
-    thei_layout_grid2_alt('\ue739'),
-    thei_layout_column4_alt('\ue73a'),
-    thei_layout_column3_alt('\ue73b'),
-    thei_layout_column2_alt('\ue73c'),
-    thei_instagram('\ue73d'),
-    thei_google('\ue73e'),
-    thei_github('\ue73f'),
-    thei_flickr('\ue740'),
-    thei_facebook('\ue741'),
-    thei_dropbox('\ue742'),
-    thei_dribbble('\ue743'),
-    thei_apple('\ue744'),
-    thei_android('\ue745'),
-    thei_save('\ue746'),
-    thei_save_alt('\ue747'),
-    thei_yahoo('\ue748'),
-    thei_wordpress('\ue749'),
-    thei_vimeo_alt('\ue74a'),
-    thei_twitter_alt('\ue74b'),
-    thei_tumblr_alt('\ue74c'),
-    thei_trello('\ue74d'),
-    thei_stack_overflow('\ue74e'),
-    thei_soundcloud('\ue74f'),
-    thei_sharethis('\ue750'),
-    thei_sharethis_alt('\ue751'),
-    thei_reddit('\ue752'),
-    thei_pinterest_alt('\ue753'),
-    thei_microsoft_alt('\ue754'),
-    thei_linux('\ue755'),
-    thei_jsfiddle('\ue756'),
-    thei_joomla('\ue757'),
-    thei_html5('\ue758'),
-    thei_flickr_alt('\ue759'),
-    thei_email('\ue75a'),
-    thei_drupal('\ue75b'),
-    thei_dropbox_alt('\ue75c'),
-    thei_css3('\ue75d'),
-    thei_rss('\ue75e'),
-    thei_rss_alt('\ue75f');
-
-    char character;
-
-    Icon(char character) {
-      this.character = character;
+    @Override public String getMappingPrefix() {
+        return MAPPING_FONT_PREFIX;
     }
 
-    public String getFormattedName() {
-      return "{" + name() + "}";
+    @Override public String getFontName() {
+        return "Themify Icons";
     }
 
-    public char getCharacter() {
-      return character;
+    @Override public String getVersion() {
+        return "0.1.2";
     }
 
-    public String getName() {
-      return name();
+    @Override public int getIconCount() {
+        return mChars.size();
     }
 
-    // remember the typeface so we can use it later
-    private static ITypeface typeface;
+    @Override public Collection<String> getIcons() {
+        Collection<String> icons = new LinkedList<>();
 
-    public ITypeface getTypeface() {
-      if (typeface == null) {
-        typeface = new ThemifyIcons();
-      }
-      return typeface;
+        for (Icon value : Icon.values()) {
+            icons.add(value.name());
+        }
+
+        return icons;
     }
-  }
+
+    @Override public String getAuthor() {
+        return "Lally Elias";
+    }
+
+    @Override public String getUrl() {
+        return "http://themify.me/themify-icons";
+    }
+
+    @Override public String getDescription() {
+        return "Themify Icons is a complete set of icons for use in web design and apps, consisting of 320+ pixel-perfect, hand-crafted icons that draw inspiration from Apple iOS 7.";
+    }
+
+    @Override public String getLicense() {
+        return "SIL Open Font License (OFL)";
+    }
+
+    @Override public String getLicenseUrl() {
+        return "http://scripts.sil.org/OFL";
+    }
+
+    @Override
+    public Font getTypeface(AbilityContext context) {
+        if (typeface == null) {
+            RawFileEntry rawFileEntry = context.getResourceManager()
+                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+            try {
+                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
+                Font.Builder newTypeface = new Font.Builder(file);
+                Font builtFont = newTypeface.build();
+                typeface = builtFont;
+                return builtFont;
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+        }
+        return  typeface;
+    }
+
+    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
+        byte[] buf;
+        try (Resource resource = rawFileEntry.openRawFile();
+             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
+            File file = new File(ctx.getCacheDir(), filename);
+
+            buf = new byte[(int) rawFileDescriptor.getFileSize()];
+            int bytesRead = resource.read(buf);
+            if (bytesRead != buf.length) {
+                throw new IOException("Asset read failed");
+            }
+            FileOutputStream output = new FileOutputStream(file);
+            output.write(buf, 0, bytesRead);
+            output.close();
+            return file;
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    public enum Icon implements IIcon {
+        THEI_WAND('\ue600'),
+        THEI_VOLUME('\ue601'),
+        THEI_USER('\ue602'),
+        THEI_UNLOCK('\ue603'),
+        THEI_UNLINK('\ue604'),
+        THEI_TRASH('\ue605'),
+        THEI_THOUGHT('\ue606'),
+        THEI_TARGET('\ue607'),
+        THEI_TAG('\ue608'),
+        THEI_TABLET('\ue609'),
+        THEI_STAR('\ue60a'),
+        THEI_SPRAY('\ue60b'),
+        THEI_SIGNAL('\ue60c'),
+        THEI_SHOPPING_CART('\ue60d'),
+        THEI_SHOPPING_CART_FULL('\ue60e'),
+        THEI_SETTINGS('\ue60f'),
+        THEI_SEARCH('\ue610'),
+        THEI_ZOOM_IN('\ue611'),
+        THEI_ZOOM_OUT('\ue612'),
+        THEI_CUT('\ue613'),
+        THEI_RULER('\ue614'),
+        THEI_RULER_PENCIL('\ue615'),
+        THEI_RULER_ALT('\ue616'),
+        THEI_BOOKMARK('\ue617'),
+        THEI_BOOKMARK_ALT('\ue618'),
+        THEI_RELOAD('\ue619'),
+        THEI_PLUS('\ue61a'),
+        THEI_PIN('\ue61b'),
+        THEI_PENCIL('\ue61c'),
+        THEI_PENCIL_ALT('\ue61d'),
+        THEI_PAINT_ROLLER('\ue61e'),
+        THEI_PAINT_BUCKET('\ue61f'),
+        THEI_NA('\ue620'),
+        THEI_MOBILE('\ue621'),
+        THEI_MINUS('\ue622'),
+        THEI_MEDALL('\ue623'),
+        THEI_MEDALL_ALT('\ue624'),
+        THEI_MARKER('\ue625'),
+        THEI_MARKER_ALT('\ue626'),
+        THEI_ARROW_UP('\ue627'),
+        THEI_ARROW_RIGHT('\ue628'),
+        THEI_ARROW_LEFT('\ue629'),
+        THEI_ARROW_DOWN('\ue62a'),
+        THEI_LOCK('\ue62b'),
+        THEI_LOCATION_ARROW('\ue62c'),
+        THEI_LINK('\ue62d'),
+        THEI_LAYOUT('\ue62e'),
+        THEI_LAYERS('\ue62f'),
+        THEI_LAYERS_ALT('\ue630'),
+        THEI_KEY('\ue631'),
+        THEI_IMPORT('\ue632'),
+        THEI_IMAGE('\ue633'),
+        THEI_HEART('\ue634'),
+        THEI_HEART_BROKEN('\ue635'),
+        THEI_HAND_STOP('\ue636'),
+        THEI_HAND_OPEN('\ue637'),
+        THEI_HAND_DRAG('\ue638'),
+        THEI_FOLDER('\ue639'),
+        THEI_FLAG('\ue63a'),
+        THEI_FLAG_ALT('\ue63b'),
+        THEI_FLAG_ALT_2('\ue63c'),
+        THEI_EYE('\ue63d'),
+        THEI_EXPORT('\ue63e'),
+        THEI_EXCHANGE_VERTICAL('\ue63f'),
+        THEI_DESKTOP('\ue640'),
+        THEI_CUP('\ue641'),
+        THEI_CROWN('\ue642'),
+        THEI_COMMENTS('\ue643'),
+        THEI_COMMENT('\ue644'),
+        THEI_COMMENT_ALT('\ue645'),
+        THEI_CLOSE('\ue646'),
+        THEI_CLIP('\ue647'),
+        THEI_ANGLE_UP('\ue648'),
+        THEI_ANGLE_RIGHT('\ue649'),
+        THEI_ANGLE_LEFT('\ue64a'),
+        THEI_ANGLE_DOWN('\ue64b'),
+        THEI_CHECK('\ue64c'),
+        THEI_CHECK_BOX('\ue64d'),
+        THEI_CAMERA('\ue64e'),
+        THEI_ANNOUNCEMENT('\ue64f'),
+        THEI_BRUSH('\ue650'),
+        THEI_BRIEFCASE('\ue651'),
+        THEI_BOLT('\ue652'),
+        THEI_BOLT_ALT('\ue653'),
+        THEI_BLACKBOARD('\ue654'),
+        THEI_BAG('\ue655'),
+        THEI_MOVE('\ue656'),
+        THEI_ARROWS_VERTICAL('\ue657'),
+        THEI_ARROWS_HORIZONTAL('\ue658'),
+        THEI_FULLSCREEN('\ue659'),
+        THEI_ARROW_TOP_RIGHT('\ue65a'),
+        THEI_ARROW_TOP_LEFT('\ue65b'),
+        THEI_ARROW_CIRCLE_UP('\ue65c'),
+        THEI_ARROW_CIRCLE_RIGHT('\ue65d'),
+        THEI_ARROW_CIRCLE_LEFT('\ue65e'),
+        THEI_ARROW_CIRCLE_DOWN('\ue65f'),
+        THEI_ANGLE_DOUBLE_UP('\ue660'),
+        THEI_ANGLE_DOUBLE_RIGHT('\ue661'),
+        THEI_ANGLE_DOUBLE_LEFT('\ue662'),
+        THEI_ANGLE_DOUBLE_DOWN('\ue663'),
+        THEI_ZIP('\ue664'),
+        THEI_WORLD('\ue665'),
+        THEI_WHEELCHAIR('\ue666'),
+        THEI_VIEW_LIST('\ue667'),
+        THEI_VIEW_LIST_ALT('\ue668'),
+        THEI_VIEW_GRID('\ue669'),
+        THEI_UPPERCASE('\ue66a'),
+        THEI_UPLOAD('\ue66b'),
+        THEI_UNDERLINE('\ue66c'),
+        THEI_TRUCK('\ue66d'),
+        THEI_TIMER('\ue66e'),
+        THEI_TICKET('\ue66f'),
+        THEI_THUMB_UP('\ue670'),
+        THEI_THUMB_DOWN('\ue671'),
+        THEI_TEXT('\ue672'),
+        THEI_STATS_UP('\ue673'),
+        THEI_STATS_DOWN('\ue674'),
+        THEI_SPLIT_V('\ue675'),
+        THEI_SPLIT_H('\ue676'),
+        THEI_SMALLCAP('\ue677'),
+        THEI_SHINE('\ue678'),
+        THEI_SHIFT_RIGHT('\ue679'),
+        THEI_SHIFT_LEFT('\ue67a'),
+        THEI_SHIELD('\ue67b'),
+        THEI_NOTEPAD('\ue67c'),
+        THEI_SERVER('\ue67d'),
+        THEI_QUOTE_RIGHT('\ue67e'),
+        THEI_QUOTE_LEFT('\ue67f'),
+        THEI_PULSE('\ue680'),
+        THEI_PRINTER('\ue681'),
+        THEI_POWER_OFF('\ue682'),
+        THEI_PLUG('\ue683'),
+        THEI_PIE_CHART('\ue684'),
+        THEI_PARAGRAPH('\ue685'),
+        THEI_PANEL('\ue686'),
+        THEI_PACKAGE('\ue687'),
+        THEI_MUSIC('\ue688'),
+        THEI_MUSIC_ALT('\ue689'),
+        THEI_MOUSE('\ue68a'),
+        THEI_MOUSE_ALT('\ue68b'),
+        THEI_MONEY('\ue68c'),
+        THEI_MICROPHONE('\ue68d'),
+        THEI_MENU('\ue68e'),
+        THEI_MENU_ALT('\ue68f'),
+        THEI_MAP('\ue690'),
+        THEI_MAP_ALT('\ue691'),
+        THEI_LOOP('\ue692'),
+        THEI_LOCATION_PIN('\ue693'),
+        THEI_LIST('\ue694'),
+        THEI_LIGHT_BULB('\ue695'),
+        THEI_ITALIC('\ue696'),
+        THEI_INFO('\ue697'),
+        THEI_INFINITE('\ue698'),
+        THEI_ID_BADGE('\ue699'),
+        THEI_HUMMER('\ue69a'),
+        THEI_HOME('\ue69b'),
+        THEI_HELP('\ue69c'),
+        THEI_HEADPHONE('\ue69d'),
+        THEI_HARDDRIVES('\ue69e'),
+        THEI_HARDDRIVE('\ue69f'),
+        THEI_GIFT('\ue6a0'),
+        THEI_GAME('\ue6a1'),
+        THEI_FILTER('\ue6a2'),
+        THEI_FILES('\ue6a3'),
+        THEI_FILE('\ue6a4'),
+        THEI_ERASER('\ue6a5'),
+        THEI_ENVELOPE('\ue6a6'),
+        THEI_DOWNLOAD('\ue6a7'),
+        THEI_DIRECTION('\ue6a8'),
+        THEI_DIRECTION_ALT('\ue6a9'),
+        THEI_DASHBOARD('\ue6aa'),
+        THEI_CONTROL_STOP('\ue6ab'),
+        THEI_CONTROL_SHUFFLE('\ue6ac'),
+        THEI_CONTROL_PLAY('\ue6ad'),
+        THEI_CONTROL_PAUSE('\ue6ae'),
+        THEI_CONTROL_FORWARD('\ue6af'),
+        THEI_CONTROL_BACKWARD('\ue6b0'),
+        THEI_CLOUD('\ue6b1'),
+        THEI_CLOUD_UP('\ue6b2'),
+        THEI_CLOUD_DOWN('\ue6b3'),
+        THEI_CLIPBOARD('\ue6b4'),
+        THEI_CAR('\ue6b5'),
+        THEI_CALENDAR('\ue6b6'),
+        THEI_BOOK('\ue6b7'),
+        THEI_BELL('\ue6b8'),
+        THEI_BASKETBALL('\ue6b9'),
+        THEI_BAR_CHART('\ue6ba'),
+        THEI_BAR_CHART_ALT('\ue6bb'),
+        THEI_BACK_RIGHT('\ue6bc'),
+        THEI_BACK_LEFT('\ue6bd'),
+        THEI_ARROWS_CORNER('\ue6be'),
+        THEI_ARCHIVE('\ue6bf'),
+        THEI_ANCHOR('\ue6c0'),
+        THEI_ALIGN_RIGHT('\ue6c1'),
+        THEI_ALIGN_LEFT('\ue6c2'),
+        THEI_ALIGN_JUSTIFY('\ue6c3'),
+        THEI_ALIGN_CENTER('\ue6c4'),
+        THEI_ALERT('\ue6c5'),
+        THEI_ALARM_CLOCK('\ue6c6'),
+        THEI_AGENDA('\ue6c7'),
+        THEI_WRITE('\ue6c8'),
+        THEI_WINDOW('\ue6c9'),
+        THEI_WIDGETIZED('\ue6ca'),
+        THEI_WIDGET('\ue6cb'),
+        THEI_WIDGET_ALT('\ue6cc'),
+        THEI_WALLET('\ue6cd'),
+        THEI_VIDEO_CLAPPER('\ue6ce'),
+        THEI_VIDEO_CAMERA('\ue6cf'),
+        THEI_VECTOR('\ue6d0'),
+        THEI_THEMIFY_LOGO('\ue6d1'),
+        THEI_THEMIFY_FAVICON('\ue6d2'),
+        THEI_THEMIFY_FAVICON_ALT('\ue6d3'),
+        THEI_SUPPORT('\ue6d4'),
+        THEI_STAMP('\ue6d5'),
+        THEI_SPLIT_V_ALT('\ue6d6'),
+        THEI_SLICE('\ue6d7'),
+        THEI_SHORTCODE('\ue6d8'),
+        THEI_SHIFT_RIGHT_ALT('\ue6d9'),
+        THEI_SHIFT_LEFT_ALT('\ue6da'),
+        THEI_RULER_ALT_2('\ue6db'),
+        THEI_RECEIPT('\ue6dc'),
+        THEI_PIN2('\ue6dd'),
+        THEI_PIN_ALT('\ue6de'),
+        THEI_PENCIL_ALT2('\ue6df'),
+        THEI_PALETTE('\ue6e0'),
+        THEI_MORE('\ue6e1'),
+        THEI_MORE_ALT('\ue6e2'),
+        THEI_MICROPHONE_ALT('\ue6e3'),
+        THEI_MAGNET('\ue6e4'),
+        THEI_LINE_DOUBLE('\ue6e5'),
+        THEI_LINE_DOTTED('\ue6e6'),
+        THEI_LINE_DASHED('\ue6e7'),
+        THEI_LAYOUT_WIDTH_FULL('\ue6e8'),
+        THEI_LAYOUT_WIDTH_DEFAULT('\ue6e9'),
+        THEI_LAYOUT_WIDTH_DEFAULT_ALT('\ue6ea'),
+        THEI_LAYOUT_TAB('\ue6eb'),
+        THEI_LAYOUT_TAB_WINDOW('\ue6ec'),
+        THEI_LAYOUT_TAB_V('\ue6ed'),
+        THEI_LAYOUT_TAB_MIN('\ue6ee'),
+        THEI_LAYOUT_SLIDER('\ue6ef'),
+        THEI_LAYOUT_SLIDER_ALT('\ue6f0'),
+        THEI_LAYOUT_SIDEBAR_RIGHT('\ue6f1'),
+        THEI_LAYOUT_SIDEBAR_NONE('\ue6f2'),
+        THEI_LAYOUT_SIDEBAR_LEFT('\ue6f3'),
+        THEI_LAYOUT_PLACEHOLDER('\ue6f4'),
+        THEI_LAYOUT_MENU('\ue6f5'),
+        THEI_LAYOUT_MENU_V('\ue6f6'),
+        THEI_LAYOUT_MENU_SEPARATED('\ue6f7'),
+        THEI_LAYOUT_MENU_FULL('\ue6f8'),
+        THEI_LAYOUT_MEDIA_RIGHT_ALT('\ue6f9'),
+        THEI_LAYOUT_MEDIA_RIGHT('\ue6fa'),
+        THEI_LAYOUT_MEDIA_OVERLAY('\ue6fb'),
+        THEI_LAYOUT_MEDIA_OVERLAY_ALT('\ue6fc'),
+        THEI_LAYOUT_MEDIA_OVERLAY_ALT_2('\ue6fd'),
+        THEI_LAYOUT_MEDIA_LEFT_ALT('\ue6fe'),
+        THEI_LAYOUT_MEDIA_LEFT('\ue6ff'),
+        THEI_LAYOUT_MEDIA_CENTER_ALT('\ue700'),
+        THEI_LAYOUT_MEDIA_CENTER('\ue701'),
+        THEI_LAYOUT_LIST_THUMB('\ue702'),
+        THEI_LAYOUT_LIST_THUMB_ALT('\ue703'),
+        THEI_LAYOUT_LIST_POST('\ue704'),
+        THEI_LAYOUT_LIST_LARGE_IMAGE('\ue705'),
+        THEI_LAYOUT_LINE_SOLID('\ue706'),
+        THEI_LAYOUT_GRID4('\ue707'),
+        THEI_LAYOUT_GRID3('\ue708'),
+        THEI_LAYOUT_GRID2('\ue709'),
+        THEI_LAYOUT_GRID2_THUMB('\ue70a'),
+        THEI_LAYOUT_CTA_RIGHT('\ue70b'),
+        THEI_LAYOUT_CTA_LEFT('\ue70c'),
+        THEI_LAYOUT_CTA_CENTER('\ue70d'),
+        THEI_LAYOUT_CTA_BTN_RIGHT('\ue70e'),
+        THEI_LAYOUT_CTA_BTN_LEFT('\ue70f'),
+        THEI_LAYOUT_COLUMN4('\ue710'),
+        THEI_LAYOUT_COLUMN3('\ue711'),
+        THEI_LAYOUT_COLUMN2('\ue712'),
+        THEI_LAYOUT_ACCORDION_SEPARATED('\ue713'),
+        THEI_LAYOUT_ACCORDION_MERGED('\ue714'),
+        THEI_LAYOUT_ACCORDION_LIST('\ue715'),
+        THEI_INK_PEN('\ue716'),
+        THEI_INFO_ALT('\ue717'),
+        THEI_HELP_ALT('\ue718'),
+        THEI_HEADPHONE_ALT('\ue719'),
+        THEI_HAND_POINT_UP('\ue71a'),
+        THEI_HAND_POINT_RIGHT('\ue71b'),
+        THEI_HAND_POINT_LEFT('\ue71c'),
+        THEI_HAND_POINT_DOWN('\ue71d'),
+        THEI_GALLERY('\ue71e'),
+        THEI_FACE_SMILE('\ue71f'),
+        THEI_FACE_SAD('\ue720'),
+        THEI_CREDIT_CARD('\ue721'),
+        THEI_CONTROL_SKIP_FORWARD('\ue722'),
+        THEI_CONTROL_SKIP_BACKWARD('\ue723'),
+        THEI_CONTROL_RECORD('\ue724'),
+        THEI_CONTROL_EJECT('\ue725'),
+        THEI_COMMENTS_SMILEY('\ue726'),
+        THEI_BRUSH_ALT('\ue727'),
+        THEI_YOUTUBE('\ue728'),
+        THEI_VIMEO('\ue729'),
+        THEI_TWITTER('\ue72a'),
+        THEI_TIME('\ue72b'),
+        THEI_TUMBLR('\ue72c'),
+        THEI_SKYPE('\ue72d'),
+        THEI_SHARE('\ue72e'),
+        THEI_SHARE_ALT('\ue72f'),
+        THEI_ROCKET('\ue730'),
+        THEI_PINTEREST('\ue731'),
+        THEI_NEW_WINDOW('\ue732'),
+        THEI_MICROSOFT('\ue733'),
+        THEI_LIST_OL('\ue734'),
+        THEI_LINKEDIN('\ue735'),
+        THEI_LAYOUT_SIDEBAR_2('\ue736'),
+        THEI_LAYOUT_GRID4_ALT('\ue737'),
+        THEI_LAYOUT_GRID3_ALT('\ue738'),
+        THEI_LAYOUT_GRID2_ALT('\ue739'),
+        THEI_LAYOUT_COLUMN4_ALT('\ue73a'),
+        THEI_LAYOUT_COLUMN3_ALT('\ue73b'),
+        THEI_LAYOUT_COLUMN2_ALT('\ue73c'),
+        THEI_INSTAGRAM('\ue73d'),
+        THEI_GOOGLE('\ue73e'),
+        THEI_GITHUB('\ue73f'),
+        THEI_FLICKR('\ue740'),
+        THEI_FACEBOOK('\ue741'),
+        THEI_DROPBOX('\ue742'),
+        THEI_DRIBBBLE('\ue743'),
+        THEI_APPLE('\ue744'),
+        THEI_ANDROID('\ue745'),
+        THEI_SAVE('\ue746'),
+        THEI_SAVE_ALT('\ue747'),
+        THEI_YAHOO('\ue748'),
+        THEI_WORDPRESS('\ue749'),
+        THEI_VIMEO_ALT('\ue74a'),
+        THEI_TWITTER_ALT('\ue74b'),
+        THEI_TUMBLR_ALT('\ue74c'),
+        THEI_TRELLO('\ue74d'),
+        THEI_STACK_OVERFLOW('\ue74e'),
+        THEI_SOUNDCLOUD('\ue74f'),
+        THEI_SHARETHIS('\ue750'),
+        THEI_SHARETHIS_ALT('\ue751'),
+        THEI_REDDIT('\ue752'),
+        THEI_PINTEREST_ALT('\ue753'),
+        THEI_MICROSOFT_ALT('\ue754'),
+        THEI_LINUX('\ue755'),
+        THEI_JSFIDDLE('\ue756'),
+        THEI_JOOMLA('\ue757'),
+        THEI_HTML5('\ue758'),
+        THEI_FLICKR_ALT('\ue759'),
+        THEI_EMAIL('\ue75a'),
+        THEI_DRUPAL('\ue75b'),
+        THEI_DROPBOX_ALT('\ue75c'),
+        THEI_CSS3('\ue75d'),
+        THEI_RSS('\ue75e'),
+        THEI_RSS_ALT('\ue75f');
+
+        char character;
+
+        Icon(char character) {
+            this.character = character;
+        }
+
+        public String getFormattedName() {
+            return "{" + name() + "}";
+        }
+
+        public char getCharacter() {
+            return character;
+        }
+
+        public String getName() {
+            return name();
+        }
+
+        // remember the typeface so we can use it later
+        private static ITypeface typeface;
+
+        public ITypeface getTypeface() {
+            if (typeface == null) {
+                typeface = new ThemifyIcons();
+            }
+            return typeface;
+        }
+    }
 }

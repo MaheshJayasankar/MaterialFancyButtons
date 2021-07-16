@@ -16,291 +16,291 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class MobiriseIcons implements ITypeface {
-  private static final String TTF_FILE = "mobirise-icons-v1.0.0.ttf";
-  private static final String MAPPING_FONT_PREFIX = "mbri";
+    private static final String TTF_FILE = "mobirise-icons-v1.0.0.ttf";
+    private static final String MAPPING_FONT_PREFIX = "MBRI";
 
-  private static Font typeface = null;
+    private static Font typeface = null;
 
-  private static HashMap<String, Character> mChars;
+    private static HashMap<String, Character> mChars;
 
-  @Override public IIcon getIcon(String key) {
-    return Icon.valueOf(key);
-  }
-
-  @Override public HashMap<String, Character> getCharacters() {
-    if (mChars == null) {
-      HashMap<String, Character> aChars = new HashMap<>();
-      for (Icon v : Icon.values()) {
-        aChars.put(v.name(), v.character);
-      }
-      mChars = aChars;
+    @Override public IIcon getIcon(String key) {
+        return Icon.valueOf(key);
     }
 
-    return mChars;
-  }
+    @Override public HashMap<String, Character> getCharacters() {
+        if (mChars == null) {
+            HashMap<String, Character> aChars = new HashMap<>();
+            for (Icon v : Icon.values()) {
+                aChars.put(v.name(), v.character);
+            }
+            mChars = aChars;
+        }
 
-  @Override public String getMappingPrefix() {
-    return MAPPING_FONT_PREFIX;
-  }
-
-  @Override public String getFontName() {
-    return "Mobirise Icons";
-  }
-
-  @Override public String getVersion() {
-    return "1.0.0";
-  }
-
-  @Override public int getIconCount() {
-    return mChars.size();
-  }
-
-  @Override public Collection<String> getIcons() {
-    Collection<String> icons = new LinkedList<>();
-
-    for (Icon value : Icon.values()) {
-      icons.add(value.name());
+        return mChars;
     }
 
-    return icons;
-  }
-
-  @Override public String getAuthor() {
-    return "Free Website Builder, https://mobirise.com/";
-  }
-
-  @Override public String getUrl() {
-    return "https://mobirise.com/";
-  }
-
-  @Override public String getDescription() {
-    return "A free, open source set of 150 elegant, pixel-perfect vector icons from Free Website Builder.";
-  }
-
-  @Override public String getLicense() {
-    return "CC BY 4.0.";
-  }
-
-  @Override public String getLicenseUrl() {
-    return "https://creativecommons.org/licenses/by/4.0/";
-  }
-
-  @Override
-  public Font getTypeface(AbilityContext context) {
-    if (typeface == null) {
-      RawFileEntry rawFileEntry = context.getResourceManager()
-              .getRawFileEntry("resources/rawfile/" + TTF_FILE);
-      try {
-        File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-        Font.Builder newTypeface = new Font.Builder(file);
-        Font builtFont = newTypeface.build();
-        typeface = builtFont;
-        return builtFont;
-      } catch (Exception e) {
-        throw new IllegalStateException(e);
-      }
-    }
-    return  typeface;
-  }
-
-  private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-    byte[] buf;
-    try (Resource resource = rawFileEntry.openRawFile();
-         RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-      File file = new File(ctx.getCacheDir(), filename);
-
-      buf = new byte[(int) rawFileDescriptor.getFileSize()];
-      int bytesRead = resource.read(buf);
-      if (bytesRead != buf.length) {
-        throw new IOException("Asset read failed");
-      }
-      FileOutputStream output = new FileOutputStream(file);
-      output.write(buf, 0, bytesRead);
-      output.close();
-      return file;
-    } catch (IOException ex) {
-      throw new IllegalStateException(ex);
-    }
-  }
-
-  public enum Icon implements IIcon {
-    mbri_add_submenu('\ue900'),
-    mbri_alert('\ue901'),
-    mbri_align_center('\ue902'),
-    mbri_align_justify('\ue903'),
-    mbri_align_left('\ue904'),
-    mbri_align_right('\ue905'),
-    mbri_android('\ue906'),
-    mbri_apple('\ue907'),
-    mbri_arrow_down('\ue908'),
-    mbri_arrow_next('\ue909'),
-    mbri_arrow_prev('\ue90a'),
-    mbri_arrow_up('\ue90b'),
-    mbri_bold('\ue90c'),
-    mbri_bookmark('\ue90d'),
-    mbri_bootstrap('\ue90e'),
-    mbri_briefcase('\ue90f'),
-    mbri_browse('\ue910'),
-    mbri_bulleted_list('\ue911'),
-    mbri_calendar('\ue912'),
-    mbri_camera('\ue913'),
-    mbri_cart_add('\ue914'),
-    mbri_cart_full('\ue915'),
-    mbri_cash('\ue916'),
-    mbri_change_style('\ue917'),
-    mbri_chat('\ue918'),
-    mbri_clock('\ue919'),
-    mbri_close('\ue91a'),
-    mbri_cloud('\ue91b'),
-    mbri_code('\ue91c'),
-    mbri_contact_form('\ue91d'),
-    mbri_credit_card('\ue91e'),
-    mbri_cursor_click('\ue91f'),
-    mbri_cust_feedback('\ue920'),
-    mbri_database('\ue921'),
-    mbri_delivery('\ue922'),
-    mbri_desktop('\ue923'),
-    mbri_devices('\ue924'),
-    mbri_down('\ue925'),
-    mbri_download('\ue926'),
-    mbri_drag_n_drop('\ue927'),
-    mbri_drag_n_drop2('\ue928'),
-    mbri_edit('\ue929'),
-    mbri_edit2('\ue92a'),
-    mbri_error('\ue92b'),
-    mbri_extension('\ue92c'),
-    mbri_features('\ue92d'),
-    mbri_file('\ue92e'),
-    mbri_flag('\ue92f'),
-    mbri_folder('\ue930'),
-    mbri_gift('\ue931'),
-    mbri_github('\ue932'),
-    mbri_globe_2('\ue933'),
-    mbri_globe('\ue934'),
-    mbri_growing_chart('\ue935'),
-    mbri_hearth('\ue936'),
-    mbri_help('\ue937'),
-    mbri_home('\ue938'),
-    mbri_hot_cup('\ue939'),
-    mbri_idea('\ue93a'),
-    mbri_image_gallery('\ue93b'),
-    mbri_image_slider('\ue93c'),
-    mbri_info('\ue93d'),
-    mbri_italic('\ue93e'),
-    mbri_key('\ue93f'),
-    mbri_laptop('\ue940'),
-    mbri_layers('\ue941'),
-    mbri_left_right('\ue942'),
-    mbri_left('\ue943'),
-    mbri_letter('\ue944'),
-    mbri_like('\ue945'),
-    mbri_link('\ue946'),
-    mbri_lock('\ue947'),
-    mbri_login('\ue948'),
-    mbri_logout('\ue949'),
-    mbri_magic_stick('\ue94a'),
-    mbri_map_pin('\ue94b'),
-    mbri_menu('\ue94c'),
-    mbri_mobile('\ue94d'),
-    mbri_mobile2('\ue94e'),
-    mbri_mobirise('\ue94f'),
-    mbri_more_horizontal('\ue950'),
-    mbri_more_vertical('\ue951'),
-    mbri_music('\ue952'),
-    mbri_new_file('\ue953'),
-    mbri_numbered_list('\ue954'),
-    mbri_opened_folder('\ue955'),
-    mbri_pages('\ue956'),
-    mbri_paper_plane('\ue957'),
-    mbri_paperclip('\ue958'),
-    mbri_photo('\ue959'),
-    mbri_photos('\ue95a'),
-    mbri_pin('\ue95b'),
-    mbri_play('\ue95c'),
-    mbri_plus('\ue95d'),
-    mbri_preview('\ue95e'),
-    mbri_print('\ue95f'),
-    mbri_protect('\ue960'),
-    mbri_question('\ue961'),
-    mbri_quote_left('\ue962'),
-    mbri_quote_right('\ue963'),
-    mbri_redo('\ue964'),
-    mbri_refresh('\ue965'),
-    mbri_responsive('\ue966'),
-    mbri_right('\ue967'),
-    mbri_rocket('\ue968'),
-    mbri_sad_face('\ue969'),
-    mbri_sale('\ue96a'),
-    mbri_save('\ue96b'),
-    mbri_search('\ue96c'),
-    mbri_setting('\ue96d'),
-    mbri_setting2('\ue96e'),
-    mbri_setting3('\ue96f'),
-    mbri_share('\ue970'),
-    mbri_shopping_bag('\ue971'),
-    mbri_shopping_basket('\ue972'),
-    mbri_shopping_cart('\ue973'),
-    mbri_sites('\ue974'),
-    mbri_smile_face('\ue975'),
-    mbri_speed('\ue976'),
-    mbri_star('\ue977'),
-    mbri_success('\ue978'),
-    mbri_sun('\ue979'),
-    mbri_sun2('\ue97a'),
-    mbri_tablet_vertical('\ue97b'),
-    mbri_tablet('\ue97c'),
-    mbri_target('\ue97d'),
-    mbri_timer('\ue97e'),
-    mbri_to_ftp('\ue97f'),
-    mbri_to_local_drive('\ue980'),
-    mbri_touch_swipe('\ue981'),
-    mbri_touch('\ue982'),
-    mbri_trash('\ue983'),
-    mbri_underline('\ue984'),
-    mbri_undo('\ue985'),
-    mbri_unlink('\ue986'),
-    mbri_unlock('\ue987'),
-    mbri_up_down('\ue988'),
-    mbri_up('\ue989'),
-    mbri_update('\ue98a'),
-    mbri_upload('\ue98b'),
-    mbri_user('\ue98c'),
-    mbri_user2('\ue98d'),
-    mbri_users('\ue98e'),
-    mbri_video_play('\ue98f'),
-    mbri_video('\ue990'),
-    mbri_watch('\ue991'),
-    mbri_website_theme('\ue992'),
-    mbri_wifi('\ue993'),
-    mbri_windows('\ue994'),
-    mbri_zoom_out('\ue995');
-
-    char character;
-
-    Icon(char character) {
-      this.character = character;
+    @Override public String getMappingPrefix() {
+        return MAPPING_FONT_PREFIX;
     }
 
-    public String getFormattedName() {
-      return "{" + name() + "}";
+    @Override public String getFontName() {
+        return "Mobirise Icons";
     }
 
-    public char getCharacter() {
-      return character;
+    @Override public String getVersion() {
+        return "1.0.0";
     }
 
-    public String getName() {
-      return name();
+    @Override public int getIconCount() {
+        return mChars.size();
     }
 
-    // remember the typeface so we can use it later
-    private static ITypeface typeface;
+    @Override public Collection<String> getIcons() {
+        Collection<String> icons = new LinkedList<>();
 
-    public ITypeface getTypeface() {
-      if (typeface == null) {
-        typeface = new MobiriseIcons();
-      }
-      return typeface;
+        for (Icon value : Icon.values()) {
+            icons.add(value.name());
+        }
+
+        return icons;
     }
-  }
+
+    @Override public String getAuthor() {
+        return "Free Website Builder, https://mobirise.com/";
+    }
+
+    @Override public String getUrl() {
+        return "https://mobirise.com/";
+    }
+
+    @Override public String getDescription() {
+        return "A free, open source set of 150 elegant, pixel-perfect vector icons from Free Website Builder.";
+    }
+
+    @Override public String getLicense() {
+        return "CC BY 4.0.";
+    }
+
+    @Override public String getLicenseUrl() {
+        return "https://creativecommons.org/licenses/by/4.0/";
+    }
+
+    @Override
+    public Font getTypeface(AbilityContext context) {
+        if (typeface == null) {
+            RawFileEntry rawFileEntry = context.getResourceManager()
+                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+            try {
+                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
+                Font.Builder newTypeface = new Font.Builder(file);
+                Font builtFont = newTypeface.build();
+                typeface = builtFont;
+                return builtFont;
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+        }
+        return  typeface;
+    }
+
+    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
+        byte[] buf;
+        try (Resource resource = rawFileEntry.openRawFile();
+             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
+            File file = new File(ctx.getCacheDir(), filename);
+
+            buf = new byte[(int) rawFileDescriptor.getFileSize()];
+            int bytesRead = resource.read(buf);
+            if (bytesRead != buf.length) {
+                throw new IOException("Asset read failed");
+            }
+            FileOutputStream output = new FileOutputStream(file);
+            output.write(buf, 0, bytesRead);
+            output.close();
+            return file;
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    public enum Icon implements IIcon {
+        MBRI_ADD_SUBMENU('\ue900'),
+        MBRI_ALERT('\ue901'),
+        MBRI_ALIGN_CENTER('\ue902'),
+        MBRI_ALIGN_JUSTIFY('\ue903'),
+        MBRI_ALIGN_LEFT('\ue904'),
+        MBRI_ALIGN_RIGHT('\ue905'),
+        MBRI_ANDROID('\ue906'),
+        MBRI_APPLE('\ue907'),
+        MBRI_ARROW_DOWN('\ue908'),
+        MBRI_ARROW_NEXT('\ue909'),
+        MBRI_ARROW_PREV('\ue90a'),
+        MBRI_ARROW_UP('\ue90b'),
+        MBRI_BOLD('\ue90c'),
+        MBRI_BOOKMARK('\ue90d'),
+        MBRI_BOOTSTRAP('\ue90e'),
+        MBRI_BRIEFCASE('\ue90f'),
+        MBRI_BROWSE('\ue910'),
+        MBRI_BULLETED_LIST('\ue911'),
+        MBRI_CALENDAR('\ue912'),
+        MBRI_CAMERA('\ue913'),
+        MBRI_CART_ADD('\ue914'),
+        MBRI_CART_FULL('\ue915'),
+        MBRI_CASH('\ue916'),
+        MBRI_CHANGE_STYLE('\ue917'),
+        MBRI_CHAT('\ue918'),
+        MBRI_CLOCK('\ue919'),
+        MBRI_CLOSE('\ue91a'),
+        MBRI_CLOUD('\ue91b'),
+        MBRI_CODE('\ue91c'),
+        MBRI_CONTACT_FORM('\ue91d'),
+        MBRI_CREDIT_CARD('\ue91e'),
+        MBRI_CURSOR_CLICK('\ue91f'),
+        MBRI_CUST_FEEDBACK('\ue920'),
+        MBRI_DATABASE('\ue921'),
+        MBRI_DELIVERY('\ue922'),
+        MBRI_DESKTOP('\ue923'),
+        MBRI_DEVICES('\ue924'),
+        MBRI_DOWN('\ue925'),
+        MBRI_DOWNLOAD('\ue926'),
+        MBRI_DRAG_N_DROP('\ue927'),
+        MBRI_DRAG_N_DROP2('\ue928'),
+        MBRI_EDIT('\ue929'),
+        MBRI_EDIT2('\ue92a'),
+        MBRI_ERROR('\ue92b'),
+        MBRI_EXTENSION('\ue92c'),
+        MBRI_FEATURES('\ue92d'),
+        MBRI_FILE('\ue92e'),
+        MBRI_FLAG('\ue92f'),
+        MBRI_FOLDER('\ue930'),
+        MBRI_GIFT('\ue931'),
+        MBRI_GITHUB('\ue932'),
+        MBRI_GLOBE_2('\ue933'),
+        MBRI_GLOBE('\ue934'),
+        MBRI_GROWING_CHART('\ue935'),
+        MBRI_HEARTH('\ue936'),
+        MBRI_HELP('\ue937'),
+        MBRI_HOME('\ue938'),
+        MBRI_HOT_CUP('\ue939'),
+        MBRI_IDEA('\ue93a'),
+        MBRI_IMAGE_GALLERY('\ue93b'),
+        MBRI_IMAGE_SLIDER('\ue93c'),
+        MBRI_INFO('\ue93d'),
+        MBRI_ITALIC('\ue93e'),
+        MBRI_KEY('\ue93f'),
+        MBRI_LAPTOP('\ue940'),
+        MBRI_LAYERS('\ue941'),
+        MBRI_LEFT_RIGHT('\ue942'),
+        MBRI_LEFT('\ue943'),
+        MBRI_LETTER('\ue944'),
+        MBRI_LIKE('\ue945'),
+        MBRI_LINK('\ue946'),
+        MBRI_LOCK('\ue947'),
+        MBRI_LOGIN('\ue948'),
+        MBRI_LOGOUT('\ue949'),
+        MBRI_MAGIC_STICK('\ue94a'),
+        MBRI_MAP_PIN('\ue94b'),
+        MBRI_MENU('\ue94c'),
+        MBRI_MOBILE('\ue94d'),
+        MBRI_MOBILE2('\ue94e'),
+        MBRI_MOBIRISE('\ue94f'),
+        MBRI_MORE_HORIZONTAL('\ue950'),
+        MBRI_MORE_VERTICAL('\ue951'),
+        MBRI_MUSIC('\ue952'),
+        MBRI_NEW_FILE('\ue953'),
+        MBRI_NUMBERED_LIST('\ue954'),
+        MBRI_OPENED_FOLDER('\ue955'),
+        MBRI_PAGES('\ue956'),
+        MBRI_PAPER_PLANE('\ue957'),
+        MBRI_PAPERCLIP('\ue958'),
+        MBRI_PHOTO('\ue959'),
+        MBRI_PHOTOS('\ue95a'),
+        MBRI_PIN('\ue95b'),
+        MBRI_PLAY('\ue95c'),
+        MBRI_PLUS('\ue95d'),
+        MBRI_PREVIEW('\ue95e'),
+        MBRI_PRINT('\ue95f'),
+        MBRI_PROTECT('\ue960'),
+        MBRI_QUESTION('\ue961'),
+        MBRI_QUOTE_LEFT('\ue962'),
+        MBRI_QUOTE_RIGHT('\ue963'),
+        MBRI_REDO('\ue964'),
+        MBRI_REFRESH('\ue965'),
+        MBRI_RESPONSIVE('\ue966'),
+        MBRI_RIGHT('\ue967'),
+        MBRI_ROCKET('\ue968'),
+        MBRI_SAD_FACE('\ue969'),
+        MBRI_SALE('\ue96a'),
+        MBRI_SAVE('\ue96b'),
+        MBRI_SEARCH('\ue96c'),
+        MBRI_SETTING('\ue96d'),
+        MBRI_SETTING2('\ue96e'),
+        MBRI_SETTING3('\ue96f'),
+        MBRI_SHARE('\ue970'),
+        MBRI_SHOPPING_BAG('\ue971'),
+        MBRI_SHOPPING_BASKET('\ue972'),
+        MBRI_SHOPPING_CART('\ue973'),
+        MBRI_SITES('\ue974'),
+        MBRI_SMILE_FACE('\ue975'),
+        MBRI_SPEED('\ue976'),
+        MBRI_STAR('\ue977'),
+        MBRI_SUCCESS('\ue978'),
+        MBRI_SUN('\ue979'),
+        MBRI_SUN2('\ue97a'),
+        MBRI_TABLET_VERTICAL('\ue97b'),
+        MBRI_TABLET('\ue97c'),
+        MBRI_TARGET('\ue97d'),
+        MBRI_TIMER('\ue97e'),
+        MBRI_TO_FTP('\ue97f'),
+        MBRI_TO_LOCAL_DRIVE('\ue980'),
+        MBRI_TOUCH_SWIPE('\ue981'),
+        MBRI_TOUCH('\ue982'),
+        MBRI_TRASH('\ue983'),
+        MBRI_UNDERLINE('\ue984'),
+        MBRI_UNDO('\ue985'),
+        MBRI_UNLINK('\ue986'),
+        MBRI_UNLOCK('\ue987'),
+        MBRI_UP_DOWN('\ue988'),
+        MBRI_UP('\ue989'),
+        MBRI_UPDATE('\ue98a'),
+        MBRI_UPLOAD('\ue98b'),
+        MBRI_USER('\ue98c'),
+        MBRI_USER2('\ue98d'),
+        MBRI_USERS('\ue98e'),
+        MBRI_VIDEO_PLAY('\ue98f'),
+        MBRI_VIDEO('\ue990'),
+        MBRI_WATCH('\ue991'),
+        MBRI_WEBSITE_THEME('\ue992'),
+        MBRI_WIFI('\ue993'),
+        MBRI_WINDOWS('\ue994'),
+        MBRI_ZOOM_OUT('\ue995');
+
+        char character;
+
+        Icon(char character) {
+            this.character = character;
+        }
+
+        public String getFormattedName() {
+            return "{" + name() + "}";
+        }
+
+        public char getCharacter() {
+            return character;
+        }
+
+        public String getName() {
+            return name();
+        }
+
+        // remember the typeface so we can use it later
+        private static ITypeface typeface;
+
+        public ITypeface getTypeface() {
+            if (typeface == null) {
+                typeface = new MobiriseIcons();
+            }
+            return typeface;
+        }
+    }
 }

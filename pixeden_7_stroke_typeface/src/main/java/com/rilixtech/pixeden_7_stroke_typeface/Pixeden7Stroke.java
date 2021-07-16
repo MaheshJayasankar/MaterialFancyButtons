@@ -16,50 +16,50 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Pixeden7Stroke implements ITypeface {
-	private static final String TTF_FILE = "pixeden-7-stroke-font-v1.2.0.ttf";
-	private static final String MAPPING_FONT_PREFIX = "pe7i";
+    private static final String TTF_FILE = "pixeden-7-stroke-font-v1.2.0.ttf";
+    private static final String MAPPING_FONT_PREFIX = "PE7I";
 
-	private static Font typeface = null;
-	private static HashMap<String, Character> mChars;
+    private static Font typeface = null;
+    private static HashMap<String, Character> mChars;
 
-	@Override public IIcon getIcon(String key) {
-		return Icon.valueOf(key);
-	}
+    @Override public IIcon getIcon(String key) {
+        return Icon.valueOf(key);
+    }
 
-	@Override public HashMap<String, Character> getCharacters() {
-		if (mChars == null) {
-			HashMap<String, Character> aChars = new HashMap<>();
-			for (Icon v : Icon.values()) {
-				aChars.put(v.name(), v.character);
-			}
-			mChars = aChars;
-		}
-		return mChars;
-	}
+    @Override public HashMap<String, Character> getCharacters() {
+        if (mChars == null) {
+            HashMap<String, Character> aChars = new HashMap<>();
+            for (Icon v : Icon.values()) {
+                aChars.put(v.name(), v.character);
+            }
+            mChars = aChars;
+        }
+        return mChars;
+    }
 
-	@Override public String getMappingPrefix() {
-		return MAPPING_FONT_PREFIX;
-	}
+    @Override public String getMappingPrefix() {
+        return MAPPING_FONT_PREFIX;
+    }
 
-	@Override public String getFontName() {
-		return "Pixeden 7 Stroke";
-	}
+    @Override public String getFontName() {
+        return "Pixeden 7 Stroke";
+    }
 
-	@Override public String getVersion() {
-		return "1.2.0.0";
-	}
+    @Override public String getVersion() {
+        return "1.2.0.0";
+    }
 
-	@Override public int getIconCount() {
-		return mChars.size();
-	}
+    @Override public int getIconCount() {
+        return mChars.size();
+    }
 
-	@Override public Collection<String> getIcons() {
-		Collection<String> icons = new LinkedList<>();
-		for (Icon value : Icon.values()) {
-			icons.add(value.name());
-		}
-		return icons;
-	}
+    @Override public Collection<String> getIcons() {
+        Collection<String> icons = new LinkedList<>();
+        for (Icon value : Icon.values()) {
+            icons.add(value.name());
+        }
+        return icons;
+    }
 
     @Override
     public String getAuthor() {
@@ -86,247 +86,247 @@ public class Pixeden7Stroke implements ITypeface {
         return "http://themes-pixeden.com/font-demos/7-stroke/";
     }
 
-	@Override
-	public Font getTypeface(AbilityContext context) {
-		if (typeface == null) {
-			RawFileEntry rawFileEntry = context.getResourceManager()
-					.getRawFileEntry("resources/rawfile/" + TTF_FILE);
-			try {
-				File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-				Font.Builder newTypeface = new Font.Builder(file);
-				Font builtFont = newTypeface.build();
-				typeface = builtFont;
-				return builtFont;
-			} catch (Exception e) {
-				throw new IllegalStateException(e);
-			}
-		}
-		return  typeface;
-	}
+    @Override
+    public Font getTypeface(AbilityContext context) {
+        if (typeface == null) {
+            RawFileEntry rawFileEntry = context.getResourceManager()
+                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+            try {
+                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
+                Font.Builder newTypeface = new Font.Builder(file);
+                Font builtFont = newTypeface.build();
+                typeface = builtFont;
+                return builtFont;
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+        }
+        return  typeface;
+    }
 
-	private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-		byte[] buf;
-		try (Resource resource = rawFileEntry.openRawFile();
-			 RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-			File file = new File(ctx.getCacheDir(), filename);
+    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
+        byte[] buf;
+        try (Resource resource = rawFileEntry.openRawFile();
+             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
+            File file = new File(ctx.getCacheDir(), filename);
 
-			buf = new byte[(int) rawFileDescriptor.getFileSize()];
-			int bytesRead = resource.read(buf);
-			if (bytesRead != buf.length) {
-				throw new IOException("Asset read failed");
-			}
-			FileOutputStream output = new FileOutputStream(file);
-			output.write(buf, 0, bytesRead);
-			output.close();
-			return file;
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
-	}
+            buf = new byte[(int) rawFileDescriptor.getFileSize()];
+            int bytesRead = resource.read(buf);
+            if (bytesRead != buf.length) {
+                throw new IOException("Asset read failed");
+            }
+            FileOutputStream output = new FileOutputStream(file);
+            output.write(buf, 0, bytesRead);
+            output.close();
+            return file;
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
 
     public enum Icon implements IIcon {
-        pe7i_7s_album('\ue6aa'),
-		pe7i_7s_arc('\ue6ab'),
-		pe7i_7s_back_2('\ue6ac'),
-		pe7i_7s_bandaid('\ue6ad'),
-		pe7i_7s_car('\ue6ae'),
-		pe7i_7s_diamond('\ue6af'),
-		pe7i_7s_door_lock('\ue6b0'),
-		pe7i_7s_eyedropper('\ue6b1'),
-		pe7i_7s_female('\ue6b2'),
-		pe7i_7s_gym('\ue6b3'),
-		pe7i_7s_hammer('\ue6b4'),
-		pe7i_7s_headphones('\ue6b5'),
-		pe7i_7s_helm('\ue6b6'),
-		pe7i_7s_hourglass('\ue6b7'),
-		pe7i_7s_leaf('\ue6b8'),
-		pe7i_7s_magic_wand('\ue6b9'),
-		pe7i_7s_male('\ue6ba'),
-		pe7i_7s_map_2('\ue6bb'),
-		pe7i_7s_next_2('\ue6bc'),
-		pe7i_7s_paint_bucket('\ue6bd'),
-		pe7i_7s_pendrive('\ue6be'),
-		pe7i_7s_photo('\ue6bf'),
-		pe7i_7s_piggy('\ue6c0'),
-		pe7i_7s_plugin('\ue6c1'),
-		pe7i_7s_refresh_2('\ue6c2'),
-		pe7i_7s_rocket('\ue6c3'),
-		pe7i_7s_settings('\ue6c4'),
-		pe7i_7s_shield('\ue6c5'),
-		pe7i_7s_smile('\ue6c6'),
-		pe7i_7s_usb('\ue6c7'),
-		pe7i_7s_vector('\ue6c8'),
-		pe7i_7s_wine('\ue6c9'),
-		pe7i_7s_cloud_upload('\ue68a'),
-		pe7i_7s_cash('\ue68c'),
-		pe7i_7s_close('\ue680'),
-		pe7i_7s_bluetooth('\ue68d'),
-		pe7i_7s_cloud_download('\ue68b'),
-		pe7i_7s_way('\ue68e'),
-		pe7i_7s_close_circle('\ue681'),
-		pe7i_7s_id('\ue68f'),
-		pe7i_7s_angle_up('\ue682'),
-		pe7i_7s_wristwatch('\ue690'),
-		pe7i_7s_angle_up_circle('\ue683'),
-		pe7i_7s_world('\ue691'),
-		pe7i_7s_angle_right('\ue684'),
-		pe7i_7s_volume('\ue692'),
-		pe7i_7s_angle_right_circle('\ue685'),
-		pe7i_7s_users('\ue693'),
-		pe7i_7s_angle_left('\ue686'),
-		pe7i_7s_user_female('\ue694'),
-		pe7i_7s_angle_left_circle('\ue687'),
-		pe7i_7s_up_arrow('\ue695'),
-		pe7i_7s_angle_down('\ue688'),
-		pe7i_7s_switch('\ue696'),
-		pe7i_7s_angle_down_circle('\ue689'),
-		pe7i_7s_scissors('\ue697'),
-		pe7i_7s_wallet('\ue600'),
-		pe7i_7s_safe('\ue698'),
-		pe7i_7s_volume2('\ue601'),
-		pe7i_7s_volume1('\ue602'),
-		pe7i_7s_voicemail('\ue603'),
-		pe7i_7s_video('\ue604'),
-		pe7i_7s_user('\ue605'),
-		pe7i_7s_upload('\ue606'),
-		pe7i_7s_unlock('\ue607'),
-		pe7i_7s_umbrella('\ue608'),
-		pe7i_7s_trash('\ue609'),
-		pe7i_7s_tools('\ue60a'),
-		pe7i_7s_timer('\ue60b'),
-		pe7i_7s_ticket('\ue60c'),
-		pe7i_7s_target('\ue60d'),
-		pe7i_7s_sun('\ue60e'),
-		pe7i_7s_study('\ue60f'),
-		pe7i_7s_stopwatch('\ue610'),
-		pe7i_7s_star('\ue611'),
-		pe7i_7s_speaker('\ue612'),
-		pe7i_7s_signal('\ue613'),
-		pe7i_7s_shuffle('\ue614'),
-		pe7i_7s_shopbag('\ue615'),
-		pe7i_7s_share('\ue616'),
-		pe7i_7s_server('\ue617'),
-		pe7i_7s_search('\ue618'),
-		pe7i_7s_film('\ue6a5'),
-		pe7i_7s_science('\ue619'),
-		pe7i_7s_disk('\ue6a6'),
-		pe7i_7s_ribbon('\ue61a'),
-		pe7i_7s_repeat('\ue61b'),
-		pe7i_7s_refresh('\ue61c'),
-		pe7i_7s_add_user('\ue6a9'),
-		pe7i_7s_refresh_cloud('\ue61d'),
-		pe7i_7s_paperclip('\ue69c'),
-		pe7i_7s_radio('\ue61e'),
-		pe7i_7s_note2('\ue69d'),
-		pe7i_7s_print('\ue61f'),
-		pe7i_7s_network('\ue69e'),
-		pe7i_7s_prev('\ue620'),
-		pe7i_7s_mute('\ue69f'),
-		pe7i_7s_power('\ue621'),
-		pe7i_7s_medal('\ue6a0'),
-		pe7i_7s_portfolio('\ue622'),
-		pe7i_7s_like2('\ue6a1'),
-		pe7i_7s_plus('\ue623'),
-		pe7i_7s_left_arrow('\ue6a2'),
-		pe7i_7s_play('\ue624'),
-		pe7i_7s_key('\ue6a3'),
-		pe7i_7s_plane('\ue625'),
-		pe7i_7s_joy('\ue6a4'),
-		pe7i_7s_photo_gallery('\ue626'),
-		pe7i_7s_pin('\ue69b'),
-		pe7i_7s_phone('\ue627'),
-		pe7i_7s_plug('\ue69a'),
-		pe7i_7s_pen('\ue628'),
-		pe7i_7s_right_arrow('\ue699'),
-		pe7i_7s_paper_plane('\ue629'),
-		pe7i_7s_delete_user('\ue6a7'),
-		pe7i_7s_paint('\ue62a'),
-		pe7i_7s_bottom_arrow('\ue6a8'),
-		pe7i_7s_notebook('\ue62b'),
-		pe7i_7s_note('\ue62c'),
-		pe7i_7s_next('\ue62d'),
-		pe7i_7s_news_paper('\ue62e'),
-		pe7i_7s_musiclist('\ue62f'),
-		pe7i_7s_music('\ue630'),
-		pe7i_7s_mouse('\ue631'),
-		pe7i_7s_more('\ue632'),
-		pe7i_7s_moon('\ue633'),
-		pe7i_7s_monitor('\ue634'),
-		pe7i_7s_micro('\ue635'),
-		pe7i_7s_menu('\ue636'),
-		pe7i_7s_map('\ue637'),
-		pe7i_7s_map_marker('\ue638'),
-		pe7i_7s_mail('\ue639'),
-		pe7i_7s_mail_open('\ue63a'),
-		pe7i_7s_mail_open_file('\ue63b'),
-		pe7i_7s_magnet('\ue63c'),
-		pe7i_7s_loop('\ue63d'),
-		pe7i_7s_look('\ue63e'),
-		pe7i_7s_lock('\ue63f'),
-		pe7i_7s_lintern('\ue640'),
-		pe7i_7s_link('\ue641'),
-		pe7i_7s_like('\ue642'),
-		pe7i_7s_light('\ue643'),
-		pe7i_7s_less('\ue644'),
-		pe7i_7s_keypad('\ue645'),
-		pe7i_7s_junk('\ue646'),
-		pe7i_7s_info('\ue647'),
-		pe7i_7s_home('\ue648'),
-		pe7i_7s_help2('\ue649'),
-		pe7i_7s_help1('\ue64a'),
-		pe7i_7s_graph3('\ue64b'),
-		pe7i_7s_graph2('\ue64c'),
-		pe7i_7s_graph1('\ue64d'),
-		pe7i_7s_graph('\ue64e'),
-		pe7i_7s_global('\ue64f'),
-		pe7i_7s_gleam('\ue650'),
-		pe7i_7s_glasses('\ue651'),
-		pe7i_7s_gift('\ue652'),
-		pe7i_7s_folder('\ue653'),
-		pe7i_7s_flag('\ue654'),
-		pe7i_7s_filter('\ue655'),
-		pe7i_7s_file('\ue656'),
-		pe7i_7s_expand1('\ue657'),
-		pe7i_7s_exapnd2('\ue658'),
-		pe7i_7s_edit('\ue659'),
-		pe7i_7s_drop('\ue65a'),
-		pe7i_7s_drawer('\ue65b'),
-		pe7i_7s_download('\ue65c'),
-		pe7i_7s_display2('\ue65d'),
-		pe7i_7s_display1('\ue65e'),
-		pe7i_7s_diskette('\ue65f'),
-		pe7i_7s_date('\ue660'),
-		pe7i_7s_cup('\ue661'),
-		pe7i_7s_culture('\ue662'),
-		pe7i_7s_crop('\ue663'),
-		pe7i_7s_credit('\ue664'),
-		pe7i_7s_copy_file('\ue665'),
-		pe7i_7s_config('\ue666'),
-		pe7i_7s_compass('\ue667'),
-		pe7i_7s_comment('\ue668'),
-		pe7i_7s_coffee('\ue669'),
-		pe7i_7s_cloud('\ue66a'),
-		pe7i_7s_clock('\ue66b'),
-		pe7i_7s_check('\ue66c'),
-		pe7i_7s_chat('\ue66d'),
-		pe7i_7s_cart('\ue66e'),
-		pe7i_7s_camera('\ue66f'),
-		pe7i_7s_call('\ue670'),
-		pe7i_7s_calculator('\ue671'),
-		pe7i_7s_browser('\ue672'),
-		pe7i_7s_box2('\ue673'),
-		pe7i_7s_box1('\ue674'),
-		pe7i_7s_bookmarks('\ue675'),
-		pe7i_7s_bicycle('\ue676'),
-		pe7i_7s_bell('\ue677'),
-		pe7i_7s_battery('\ue678'),
-		pe7i_7s_ball('\ue679'),
-		pe7i_7s_back('\ue67a'),
-		pe7i_7s_attention('\ue67b'),
-		pe7i_7s_anchor('\ue67c'),
-		pe7i_7s_albums('\ue67d'),
-		pe7i_7s_alarm('\ue67e'),
-		pe7i_7s_airplay('\ue67f');
+        PE7I_7S_ALBUM('\ue6aa'),
+        PE7I_7S_ARC('\ue6ab'),
+        PE7I_7S_BACK_2('\ue6ac'),
+        PE7I_7S_BANDAID('\ue6ad'),
+        PE7I_7S_CAR('\ue6ae'),
+        PE7I_7S_DIAMOND('\ue6af'),
+        PE7I_7S_DOOR_LOCK('\ue6b0'),
+        PE7I_7S_EYEDROPPER('\ue6b1'),
+        PE7I_7S_FEMALE('\ue6b2'),
+        PE7I_7S_GYM('\ue6b3'),
+        PE7I_7S_HAMMER('\ue6b4'),
+        PE7I_7S_HEADPHONES('\ue6b5'),
+        PE7I_7S_HELM('\ue6b6'),
+        PE7I_7S_HOURGLASS('\ue6b7'),
+        PE7I_7S_LEAF('\ue6b8'),
+        PE7I_7S_MAGIC_WAND('\ue6b9'),
+        PE7I_7S_MALE('\ue6ba'),
+        PE7I_7S_MAP_2('\ue6bb'),
+        PE7I_7S_NEXT_2('\ue6bc'),
+        PE7I_7S_PAINT_BUCKET('\ue6bd'),
+        PE7I_7S_PENDRIVE('\ue6be'),
+        PE7I_7S_PHOTO('\ue6bf'),
+        PE7I_7S_PIGGY('\ue6c0'),
+        PE7I_7S_PLUGIN('\ue6c1'),
+        PE7I_7S_REFRESH_2('\ue6c2'),
+        PE7I_7S_ROCKET('\ue6c3'),
+        PE7I_7S_SETTINGS('\ue6c4'),
+        PE7I_7S_SHIELD('\ue6c5'),
+        PE7I_7S_SMILE('\ue6c6'),
+        PE7I_7S_USB('\ue6c7'),
+        PE7I_7S_VECTOR('\ue6c8'),
+        PE7I_7S_WINE('\ue6c9'),
+        PE7I_7S_CLOUD_UPLOAD('\ue68a'),
+        PE7I_7S_CASH('\ue68c'),
+        PE7I_7S_CLOSE('\ue680'),
+        PE7I_7S_BLUETOOTH('\ue68d'),
+        PE7I_7S_CLOUD_DOWNLOAD('\ue68b'),
+        PE7I_7S_WAY('\ue68e'),
+        PE7I_7S_CLOSE_CIRCLE('\ue681'),
+        PE7I_7S_ID('\ue68f'),
+        PE7I_7S_ANGLE_UP('\ue682'),
+        PE7I_7S_WRISTWATCH('\ue690'),
+        PE7I_7S_ANGLE_UP_CIRCLE('\ue683'),
+        PE7I_7S_WORLD('\ue691'),
+        PE7I_7S_ANGLE_RIGHT('\ue684'),
+        PE7I_7S_VOLUME('\ue692'),
+        PE7I_7S_ANGLE_RIGHT_CIRCLE('\ue685'),
+        PE7I_7S_USERS('\ue693'),
+        PE7I_7S_ANGLE_LEFT('\ue686'),
+        PE7I_7S_USER_FEMALE('\ue694'),
+        PE7I_7S_ANGLE_LEFT_CIRCLE('\ue687'),
+        PE7I_7S_UP_ARROW('\ue695'),
+        PE7I_7S_ANGLE_DOWN('\ue688'),
+        PE7I_7S_SWITCH('\ue696'),
+        PE7I_7S_ANGLE_DOWN_CIRCLE('\ue689'),
+        PE7I_7S_SCISSORS('\ue697'),
+        PE7I_7S_WALLET('\ue600'),
+        PE7I_7S_SAFE('\ue698'),
+        PE7I_7S_VOLUME2('\ue601'),
+        PE7I_7S_VOLUME1('\ue602'),
+        PE7I_7S_VOICEMAIL('\ue603'),
+        PE7I_7S_VIDEO('\ue604'),
+        PE7I_7S_USER('\ue605'),
+        PE7I_7S_UPLOAD('\ue606'),
+        PE7I_7S_UNLOCK('\ue607'),
+        PE7I_7S_UMBRELLA('\ue608'),
+        PE7I_7S_TRASH('\ue609'),
+        PE7I_7S_TOOLS('\ue60a'),
+        PE7I_7S_TIMER('\ue60b'),
+        PE7I_7S_TICKET('\ue60c'),
+        PE7I_7S_TARGET('\ue60d'),
+        PE7I_7S_SUN('\ue60e'),
+        PE7I_7S_STUDY('\ue60f'),
+        PE7I_7S_STOPWATCH('\ue610'),
+        PE7I_7S_STAR('\ue611'),
+        PE7I_7S_SPEAKER('\ue612'),
+        PE7I_7S_SIGNAL('\ue613'),
+        PE7I_7S_SHUFFLE('\ue614'),
+        PE7I_7S_SHOPBAG('\ue615'),
+        PE7I_7S_SHARE('\ue616'),
+        PE7I_7S_SERVER('\ue617'),
+        PE7I_7S_SEARCH('\ue618'),
+        PE7I_7S_FILM('\ue6a5'),
+        PE7I_7S_SCIENCE('\ue619'),
+        PE7I_7S_DISK('\ue6a6'),
+        PE7I_7S_RIBBON('\ue61a'),
+        PE7I_7S_REPEAT('\ue61b'),
+        PE7I_7S_REFRESH('\ue61c'),
+        PE7I_7S_ADD_USER('\ue6a9'),
+        PE7I_7S_REFRESH_CLOUD('\ue61d'),
+        PE7I_7S_PAPERCLIP('\ue69c'),
+        PE7I_7S_RADIO('\ue61e'),
+        PE7I_7S_NOTE2('\ue69d'),
+        PE7I_7S_PRINT('\ue61f'),
+        PE7I_7S_NETWORK('\ue69e'),
+        PE7I_7S_PREV('\ue620'),
+        PE7I_7S_MUTE('\ue69f'),
+        PE7I_7S_POWER('\ue621'),
+        PE7I_7S_MEDAL('\ue6a0'),
+        PE7I_7S_PORTFOLIO('\ue622'),
+        PE7I_7S_LIKE2('\ue6a1'),
+        PE7I_7S_PLUS('\ue623'),
+        PE7I_7S_LEFT_ARROW('\ue6a2'),
+        PE7I_7S_PLAY('\ue624'),
+        PE7I_7S_KEY('\ue6a3'),
+        PE7I_7S_PLANE('\ue625'),
+        PE7I_7S_JOY('\ue6a4'),
+        PE7I_7S_PHOTO_GALLERY('\ue626'),
+        PE7I_7S_PIN('\ue69b'),
+        PE7I_7S_PHONE('\ue627'),
+        PE7I_7S_PLUG('\ue69a'),
+        PE7I_7S_PEN('\ue628'),
+        PE7I_7S_RIGHT_ARROW('\ue699'),
+        PE7I_7S_PAPER_PLANE('\ue629'),
+        PE7I_7S_DELETE_USER('\ue6a7'),
+        PE7I_7S_PAINT('\ue62a'),
+        PE7I_7S_BOTTOM_ARROW('\ue6a8'),
+        PE7I_7S_NOTEBOOK('\ue62b'),
+        PE7I_7S_NOTE('\ue62c'),
+        PE7I_7S_NEXT('\ue62d'),
+        PE7I_7S_NEWS_PAPER('\ue62e'),
+        PE7I_7S_MUSICLIST('\ue62f'),
+        PE7I_7S_MUSIC('\ue630'),
+        PE7I_7S_MOUSE('\ue631'),
+        PE7I_7S_MORE('\ue632'),
+        PE7I_7S_MOON('\ue633'),
+        PE7I_7S_MONITOR('\ue634'),
+        PE7I_7S_MICRO('\ue635'),
+        PE7I_7S_MENU('\ue636'),
+        PE7I_7S_MAP('\ue637'),
+        PE7I_7S_MAP_MARKER('\ue638'),
+        PE7I_7S_MAIL('\ue639'),
+        PE7I_7S_MAIL_OPEN('\ue63a'),
+        PE7I_7S_MAIL_OPEN_FILE('\ue63b'),
+        PE7I_7S_MAGNET('\ue63c'),
+        PE7I_7S_LOOP('\ue63d'),
+        PE7I_7S_LOOK('\ue63e'),
+        PE7I_7S_LOCK('\ue63f'),
+        PE7I_7S_LINTERN('\ue640'),
+        PE7I_7S_LINK('\ue641'),
+        PE7I_7S_LIKE('\ue642'),
+        PE7I_7S_LIGHT('\ue643'),
+        PE7I_7S_LESS('\ue644'),
+        PE7I_7S_KEYPAD('\ue645'),
+        PE7I_7S_JUNK('\ue646'),
+        PE7I_7S_INFO('\ue647'),
+        PE7I_7S_HOME('\ue648'),
+        PE7I_7S_HELP2('\ue649'),
+        PE7I_7S_HELP1('\ue64a'),
+        PE7I_7S_GRAPH3('\ue64b'),
+        PE7I_7S_GRAPH2('\ue64c'),
+        PE7I_7S_GRAPH1('\ue64d'),
+        PE7I_7S_GRAPH('\ue64e'),
+        PE7I_7S_GLOBAL('\ue64f'),
+        PE7I_7S_GLEAM('\ue650'),
+        PE7I_7S_GLASSES('\ue651'),
+        PE7I_7S_GIFT('\ue652'),
+        PE7I_7S_FOLDER('\ue653'),
+        PE7I_7S_FLAG('\ue654'),
+        PE7I_7S_FILTER('\ue655'),
+        PE7I_7S_FILE('\ue656'),
+        PE7I_7S_EXPAND1('\ue657'),
+        PE7I_7S_EXAPND2('\ue658'),
+        PE7I_7S_EDIT('\ue659'),
+        PE7I_7S_DROP('\ue65a'),
+        PE7I_7S_DRAWER('\ue65b'),
+        PE7I_7S_DOWNLOAD('\ue65c'),
+        PE7I_7S_DISPLAY2('\ue65d'),
+        PE7I_7S_DISPLAY1('\ue65e'),
+        PE7I_7S_DISKETTE('\ue65f'),
+        PE7I_7S_DATE('\ue660'),
+        PE7I_7S_CUP('\ue661'),
+        PE7I_7S_CULTURE('\ue662'),
+        PE7I_7S_CROP('\ue663'),
+        PE7I_7S_CREDIT('\ue664'),
+        PE7I_7S_COPY_FILE('\ue665'),
+        PE7I_7S_CONFIG('\ue666'),
+        PE7I_7S_COMPASS('\ue667'),
+        PE7I_7S_COMMENT('\ue668'),
+        PE7I_7S_COFFEE('\ue669'),
+        PE7I_7S_CLOUD('\ue66a'),
+        PE7I_7S_CLOCK('\ue66b'),
+        PE7I_7S_CHECK('\ue66c'),
+        PE7I_7S_CHAT('\ue66d'),
+        PE7I_7S_CART('\ue66e'),
+        PE7I_7S_CAMERA('\ue66f'),
+        PE7I_7S_CALL('\ue670'),
+        PE7I_7S_CALCULATOR('\ue671'),
+        PE7I_7S_BROWSER('\ue672'),
+        PE7I_7S_BOX2('\ue673'),
+        PE7I_7S_BOX1('\ue674'),
+        PE7I_7S_BOOKMARKS('\ue675'),
+        PE7I_7S_BICYCLE('\ue676'),
+        PE7I_7S_BELL('\ue677'),
+        PE7I_7S_BATTERY('\ue678'),
+        PE7I_7S_BALL('\ue679'),
+        PE7I_7S_BACK('\ue67a'),
+        PE7I_7S_ATTENTION('\ue67b'),
+        PE7I_7S_ANCHOR('\ue67c'),
+        PE7I_7S_ALBUMS('\ue67d'),
+        PE7I_7S_ALARM('\ue67e'),
+        PE7I_7S_AIRPLAY('\ue67f');
 
         char character;
 
