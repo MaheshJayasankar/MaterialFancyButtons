@@ -8,6 +8,7 @@ public class GenericsUtil {
 
     private GenericsUtil() {}
 
+    // If a new font module is to be added, its name should be appended in the below array
     private static final String[] SUPPORTED_FONT_CLASSES = new String[]{
         "com.rilixtech.community_material_typeface.CommunityMaterial",
         "com.rilixtech.devicon_typeface.Devicon",

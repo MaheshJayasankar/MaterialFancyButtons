@@ -29,8 +29,8 @@ public class FontUtil {
      * @return The converted value in fp.
      */
     public static int pxToFp(final Context context, final float px) {
-        // TODO: Mapping not confirmed. Need to test
-        return Math.round(px / AttrHelper.getFontRatio(context));
+        float fpToPxRatio = fpToPx(context, 1.0F);
+        return Math.round(px / fpToPxRatio);
     }
 
     /**
@@ -41,8 +41,7 @@ public class FontUtil {
      * @return The converted value in px.
      */
     public static int fpToPx(final Context context, final float fp) {
-        // TODO: Mapping not confirmed. Need to test
-        return Math.round(fp * AttrHelper.getFontRatio(context));
+        return AttrHelper.fp2px(fp, context);
     }
 
     /**
@@ -71,6 +70,7 @@ public class FontUtil {
                 if (typeface == null) {
                     // If both font and default font are not able to be loaded, load the system Default font
                     typeface = Font.DEFAULT;
+                    // Cache the default font as well
                     updateCacheIfNotEmpty(defaultFontName, typeface);
                 }
             } else {
@@ -82,6 +82,12 @@ public class FontUtil {
         return  typeface;
     }
 
+    /**
+     * Update the fonts cache map with the loaded font for the given key, if the key is not empty or null.
+     *
+     * @param key Key to access the font
+     * @param font Loaded font to store for quick future access
+     */
     private static void updateCacheIfNotEmpty(String key, Font font) {
         if (!TextUtils.isEmpty(key)) {
             cachedFontMap.put(key, font);
