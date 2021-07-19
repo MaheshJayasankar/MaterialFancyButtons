@@ -418,9 +418,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         if (optionalAttribute.isPresent()) {
             String stringValue = optionalAttribute.get().getStringValue();
             try {
-                // TODO toUpperCase is a temporary measure to convert lowercase attributes to uppercase.
-                // Must change all enum calls of this type to upper case when possible (look through XML files)
-                return E.valueOf(enumType, stringValue.toUpperCase());
+                return E.valueOf(enumType, stringValue);
             } catch (IllegalArgumentException e) {
                 return defaultValue;
             }
