@@ -22,7 +22,11 @@ import com.rilixtech.typicons_typeface.Typicons;
 import com.rilixtech.vaadin_icons_typeface.VaadinIcons;
 import com.rilixtech.weather_icons_typeface.WeatherIcons;
 
+/**
+ * Temp class, port to ProgramButtons.
+ */
 public class DependencyProvider {
+    // TODO Port to ProgramButtons
     CommunityMaterial cmb;
     Devicon dvb;
     Dripicons dpb;

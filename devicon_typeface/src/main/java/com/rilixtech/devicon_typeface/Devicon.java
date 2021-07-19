@@ -1,13 +1,12 @@
 package com.rilixtech.devicon_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
 import ohos.global.resource.RawFileDescriptor;
 import ohos.global.resource.RawFileEntry;
 import ohos.global.resource.Resource;
-
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Devicon implements ITypeface{
+public class Devicon implements ITypeface {
     private static final String TTF_FILE = "devicon-font-v2.0.0.1.ttf";
     private static final String MAPPING_FONT_PREFIX = "DEVI";
 
