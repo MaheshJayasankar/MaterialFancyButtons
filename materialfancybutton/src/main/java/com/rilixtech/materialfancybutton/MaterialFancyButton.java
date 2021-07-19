@@ -107,6 +107,12 @@ public class MaterialFancyButton extends DirectionalLayout {
     private boolean mGhost = false; // Default is a solid button !
 
     /**
+     * Indicates whether this component needs an update. Used by refreshComponents() to clear all components and re-add
+     * them.
+     */
+    private boolean needsUpdate = true;
+
+    /**
      * Used to define a MaterialFancyButton Component.
      * This constructor uses the default attributes defined for the MaterialFancyButton.
      * To change the attributes after instantiation, refer to the setter methods of this class.
@@ -152,41 +158,41 @@ public class MaterialFancyButton extends DirectionalLayout {
         }
 
         setupBackground();
-
         buildComponentContainer();
     }
 
     private void buildComponentContainer() {
+        if (!needsUpdate) {
+            return;
+        }
         List<Component> views = new ArrayList<>();
 
         if (mIconPosition == POSITION_LEFT || mIconPosition == POSITION_TOP) {
-            if (mIconView != null) {
-                views.add(mIconView);
-            }
-            if (mFontIconView != null) {
-                views.add(mFontIconView);
-            }
-            if (mTextView != null) {
-                views.add(mTextView);
-            }
+            addToListIfNotNull(views, mIconView);
+            addToListIfNotNull(views, mFontIconView);
+            addToListIfNotNull(views, mTextView);
         } else {
-            if (mTextView != null) {
-                views.add(mTextView);
-            }
-            if (mIconView != null) {
-                views.add(mIconView);
-            }
-            if (mFontIconView != null) {
-                views.add(mFontIconView);
-            }
+            addToListIfNotNull(views, mTextView);
+            addToListIfNotNull(views, mIconView);
+            addToListIfNotNull(views, mFontIconView);
         }
 
-        addListOfComponents(views);
-    }
-
-    private void addListOfComponents(List<Component> views) {
         for (Component view : views) {
             addComponent(view);
+        }
+        needsUpdate = false;
+    }
+
+    private void addToListIfNotNull(List<Component> views, Component component) {
+        if (component != null) {
+            views.add(component);
+        }
+    }
+
+    private void refreshComponents() {
+        if (needsUpdate) {
+            removeAllComponents();
+            buildComponentContainer();
         }
     }
 
@@ -200,12 +206,13 @@ public class MaterialFancyButton extends DirectionalLayout {
         }
         if (mTextView == null) {
             mTextView = new Text(getContext());
+            needsUpdate = true;
         }
 
         mTextView.setText(mText);
         mTextView.setTextAlignment(mTextGravity);
         mTextView.setTextColor(new Color(mEnabled ? mDefaultTextColor : mDisabledTextColor));
-        mTextView.setTextSize(FontUtil.pxToFp(getContext(), mTextSize));
+        mTextView.setTextSize(FontUtil.pxToFp(getContext(), mTextSize), Text.TextSizeType.FP);
         mTextView.setLayoutConfig(new LayoutConfig(MATCH_CONTENT, MATCH_CONTENT));
         // TODO How to set font style?
         mTextView.setFont(mTextView.getFont());
@@ -221,6 +228,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         }
         if (mFontIconView == null) {
             mFontIconView = new Text(getContext());
+            needsUpdate = true;
         }
         mFontIconView.setTextColor(new Color(mEnabled ? mDefaultIconColor : mDisabledTextColor));
         LayoutConfig params = new LayoutConfig(MATCH_CONTENT, MATCH_CONTENT);
@@ -243,7 +251,7 @@ public class MaterialFancyButton extends DirectionalLayout {
         }
 
         mFontIconView.setLayoutConfig(params);
-        mFontIconView.setTextSize(FontUtil.pxToFp(getContext(), mFontIconSize));
+        mFontIconView.setTextSize(FontUtil.pxToFp(getContext(), mFontIconSize), Text.TextSizeType.FP);
         mFontIconView.setText(mFontIcon);
         mFontIconView.setFont(mIconTypeFace);
         HiLog.debug(LABEL, "setupFontIconView mIconTypeFace  =  %{public}s", mIconTypeFace.toString());
@@ -256,6 +264,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     private void setupIconView() {
         if (mIconView == null) {
             mIconView = new Image(getContext());
+            needsUpdate = true;
         }
         mIconView.setPadding(mIconPaddingLeft, mIconPaddingTop, mIconPaddingRight, mIconPaddingBottom);
         LayoutConfig params = new LayoutConfig(MATCH_CONTENT, MATCH_CONTENT);
@@ -547,11 +556,14 @@ public class MaterialFancyButton extends DirectionalLayout {
 
     /**
      * Used by the Attribute setter functions to refresh the button Components after changes.
+     * In case a new Component is to be added (eg. Font-Icon Text Component), the Components of this ComponentContainer
+     * are rebuilt.
      */
     private void setupView() {
         setupFontIconView();
         setupTextView();
         setupBackground();
+        refreshComponents();
     }
 
     /**
@@ -786,12 +798,12 @@ public class MaterialFancyButton extends DirectionalLayout {
     public void setTextSize(int textSize) {
         mTextSize = FontUtil.fpToPx(getContext(), textSize);
         if (mTextView != null) {
-            mTextView.setTextSize(textSize);
+            mTextView.setTextSize(textSize, Text.TextSizeType.FP);
         }
     }
 
     /**
-     * Get the the size of Text in fp.
+     * Get the the size of Text in px.
      *
      * @return Text Size
      */
@@ -914,6 +926,7 @@ public class MaterialFancyButton extends DirectionalLayout {
      *
      * @return The Element used as the drawable-icon, {@code null} if no drawable-icon is being used.
      */
+    @SuppressWarnings("unused")
     public Element getElementIconResource() {
         return mIconResource;
     }
@@ -980,7 +993,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     public void setFontIconSize(int iconSize) {
         mFontIconSize = FontUtil.fpToPx(getContext(), iconSize);
         if (mFontIconView != null) {
-            mFontIconView.setTextSize(iconSize);
+            mFontIconView.setTextSize(iconSize, Text.TextSizeType.FP);
         }
     }
 
@@ -1182,6 +1195,7 @@ public class MaterialFancyButton extends DirectionalLayout {
      *
      * @param fontName : Name of the font file. It should be placed in the rawfile directory of the HAP using the font.
      */
+    @SuppressWarnings("unused")
     public void setCustomTextFont(String fontName) {
         Context callerContext = getContext();
         if (callerContext instanceof AbilityContext) {

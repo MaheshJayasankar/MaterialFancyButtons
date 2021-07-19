@@ -19,7 +19,7 @@ package com.rilixtech.materialfancybuttons.slice;
 import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_CONTENT;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
-import ohos.agp.components.DirectionalLayout;
+import ohos.agp.components.ComponentContainer;
 import com.rilixtech.community_material_typeface.CommunityMaterial;
 import com.rilixtech.devicon_typeface.Devicon;
 import com.rilixtech.dripicons_typeface.Dripicons;
@@ -44,6 +44,7 @@ import com.rilixtech.themify_icons_typeface.ThemifyIcons;
 import com.rilixtech.typicons_typeface.Typicons;
 import com.rilixtech.vaadin_icons_typeface.VaadinIcons;
 import com.rilixtech.weather_icons_typeface.WeatherIcons;
+import ohos.agp.components.ScrollView;
 
 /**
  * This AbilitySlice displays a set of {@link MaterialFancyButton} Components instantiated using Java code
@@ -86,14 +87,19 @@ public class ProgramButtonsSlice extends AbilitySlice {
     }
 
     private void addButtonToLayout(IIcon icon) {
-        String buttonText = String.format(BUTTON_TEXT_FORMAT, icon.getClass().getSimpleName());
+        String buttonText = String.format(BUTTON_TEXT_FORMAT, icon.getTypeface().getFontName());
         MaterialFancyButton materialFancyButton = new MaterialFancyButton(this);
         materialFancyButton.setIcon(icon);
+        materialFancyButton.setIconPosition(MaterialFancyButton.POSITION_RIGHT);
         materialFancyButton.setText(buttonText);
         materialFancyButton.setRadius(30);
-        DirectionalLayout.LayoutConfig layoutConfig =
-                new DirectionalLayout.LayoutConfig(MATCH_CONTENT, MATCH_CONTENT);
-        DirectionalLayout container = (DirectionalLayout) findComponentById(ResourceTable.Id_programbuttons_container);
+        materialFancyButton.setTextSize(12);
+        materialFancyButton.setFontIconSize(40);
+        ComponentContainer.LayoutConfig layoutConfig =
+                new ComponentContainer.LayoutConfig(MATCH_CONTENT, MATCH_CONTENT);
+        layoutConfig.setMarginBottom(24);
+        ComponentContainer container = (ComponentContainer)
+                findComponentById(ResourceTable.Id_programbuttons_container);
         container.addComponent(materialFancyButton, layoutConfig);
     }
 

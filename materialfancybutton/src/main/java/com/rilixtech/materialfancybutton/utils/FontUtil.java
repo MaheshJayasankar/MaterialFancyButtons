@@ -110,7 +110,7 @@ public class FontUtil {
         return typeface;
     }
 
-    private static Font getFontFromRawFile(AbilityContext context, String fontName) throws IllegalStateException  {
+    public static Font getFontFromRawFile(AbilityContext context, String fontName) throws IllegalStateException  {
         Font typeface;
         RawFileEntry rawFileEntry = context.getResourceManager()
                 .getRawFileEntry("resources/rawfile/" + fontName);

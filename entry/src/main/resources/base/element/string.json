@@ -25,6 +25,10 @@
       "value": "List Item Default Text"
     },
     {
+      "name": "program_button_desc",
+      "value": "Buttons defined programmatically using the various supported typefaces."
+    },
+    {
       "name": "action_settings",
       "value": "Settings"
     },

@@ -1,5 +1,6 @@
 package com.rilixtech.community_material_typeface;
 
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
 import ohos.global.resource.RawFileDescriptor;
@@ -110,39 +111,13 @@ public class CommunityMaterial implements ITypeface {
     @Override
     public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                typeface = FontUtil.getFontFromRawFile(context, TTF_FILE);
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
-    }
-
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+        return typeface;
     }
 
     /**
@@ -2082,7 +2057,6 @@ public class CommunityMaterial implements ITypeface {
         CMDI_YIN_YANG('\uF67F'),
         CMDI_YOUTUBE_PLAY('\uF5C3'),
         CMDI_ZIP_BOX('\uF5C4');
-
 
         char character;
 
