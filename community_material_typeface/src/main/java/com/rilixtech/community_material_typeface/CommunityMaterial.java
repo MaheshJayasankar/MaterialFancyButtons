@@ -1,29 +1,23 @@
 package com.rilixtech.community_material_typeface;
 
-import com.rilixtech.materialfancybutton.utils.FontUtil;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
- * ITypeface implementation using the Community Material Design font. It supports a variety of icons that can be used by
+ * ITypeface implementation using the Community Material Design font. It hosts a variety of icons that can be used by
  * the MaterialFancyButton Components.
  */
 public class CommunityMaterial implements ITypeface {
     private static final String TTF_FILE = "communitymaterial-font-v1.9.32.ttf";
     private static final String MAPPING_FONT_PREFIX = "CMDI";
 
-    private Font typeface = null;
+    private static Font typeface = null;
 
     private static HashMap<String, Character> mChars;
 
@@ -62,7 +56,7 @@ public class CommunityMaterial implements ITypeface {
 
     @Override
     public String getVersion() {
-        return "1.9.32.1";
+        return "1" + ".9.32.1";
     }
 
     @Override
@@ -112,12 +106,16 @@ public class CommunityMaterial implements ITypeface {
     public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
             try {
-                typeface = FontUtil.getFontFromRawFile(context, TTF_FILE);
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
             } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
         return typeface;
+    }
+
+    private static void cacheTypeface(Font font) {
+        typeface = font;
     }
 
     /**

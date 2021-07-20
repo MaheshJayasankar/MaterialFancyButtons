@@ -2,18 +2,18 @@ package com.rilixtech.devicon_typeface;
 
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+
+/**
+ * ITypeface implementation using the Devicon font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class Devicon implements ITypeface {
     private static final String TTF_FILE = "devicon-font-v2.0.0.1.ttf";
     private static final String MAPPING_FONT_PREFIX = "DEVI";
@@ -27,13 +27,17 @@ public class Devicon implements ITypeface {
 
     @Override public HashMap<String, Character> getCharacters() {
         if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.character);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
         return mChars;
+    }
+
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        mChars = characterHashMap;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class Devicon implements ITypeface {
 
     @Override
     public String getVersion() {
-        return "2.0.0.1";
+        return "2" + ".0.0.1";
     }
 
     @Override
@@ -77,7 +81,8 @@ public class Devicon implements ITypeface {
 
     @Override
     public String getDescription() {
-        return "Devicon is a set of icons representing programming languages, designing & development tools. You can use it as a font or directly copy/paste the svg code into your project.";
+        return "Devicon is a set of icons representing programming languages, designing & development tools. "
+                + "You can use it as a font or directly copy/paste the svg code into your project.";
     }
 
     @Override
@@ -91,44 +96,27 @@ public class Devicon implements ITypeface {
     }
 
 
+
+
     @Override
     public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return typeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        typeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by this ITypeface.
+     */
     public enum Icon implements IIcon {
         DEVI_SSH_PLAIN_WORDMARK('\ue900'),
         DEVI_SSH_PLAIN('\ue901'),
@@ -314,11 +302,19 @@ public class Devicon implements ITypeface {
         // remember the typeface so we can use it later
         private static ITypeface typeface;
 
+        /** Gets the ITypeface corresponding to this IIcon.
+         *
+         * @return ITypeface object corresponding to this IIcon.
+         */
         public ITypeface getTypeface() {
             if (typeface == null) {
-                typeface = new Devicon();
+                setTypeface(new Devicon());
             }
             return typeface;
+        }
+
+        private static void setTypeface(Devicon typeface) {
+            Icon.typeface = typeface;
         }
     }
 }

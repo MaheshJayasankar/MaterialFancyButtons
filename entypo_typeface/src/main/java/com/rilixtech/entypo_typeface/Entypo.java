@@ -2,19 +2,18 @@ package com.rilixtech.entypo_typeface;
 
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the Entypo font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class Entypo implements ITypeface {
     private static final String TTF_FILE = "entypo-font-v1.0.0.1.ttf";
     private static final String MAPPING_FONT_PREFIX = "ENTI";
@@ -31,15 +30,19 @@ public class Entypo implements ITypeface {
     @Override
     public HashMap<String, Character> getCharacters() {
         if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(),
+                characterHashMap.put(v.name(),
                         v.character);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
 
         return mChars;
+    }
+
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        mChars = characterHashMap;
     }
 
     @Override
@@ -101,41 +104,22 @@ public class Entypo implements ITypeface {
     @Override
     public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return typeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        typeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by this ITypeface.
+     */
     public enum Icon implements IIcon {
         ENTI_ADD_TO_LIST('\ue900'),
         ENTI_CLASSIC_COMPUTER('\ue901'),
@@ -544,11 +528,19 @@ public class Entypo implements ITypeface {
         // remember the typeface so we can use it later
         private static ITypeface typeface;
 
+        /** Gets the ITypeface corresponding to this IIcon.
+         *
+         * @return ITypeface object corresponding to this IIcon.
+         */
         public ITypeface getTypeface() {
             if (typeface == null) {
-                typeface = new Entypo();
+                setTypeface(new Entypo());
             }
             return typeface;
+        }
+
+        private static void setTypeface(Entypo typeface) {
+            Icon.typeface = typeface;
         }
     }
 

@@ -1,20 +1,18 @@
 package com.rilixtech.dripicons_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the Dripicons font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class Dripicons implements ITypeface {
     private static final String TTF_FILE = "dripicons-v2.ttf";
     private static final String MAPPING_FONT_PREFIX = "DRPI";
@@ -29,14 +27,18 @@ public class Dripicons implements ITypeface {
 
     @Override public HashMap<String, Character> getCharacters() {
         if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.character);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
 
         return mChars;
+    }
+
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        mChars = characterHashMap;
     }
 
     @Override public String getMappingPrefix() {
@@ -88,44 +90,25 @@ public class Dripicons implements ITypeface {
     @Override
     public Font getTypeface(AbilityContext context) {
         if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return typeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        typeface = font;
     }
 
-    private static final char a = 0x0027;
-    private static final char back_slash = 0x005C;
+    private static final char A_LOWERCASE = 0x0027;
+    private static final char BACK_SLASH = 0x005C;
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by this ITypeface.
+     */
     public enum Icon implements IIcon {
         DRPI_ALARM('\u0061'),
         DRPI_ALIGN_CENTER('\u0062'),
@@ -195,7 +178,7 @@ public class Dripicons implements ITypeface {
         DRPI_DEVICE_MOBILE('\u0024'),
         DRPI_DEVICE_TABLET('\u0025'),
         DRPI_DIRECTION('\u0026'),
-        drpi_disc(a),
+        DRPI_DISC(A_LOWERCASE),
         DRPI_DOCUMENT('\u0028'),
         DRPI_DOCUMENT_DELETE('\u0029'),
         DRPI_DOCUMENT_EDIT('\u002a'),
@@ -220,7 +203,7 @@ public class Dripicons implements ITypeface {
         DRPI_FORWARD('\u007c'),
         DRPI_GAMING('\u007d'),
         DRPI_GEAR('\u007e'),
-        drpi_graduation(back_slash),
+        DRPI_GRADUATION(BACK_SLASH),
         DRPI_GRAPH_BAR('\ue000'),
         DRPI_GRAPH_LINE('\ue001'),
         DRPI_GRAPH_PIE('\ue002'),
@@ -349,11 +332,19 @@ public class Dripicons implements ITypeface {
         // remember the typeface so we can use it later
         private static ITypeface typeface;
 
+        /** Gets the ITypeface corresponding to this IIcon.
+         *
+         * @return ITypeface object corresponding to this IIcon.
+         */
         public ITypeface getTypeface() {
             if (typeface == null) {
-                typeface = new Dripicons();
+                setTypeface(new Dripicons());
             }
             return typeface;
+        }
+
+        private static void setTypeface(Dripicons typeface) {
+            Icon.typeface = typeface;
         }
     }
 }
