@@ -44,7 +44,6 @@ import com.rilixtech.themify_icons_typeface.ThemifyIcons;
 import com.rilixtech.typicons_typeface.Typicons;
 import com.rilixtech.vaadin_icons_typeface.VaadinIcons;
 import com.rilixtech.weather_icons_typeface.WeatherIcons;
-import ohos.agp.components.ScrollView;
 
 /**
  * This AbilitySlice displays a set of {@link MaterialFancyButton} Components instantiated using Java code
@@ -94,10 +93,11 @@ public class ProgramButtonsSlice extends AbilitySlice {
         materialFancyButton.setText(buttonText);
         materialFancyButton.setRadius(30);
         materialFancyButton.setTextSize(12);
-        materialFancyButton.setFontIconSize(40);
+        materialFancyButton.setFontIconSize(12);
+        materialFancyButton.setIconPadding(4, 8, 4, 8);
         ComponentContainer.LayoutConfig layoutConfig =
                 new ComponentContainer.LayoutConfig(MATCH_CONTENT, MATCH_CONTENT);
-        layoutConfig.setMarginBottom(24);
+        layoutConfig.setMarginBottom(12);
         ComponentContainer container = (ComponentContainer)
                 findComponentById(ResourceTable.Id_programbuttons_container);
         container.addComponent(materialFancyButton, layoutConfig);

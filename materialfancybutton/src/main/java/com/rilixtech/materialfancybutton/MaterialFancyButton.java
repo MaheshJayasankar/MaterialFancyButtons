@@ -51,7 +51,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     // # Text Attributes
     private int mDefaultTextColor = Color.WHITE.getValue();
     private int mDefaultIconColor = Color.WHITE.getValue();
-    private int mTextSize = FontUtil.fpToPx(getContext(), 40);
+    private int mTextSize = FontUtil.fpToPx(getContext(), 16);
     private int mTextGravity; // Gravity.CENTER
     private String mText = null;
     private int mTextStyle;
