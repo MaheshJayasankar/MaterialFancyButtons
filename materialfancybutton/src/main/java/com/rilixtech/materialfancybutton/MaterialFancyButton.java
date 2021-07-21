@@ -58,7 +58,7 @@ public class MaterialFancyButton extends DirectionalLayout {
 
     // # Icon Attributes
     private Element mIconResource = null;
-    private int mFontIconSize = FontUtil.fpToPx(getContext(), 40);
+    private int mFontIconSize = FontUtil.fpToPx(getContext(), 16);
     private String mFontIcon = null;
     private int mIconPosition = 1;
     private String mIcon = null;
