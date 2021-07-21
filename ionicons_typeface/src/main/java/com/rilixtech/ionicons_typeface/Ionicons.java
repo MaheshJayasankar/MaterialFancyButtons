@@ -1,124 +1,136 @@
 package com.rilixtech.ionicons_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Ionicons implements ITypeface{
+/**
+ * ITypeface implementation using the Ionicons font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
+public class Ionicons implements ITypeface {
     private static final String TTF_FILE = "ionicons.ttf";
-    private static final String MAPPING_FONT_PREFIX = "IONI";
+    private static final String IONICONS_PREFIX = "IONI";
+    public static final String IONICONS_NAME = "Ionicons";
+    public static final String IONICONS_VERSION = "2" + ".0.1.1";
+    public static final String IONICONS_AUTHOR = "Benjsperry";
+    public static final String IONICONS_URL = "http://ionicons.com/";
+    public static final String IONICONS_DESC = "The premium icon font for Ionic Framework.";
+    public static final String IONICONS_LICENSE = "MIT Licensed";
+    public static final String IONICONS_LICENSE_URL = "https://github.com/driftyco/ionicons/blob/master/LICENSE";
 
-    private static Font typeface = null;
-    private static HashMap<String, Character> mChars;
+    private static Font ioniconsTypeface = null;
+    private static HashMap<String, Character> ioniconsCharMap;
 
+    /**
+     * Ionicons IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which Ionicons IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the Ionicons icon characters in a HashMap.
+     *
+     * @return HashMap of all Ionicons icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (ioniconsCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                setChars(characterHashMap, v);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-        return mChars;
+        return ioniconsCharMap;
     }
 
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        ioniconsCharMap = characterHashMap;
+    }
+
+    /**
+     * Set the Ionicons Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap, Icon v) {
+        characterHashMap.put(v.name(), v.ioniconsCharacter);
+    }
+
+    /**
+     * Return the Ionicons Mapping Prefix.
+     *
+     * @return Ionicons Mapping Prefix, used by all Ionicons icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return IONICONS_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Ionicons";
+        return IONICONS_NAME;
     }
 
     @Override public String getVersion() {
-        return "2.0.1.1";
+        return IONICONS_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return ioniconsCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> ioniconsKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            ioniconsKeyList.add(value.name());
         }
-        return icons;
+        return ioniconsKeyList;
     }
 
     @Override public String getAuthor() {
-        return "Benjsperry";
+        return IONICONS_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "http://ionicons.com/";
+        return IONICONS_URL;
     }
 
     @Override public String getDescription() {
-        return "The premium icon font for Ionic Framework.";
+        return IONICONS_DESC;
     }
 
     @Override public String getLicense() {
-        return "MIT Licensed";
+        return IONICONS_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "https://github.com/driftyco/ionicons/blob/master/LICENSE";
+        return IONICONS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (ioniconsTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return ioniconsTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        ioniconsTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by Ionicons ITypeface.
+     */
     public enum Icon implements IIcon {
         IONI_ALERT('\uf101'),
         IONI_ALERT_CIRCLED('\uf100'),
@@ -854,10 +866,10 @@ public class Ionicons implements ITypeface{
         IONI_WRENCH('\uf2ba'),
         IONI_XBOX('\uf30c');
 
-        char character;
+        char ioniconsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.ioniconsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -865,7 +877,7 @@ public class Ionicons implements ITypeface{
         }
 
         public char getCharacter() {
-            return character;
+            return ioniconsCharacter;
         }
 
         public String getName() {
@@ -873,13 +885,18 @@ public class Ionicons implements ITypeface{
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface ioniconsTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new Ionicons();
+            if (ioniconsTypeface == null) {
+                setTypeface(new Ionicons());
             }
-            return typeface;
+            return ioniconsTypeface;
+        }
+
+        private static void setTypeface(Ionicons ioniconsTypeface) {
+            Icon.ioniconsTypeface = ioniconsTypeface;
         }
     }
 }

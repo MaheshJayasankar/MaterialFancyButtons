@@ -1,141 +1,142 @@
 package com.rilixtech.octicons_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the Octicons font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class Octicons implements ITypeface {
     private static final String TTF_FILE = "octicons-v3.2.0.ttf";
-    private static final String MAPPING_FONT_PREFIX = "OCTI";
+    private static final String OCTICONS_PREFIX = "OCTI";
+    public static final String OCTICONS_NAME = "Octicons";
+    public static final String OCTICONS_VERSION = "3" + ".2.0";
+    public static final String OCTICONS_AUTHOR = "GitHub";
+    public static final String OCTICONS_URL = "https://github.com/github/octicons";
+    public static final String OCTICONS_DESC = "GitHub's icon font https://octicons.github.com/";
+    public static final String OCTICONS_LICENSE = " SIL OFL 1.1";
+    public static final String OCTICONS_LICENSE_URL = "http://scripts.sil.org/OFL";
 
-    private static Font typeface = null;
+    private static Font octiconsTypeface = null;
+    private static HashMap<String, Character> octiconsCharMap;
 
-    private static HashMap<String, Character> mChars;
-
-    @Override
-    public IIcon getIcon(String key) {
+    /**
+     * Octicons IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which Octicons IIcon is to be retrieved.
+     */
+    @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
-    @Override
-    public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+    /**
+     * Get all the Octicons icon characters in a HashMap.
+     *
+     * @return HashMap of all Octicons icon character names mapped to their character values.
+     */
+    @Override public HashMap<String, Character> getCharacters() {
+        if (octiconsCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(),
-                        v.character);
+                characterHashMap.put(v.name(), v.octiconsCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-
-        return mChars;
+        return octiconsCharMap;
     }
 
+    /**
+     * Set the Octicons Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        octiconsCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the Octicons Mapping Prefix.
+     *
+     * @return Octicons Mapping Prefix, used by all Octicons icons.
+     */
     @Override
     public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return OCTICONS_PREFIX;
     }
 
     @Override
     public String getFontName() {
-        return "Octicons";
+        return OCTICONS_NAME;
     }
 
     @Override
     public String getVersion() {
-        return "3.2.0";
+        return OCTICONS_VERSION;
     }
 
     @Override
     public int getIconCount() {
-        return mChars.size();
+        return octiconsCharMap.size();
     }
 
     @Override
     public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
-
+        Collection<String> octiconsKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            octiconsKeyList.add(value.name());
         }
-
-        return icons;
+        return octiconsKeyList;
     }
 
     @Override
     public String getAuthor() {
-        return "GitHub";
+        return OCTICONS_AUTHOR;
     }
 
     @Override
     public String getUrl() {
-        return "https://github.com/github/octicons";
+        return OCTICONS_URL;
     }
 
     @Override
     public String getDescription() {
-        return "GitHub's icon font https://octicons.github.com/";
+        return OCTICONS_DESC;
     }
 
     @Override
     public String getLicense() {
-        return " SIL OFL 1.1";
+        return OCTICONS_LICENSE;
     }
 
     @Override
     public String getLicenseUrl() {
-        return "http://scripts.sil.org/OFL";
+        return OCTICONS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (octiconsTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return octiconsTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        octiconsTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by Octicons ITypeface.
+     */
     public enum Icon implements IIcon {
         //Octicons
         OCTI_ALERT('\uf02d'),
@@ -332,10 +333,10 @@ public class Octicons implements ITypeface {
         OCTI_X('\uf081'),
         OCTI_ZAP('\u26A1');
 
-        char character;
+        char octiconsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.octiconsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -343,7 +344,7 @@ public class Octicons implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return octiconsCharacter;
         }
 
         public String getName() {
@@ -351,13 +352,18 @@ public class Octicons implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface octiconsTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new Octicons();
+            if (octiconsTypeface == null) {
+                setTypeface(new Octicons());
             }
-            return typeface;
+            return octiconsTypeface;
+        }
+
+        private static void setTypeface(Octicons octiconsTypeface) {
+            Icon.octiconsTypeface = octiconsTypeface;
         }
     }
 }

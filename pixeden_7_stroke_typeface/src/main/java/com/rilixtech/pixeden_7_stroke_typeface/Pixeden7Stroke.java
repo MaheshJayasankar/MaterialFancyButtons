@@ -1,129 +1,137 @@
 package com.rilixtech.pixeden_7_stroke_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the Pixeden7Stroke font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class Pixeden7Stroke implements ITypeface {
     private static final String TTF_FILE = "pixeden-7-stroke-font-v1.2.0.ttf";
-    private static final String MAPPING_FONT_PREFIX = "PE7I";
+    private static final String PIXEDEN_7_STROKE_PREFIX = "PE7I";
+    public static final String PIXEDEN_7_STROKE_NAME = "Pixeden 7 Stroke";
+    public static final String PIXEDEN_7_STROKE_VERSION = "1" + ".2.0.0";
+    public static final String PIXEDEN_7_STROKE_AUTHOR = "Riccardo Montagnin";
+    public static final String PIXEDEN_7_STROKE_URL = "http://themes-pixeden.com/font-demos/7-stroke/";
+    public static final String PIXEDEN_7_STROKE_DESC = "A series of iOS 7 inspired vector icons";
+    public static final String PIXEDEN_7_STROKE_LICENSE = "Royalty free for use in both personal and commercial projects";
+    public static final String PIXEDEN_7_STROKE_LICENSE_URL = "http://themes-pixeden.com/font-demos/7-stroke/";
 
-    private static Font typeface = null;
-    private static HashMap<String, Character> mChars;
+    private static Font pixeden7StrokeTypeface = null;
+    private static HashMap<String, Character> pixeden7StrokeCharMap;
 
+    /**
+     * Pixeden7Stroke IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which Pixeden7Stroke IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the Pixeden7Stroke icon characters in a HashMap.
+     *
+     * @return HashMap of all Pixeden7Stroke icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (pixeden7StrokeCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.pixeden7StrokeCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-        return mChars;
+        return pixeden7StrokeCharMap;
     }
 
+    /**
+     * Set the Pixeden7Stroke Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        pixeden7StrokeCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the Pixeden7Stroke Mapping Prefix.
+     *
+     * @return Pixeden7Stroke Mapping Prefix, used by all Pixeden7Stroke icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return PIXEDEN_7_STROKE_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Pixeden 7 Stroke";
+        return PIXEDEN_7_STROKE_NAME;
     }
 
     @Override public String getVersion() {
-        return "1.2.0.0";
+        return PIXEDEN_7_STROKE_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return pixeden7StrokeCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> pixeden7StrokeKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            pixeden7StrokeKeyList.add(value.name());
         }
-        return icons;
+        return pixeden7StrokeKeyList;
     }
 
     @Override
     public String getAuthor() {
-        return "Riccardo Montagnin";
+        return PIXEDEN_7_STROKE_AUTHOR;
     }
 
     @Override
     public String getUrl() {
-        return "http://themes-pixeden.com/font-demos/7-stroke/";
+        return PIXEDEN_7_STROKE_URL;
     }
 
     @Override
     public String getDescription() {
-        return "A series of iOS 7 inspired vector icons";
+        return PIXEDEN_7_STROKE_DESC;
     }
 
     @Override
     public String getLicense() {
-        return "Royalty free for use in both personal and commercial projects";
+        return PIXEDEN_7_STROKE_LICENSE;
     }
 
     @Override
     public String getLicenseUrl() {
-        return "http://themes-pixeden.com/font-demos/7-stroke/";
+        return PIXEDEN_7_STROKE_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (pixeden7StrokeTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return pixeden7StrokeTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        pixeden7StrokeTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by Pixeden7Stroke ITypeface.
+     */
     public enum Icon implements IIcon {
         PE7I_7S_ALBUM('\ue6aa'),
         PE7I_7S_ARC('\ue6ab'),
@@ -328,10 +336,10 @@ public class Pixeden7Stroke implements ITypeface {
         PE7I_7S_ALARM('\ue67e'),
         PE7I_7S_AIRPLAY('\ue67f');
 
-        char character;
+        char pixeden7StrokeCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.pixeden7StrokeCharacter = character;
         }
 
         public String getFormattedName() {
@@ -339,7 +347,7 @@ public class Pixeden7Stroke implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return pixeden7StrokeCharacter;
         }
 
         public String getName() {
@@ -347,13 +355,18 @@ public class Pixeden7Stroke implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface pixeden7StrokeTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new Pixeden7Stroke();
+            if (pixeden7StrokeTypeface == null) {
+                setTypeface(new Pixeden7Stroke());
             }
-            return typeface;
+            return pixeden7StrokeTypeface;
+        }
+
+        private static void setTypeface(Pixeden7Stroke pixeden7StrokeTypeface) {
+            Icon.pixeden7StrokeTypeface = pixeden7StrokeTypeface;
         }
     }
 }

@@ -10,5 +10,9 @@ public interface IIcon {
 
     char getCharacter();
 
+    /** Gets the ITypeface corresponding to this IIcon.
+     *
+     * @return ITypeface object corresponding to this IIcon.
+     */
     ITypeface getTypeface();
 }

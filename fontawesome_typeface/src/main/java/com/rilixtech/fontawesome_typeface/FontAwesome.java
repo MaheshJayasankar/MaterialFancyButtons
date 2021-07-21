@@ -1,17 +1,10 @@
 package com.rilixtech.fontawesome_typeface;
 
+import ohos.agp.text.Font;
+import ohos.app.AbilityContext;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
 import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import com.rilixtech.materialfancybutton.utils.FontUtil;
-import ohos.agp.text.Font;
-import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,98 +15,123 @@ import java.util.LinkedList;
  */
 public class FontAwesome implements ITypeface {
     private static final String TTF_FILE = "fontawesome-font-v4.7.ttf";
-    private static final String MAPPING_FONT_PREFIX = "FAWI";
+    private static final String FONT_AWESOME_PREFIX = "FAWI";
+    public static final String FONT_AWESOME_NAME = "FontAwesome";
+    public static final String FONT_AWESOME_VERSION = "4" + ".7.0.0";
+    public static final String FONT_AWESOME_AUTHOR = "Dave Gandy";
+    public static final String FONT_AWESOME_URL = "https://github.com/FortAwesome/Font-Awesome";
+    public static final String FONT_AWESOME_DESC = "Font Awesome is a full suite of 675 pictographic icons for easy scalable vector graphics on websites, created and maintained by Dave Gandy. Stay up to date @fontawesome.";
+    public static final String FONT_AWESOME_LICENSE = "SIL OFL 1.1";
+    public static final String FONT_AWESOME_LICENSE_URL = "http://scripts.sil.org/OFL";
 
-    private static Font typeface = null;
+    private static Font fontAwesomeTypeface = null;
 
-    private static HashMap<String, Character> mChars;
+    private static HashMap<String, Character> fontAwesomeCharMap;
 
+    /**
+     * FontAwesome IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which FontAwesome IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the FontAwesome icon characters in a HashMap.
+     *
+     * @return HashMap of all FontAwesome icon character names mapped to their character values.
+     */
     @Override
     public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
+        if (fontAwesomeCharMap == null) {
             HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
                 characterHashMap.put(v.name(),
-                        v.character);
+                        v.fontAwesomeCharacter);
             }
             setChars(characterHashMap);
         }
 
-        return mChars;
+        return fontAwesomeCharMap;
     }
 
+    /**
+     * Set the FontAwesome Characters into a HashMap.
+     */
     private static void setChars(HashMap<String, Character> characterHashMap) {
-        mChars = characterHashMap;
+        fontAwesomeCharMap = characterHashMap;
     }
 
+    /**
+     * Return the FontAwesome Mapping Prefix.
+     *
+     * @return FontAwesome Mapping Prefix, used by all FontAwesome icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return FONT_AWESOME_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "FontAwesome";
+        return FONT_AWESOME_NAME;
     }
 
     @Override public String getVersion() {
-        return "4.7.0.0";
+        return FONT_AWESOME_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return fontAwesomeCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> fontAwesomeKeyList = new LinkedList<>();
 
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            fontAwesomeKeyList.add(value.name());
         }
 
-        return icons;
+        return fontAwesomeKeyList;
     }
 
     @Override public String getAuthor() {
-        return "Dave Gandy";
+        return FONT_AWESOME_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "https://github.com/FortAwesome/Font-Awesome";
+        return FONT_AWESOME_URL;
     }
 
     @Override public String getDescription() {
-        return "Font Awesome is a full suite of 675 pictographic icons for easy scalable vector graphics on websites, created and maintained by Dave Gandy. Stay up to date @fontawesome.";
+        return FONT_AWESOME_DESC;
     }
 
     @Override public String getLicense() {
-        return "SIL OFL 1.1";
+        return FONT_AWESOME_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "http://scripts.sil.org/OFL";
+        return FONT_AWESOME_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
+        if (fontAwesomeTypeface == null) {
             try {
                 cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
             } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return typeface;
+        return fontAwesomeTypeface;
     }
 
     private static void cacheTypeface(Font font) {
-        typeface = font;
+        fontAwesomeTypeface = font;
     }
 
     /**
-     * Enumerates all the supported Custom Icon Unicode characters by this ITypeface.
+     * Enumerates all the supported Custom Icon Unicode characters by FontAwesome ITypeface.
      */
     public enum Icon implements IIcon {
         FAWI_GLASS('\uf000'),
@@ -792,11 +810,10 @@ public class FontAwesome implements ITypeface {
         FAWI_WPEXPLORER('\uf2de'),
         FAWI_MEETUP('\uf2e0');
 
-
-        char character;
+        char fontAwesomeCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.fontAwesomeCharacter = character;
         }
 
         public String getFormattedName() {
@@ -804,7 +821,7 @@ public class FontAwesome implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return fontAwesomeCharacter;
         }
 
         public String getName() {
@@ -812,21 +829,18 @@ public class FontAwesome implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface fontAwesomeTypeface;
 
-        /** Gets the ITypeface corresponding to this IIcon.
-         *
-         * @return ITypeface object corresponding to this IIcon.
-         */
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
+            if (fontAwesomeTypeface == null) {
                 setTypeface(new FontAwesome());
             }
-            return typeface;
+            return fontAwesomeTypeface;
         }
 
-        private static void setTypeface(FontAwesome typeface) {
-            Icon.typeface = typeface;
+        private static void setTypeface(FontAwesome fontAwesomeTypeface) {
+            Icon.fontAwesomeTypeface = fontAwesomeTypeface;
         }
     }
 }

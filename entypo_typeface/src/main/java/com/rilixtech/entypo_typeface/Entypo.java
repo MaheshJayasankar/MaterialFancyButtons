@@ -1,11 +1,10 @@
 package com.rilixtech.entypo_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.utils.FontUtil;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,109 +15,134 @@ import java.util.LinkedList;
  */
 public class Entypo implements ITypeface {
     private static final String TTF_FILE = "entypo-font-v1.0.0.1.ttf";
-    private static final String MAPPING_FONT_PREFIX = "ENTI";
+    private static final String ENTYPO_PREFIX = "ENTI";
+    public static final String ENTYPO_NAME = "Entypo";
+    public static final String ENTYPO_VERSION = "1" + ".0.0.1";
+    public static final String ENTYPO_AUTHOR = "Daniel Bruce";
+    public static final String ENTYPO_URL = "http://www.entypo.com/";
+    public static final String ENTYPO_DESC = "411 carefully crafted premium pictograms by Daniel Bruce";
+    public static final String ENTYPO_LICENSE = "CC BY-SA 4.0";
+    public static final String ENTYPO_LICENSE_URL = "https://creativecommons.org/licenses/by-sa/4.0/";
 
-    private static Font typeface = null;
+    private static Font entypoTypeface = null;
 
-    private static HashMap<String, Character> mChars;
+    private static HashMap<String, Character> entypoCharMap;
 
+    /**
+     * Entypo IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which Entypo IIcon is to be retrieved.
+     */
     @Override
     public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the Entypo icon characters in a HashMap.
+     *
+     * @return HashMap of all Entypo icon character names mapped to their character values.
+     */
     @Override
     public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
+        if (entypoCharMap == null) {
             HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
                 characterHashMap.put(v.name(),
-                        v.character);
+                        v.entypoCharacter);
             }
             setChars(characterHashMap);
         }
 
-        return mChars;
+        return entypoCharMap;
     }
 
+    /**
+     * Set the Entypo Characters into a HashMap.
+     */
     private static void setChars(HashMap<String, Character> characterHashMap) {
-        mChars = characterHashMap;
+        entypoCharMap = characterHashMap;
     }
 
+    /**
+     * Return the Entypo Mapping Prefix.
+     *
+     * @return Entypo Mapping Prefix, used by all Entypo icons.
+     */
     @Override
     public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return ENTYPO_PREFIX;
     }
 
     @Override
     public String getFontName() {
-        return "Entypo";
+        return ENTYPO_NAME;
     }
 
     @Override
     public String getVersion() {
-        return "1.0.0.1";
+        return ENTYPO_VERSION;
     }
 
     @Override
     public int getIconCount() {
-        return mChars.size();
+        return entypoCharMap.size();
     }
 
     @Override
     public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> entypoKeyList = new LinkedList<>();
 
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            entypoKeyList.add(value.name());
         }
 
-        return icons;
+        return entypoKeyList;
     }
 
     @Override
     public String getAuthor() {
-        return "Daniel Bruce";
+        return ENTYPO_AUTHOR;
     }
 
     @Override
     public String getUrl() {
-        return "http://www.entypo.com/";
+        return ENTYPO_URL;
     }
 
     @Override
     public String getDescription() {
-        return "411 carefully crafted premium pictograms by Daniel Bruce";
+        return ENTYPO_DESC;
     }
 
     @Override
     public String getLicense() {
-        return "CC BY-SA 4.0";
+        return ENTYPO_LICENSE;
     }
 
     @Override
     public String getLicenseUrl() {
-        return "https://creativecommons.org/licenses/by-sa/4.0/";
+        return ENTYPO_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
+        if (entypoTypeface == null) {
             try {
                 cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
             } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return typeface;
+        return entypoTypeface;
     }
 
     private static void cacheTypeface(Font font) {
-        typeface = font;
+        entypoTypeface = font;
     }
 
     /**
-     * Enumerates all the supported Custom Icon Unicode characters by this ITypeface.
+     * Enumerates all the supported Custom Icon Unicode characters by Entypo ITypeface.
      */
     public enum Icon implements IIcon {
         ENTI_ADD_TO_LIST('\ue900'),
@@ -507,10 +531,10 @@ public class Entypo implements ITypeface {
         ENTI_YOUTUBE_WITH_CIRCLE('\uea7f'),
         ENTI_YOUTUBE('\uea80');
 
-        char character;
+        char entypoCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.entypoCharacter = character;
         }
 
         public String getFormattedName() {
@@ -518,7 +542,7 @@ public class Entypo implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return entypoCharacter;
         }
 
         public String getName() {
@@ -526,22 +550,18 @@ public class Entypo implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface entypoTypeface;
 
-        /** Gets the ITypeface corresponding to this IIcon.
-         *
-         * @return ITypeface object corresponding to this IIcon.
-         */
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
+            if (entypoTypeface == null) {
                 setTypeface(new Entypo());
             }
-            return typeface;
+            return entypoTypeface;
         }
 
-        private static void setTypeface(Entypo typeface) {
-            Icon.typeface = typeface;
+        private static void setTypeface(Entypo entypoTypeface) {
+            Icon.entypoTypeface = entypoTypeface;
         }
     }
-
 }

@@ -15,111 +15,132 @@ import java.util.LinkedList;
  */
 public class CommunityMaterial implements ITypeface {
     private static final String TTF_FILE = "communitymaterial-font-v1.9.32.ttf";
-    private static final String MAPPING_FONT_PREFIX = "CMDI";
+    public static final String COMMUNITY_MATERIAL_PREFIX = "CMDI";
+    public static final String COMMUNITY_MATERIAL_DESIGN_NAME = "Community Material Design";
+    public static final String COMMUNITY_MATERIAL_VERSION = "1" + ".9.32.1";
+    public static final String COMMUNITY_MATERIAL_AUTHOR = "Templarian / Community / Google";
+    public static final String COMMUNITY_MATERIAL_URL = "http://materialdesignicons.com/";
+    public static final String COMMUNITY_MATERIAL_DESC = "Material Design Icons are the official open-source icons"
+            + " featured in the Google Material Design specification.";
+    public static final String COMMUNITY_MATERIAL_LICENSE = "Templates - Free, Community Icons - SIL Open Font License"
+            + " 1.1, Google Material Design Icons: Attribution 4.0 International";
+    public static final String COMMUNITY_MATERIAL_LICENSE_URL =
+            "https://raw.githubusercontent.com/Templarian/MaterialDesign/master/license.txt";
+    private static Font communityMaterialTypeface = null;
+    private static HashMap<String, Character> communityMaterialCharMap;
 
-    private static Font typeface = null;
-
-    private static HashMap<String, Character> mChars;
-
+    /**
+     * Community Material IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which Community Material IIcon is to be retrieved.
+     */
     @Override
     public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the Community Material icon characters in a HashMap.
+     *
+     * @return HashMap of all Community Material icon character names mapped to their character values.
+     */
     @Override
     public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
+        if (communityMaterialCharMap == null) {
             HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                characterHashMap.put(v.name(),
-                        v.character);
+                characterHashMap.put(v.name(), v.communityMaterialCharacter);
             }
             setChars(characterHashMap);
         }
-
-        return mChars;
+        return communityMaterialCharMap;
     }
 
+    /**
+     * Set the Community Material Characters into a HashMap.
+     */
     private static void setChars(HashMap<String, Character> characterHashMap) {
-        mChars = characterHashMap;
+        communityMaterialCharMap = characterHashMap;
     }
 
+    /**
+     * Return the Community Material Mapping Prefix.
+     *
+     * @return Community Material Mapping Prefix, used by all Community Material icons.
+     */
     @Override
     public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return COMMUNITY_MATERIAL_PREFIX;
     }
 
     @Override
     public String getFontName() {
-        return "Community Material Design";
+        return COMMUNITY_MATERIAL_DESIGN_NAME;
     }
 
     @Override
     public String getVersion() {
-        return "1" + ".9.32.1";
+        return COMMUNITY_MATERIAL_VERSION;
     }
 
     @Override
     public int getIconCount() {
-        return mChars.size();
+        return communityMaterialCharMap.size();
     }
 
     @Override
     public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> communityMaterialKeyList = new LinkedList<>();
 
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            communityMaterialKeyList.add(value.name());
         }
-
-        return icons;
+        return communityMaterialKeyList;
     }
 
     @Override
     public String getAuthor() {
-        return "Templarian / Community / Google";
+        return COMMUNITY_MATERIAL_AUTHOR;
     }
 
     @Override
     public String getUrl() {
-        return "http://materialdesignicons.com/";
+        return COMMUNITY_MATERIAL_URL;
     }
 
     @Override
     public String getDescription() {
-        return "Material Design Icons are the official open-source icons featured in the Google Material Design"
-                + " specification.";
+        return COMMUNITY_MATERIAL_DESC;
     }
 
     @Override
     public String getLicense() {
-        return "Templates - Free, Community Icons - SIL Open Font License 1.1, Google Material Design Icons:"
-                + " Attribution 4.0 International";
+        return COMMUNITY_MATERIAL_LICENSE;
     }
 
     @Override
     public String getLicenseUrl() {
-        return "https://raw.githubusercontent.com/Templarian/MaterialDesign/master/license.txt";
+        return COMMUNITY_MATERIAL_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
+        if (communityMaterialTypeface == null) {
             try {
                 cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
             } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return typeface;
+        return communityMaterialTypeface;
     }
 
     private static void cacheTypeface(Font font) {
-        typeface = font;
+        communityMaterialTypeface = font;
     }
 
     /**
-     * Enumerates all the supported Custom Icon Unicode characters by this ITypeface.
+     * Enumerates all the supported Custom Icon Unicode characters by Community Material ITypeface.
      */
     public enum Icon implements IIcon {
         // Material design icons (v1.9.32)
@@ -2056,40 +2077,40 @@ public class CommunityMaterial implements ITypeface {
         CMDI_YOUTUBE_PLAY('\uF5C3'),
         CMDI_ZIP_BOX('\uF5C4');
 
-        char character;
+        char communityMaterialCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.communityMaterialCharacter = character;
         }
 
+        @Override
         public String getFormattedName() {
             return "{" + name() + "}";
         }
 
+        @Override
         public char getCharacter() {
-            return character;
+            return communityMaterialCharacter;
         }
 
+        @Override
         public String getName() {
             return name();
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface communityMaterialTypeface;
 
-        /** Gets the ITypeface corresponding to this IIcon.
-         *
-         * @return ITypeface object corresponding to this IIcon.
-         */
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                setTypeface(new CommunityMaterial());
+            if (communityMaterialTypeface == null) {
+                setCommunityMaterialTypeface(new CommunityMaterial());
             }
-            return typeface;
+            return communityMaterialTypeface;
         }
 
-        private static void setTypeface(CommunityMaterial typeface) {
-            Icon.typeface = typeface;
+        private static void setCommunityMaterialTypeface(CommunityMaterial communityMaterialTypeface) {
+            Icon.communityMaterialTypeface = communityMaterialTypeface;
         }
     }
 }

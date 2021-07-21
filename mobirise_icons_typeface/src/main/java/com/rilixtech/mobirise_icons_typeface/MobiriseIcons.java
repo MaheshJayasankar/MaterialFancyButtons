@@ -1,128 +1,132 @@
 package com.rilixtech.mobirise_icons_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the MobiriseIcons font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class MobiriseIcons implements ITypeface {
     private static final String TTF_FILE = "mobirise-icons-v1.0.0.ttf";
-    private static final String MAPPING_FONT_PREFIX = "MBRI";
+    private static final String MOBIRISE_ICONS_PREFIX = "MBRI";
+    public static final String MOBIRISE_ICONS_NAME = "Mobirise Icons";
+    public static final String MOBIRISE_ICONS_VERSION = "1" + ".0.0";
+    public static final String MOBIRISE_ICONS_AUTHOR = "Free Website Builder, https://mobirise.com/";
+    public static final String MOBIRISE_ICONS_URL = "https://mobirise.com/";
+    public static final String MOBIRISE_ICONS_DESC = "A free, open source set of 150 elegant, pixel-perfect vector icons from Free Website Builder.";
+    public static final String MOBIRISE_ICONS_LICENSE = "CC BY 4.0.";
+    public static final String MOBIRISE_ICONS_LICENSE_URL = "https://creativecommons.org/licenses/by/4.0/";
 
-    private static Font typeface = null;
+    private static Font mobiriseIconsTypeface = null;
+    private static HashMap<String, Character> mobiriseIconsCharMap;
 
-    private static HashMap<String, Character> mChars;
-
+    /**
+     * MobiriseIcons IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which MobiriseIcons IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the MobiriseIcons icon characters in a HashMap.
+     *
+     * @return HashMap of all MobiriseIcons icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (mobiriseIconsCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.mobiriseIconsCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-
-        return mChars;
+        return mobiriseIconsCharMap;
     }
 
+    /**
+     * Set the MobiriseIcons Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        mobiriseIconsCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the MobiriseIcons Mapping Prefix.
+     *
+     * @return MobiriseIcons Mapping Prefix, used by all MobiriseIcons icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return MOBIRISE_ICONS_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Mobirise Icons";
+        return MOBIRISE_ICONS_NAME;
     }
 
     @Override public String getVersion() {
-        return "1.0.0";
+        return MOBIRISE_ICONS_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return mobiriseIconsCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
-
+        Collection<String> mobiriseIconsKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            mobiriseIconsKeyList.add(value.name());
         }
-
-        return icons;
+        return mobiriseIconsKeyList;
     }
 
     @Override public String getAuthor() {
-        return "Free Website Builder, https://mobirise.com/";
+        return MOBIRISE_ICONS_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "https://mobirise.com/";
+        return MOBIRISE_ICONS_URL;
     }
 
     @Override public String getDescription() {
-        return "A free, open source set of 150 elegant, pixel-perfect vector icons from Free Website Builder.";
+        return MOBIRISE_ICONS_DESC;
     }
 
     @Override public String getLicense() {
-        return "CC BY 4.0.";
+        return MOBIRISE_ICONS_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "https://creativecommons.org/licenses/by/4.0/";
+        return MOBIRISE_ICONS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (mobiriseIconsTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return mobiriseIconsTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        mobiriseIconsTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by MobiriseIcons ITypeface.
+     */
     public enum Icon implements IIcon {
         MBRI_ADD_SUBMENU('\ue900'),
         MBRI_ALERT('\ue901'),
@@ -275,10 +279,10 @@ public class MobiriseIcons implements ITypeface {
         MBRI_WINDOWS('\ue994'),
         MBRI_ZOOM_OUT('\ue995');
 
-        char character;
+        char mobiriseIconsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.mobiriseIconsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -286,7 +290,7 @@ public class MobiriseIcons implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return mobiriseIconsCharacter;
         }
 
         public String getName() {
@@ -294,13 +298,18 @@ public class MobiriseIcons implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface mobiriseIconsTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new MobiriseIcons();
+            if (mobiriseIconsTypeface == null) {
+                setTypeface(new MobiriseIcons());
             }
-            return typeface;
+            return mobiriseIconsTypeface;
+        }
+
+        private static void setTypeface(MobiriseIcons mobiriseIconsTypeface) {
+            Icon.mobiriseIconsTypeface = mobiriseIconsTypeface;
         }
     }
 }

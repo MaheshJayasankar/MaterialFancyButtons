@@ -1,128 +1,132 @@
 package com.rilixtech.themify_icons_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the ThemifyIcons font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class ThemifyIcons implements ITypeface {
     private static final String TTF_FILE = "themify-icons-v0.1.2.ttf";
-    private static final String MAPPING_FONT_PREFIX = "THEI";
+    private static final String THEMIFY_ICONS_PREFIX = "THEI";
+    public static final String THEMIFY_ICONS_NAME = "Themify Icons";
+    public static final String THEMIFY_ICONS_VERSION = "0" + ".1.2";
+    public static final String THEMIFY_ICONS_AUTHOR = "Lally Elias";
+    public static final String THEMIFY_ICONS_URL = "http://themify.me/themify-icons";
+    public static final String THEMIFY_ICONS_DESC = "Themify Icons is a complete set of icons for use in web design and apps, consisting of 320+ pixel-perfect, hand-crafted icons that draw inspiration from Apple iOS 7.";
+    public static final String THEMIFY_ICONS_LICENSE = "SIL Open Font License (OFL)";
+    public static final String THEMIFY_ICONS_LICENSE_URL = "http://scripts.sil.org/OFL";
 
-    private static Font typeface = null;
+    private static Font themifyIconsTypeface = null;
+    private static HashMap<String, Character> themifyIconsCharMap;
 
-    private static HashMap<String, Character> mChars;
-
+    /**
+     * ThemifyIcons IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which ThemifyIcons IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the ThemifyIcons icon characters in a HashMap.
+     *
+     * @return HashMap of all ThemifyIcons icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (themifyIconsCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.themifyIconsCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-
-        return mChars;
+        return themifyIconsCharMap;
     }
 
+    /**
+     * Set the ThemifyIcons Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        themifyIconsCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the ThemifyIcons Mapping Prefix.
+     *
+     * @return ThemifyIcons Mapping Prefix, used by all ThemifyIcons icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return THEMIFY_ICONS_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Themify Icons";
+        return THEMIFY_ICONS_NAME;
     }
 
     @Override public String getVersion() {
-        return "0.1.2";
+        return THEMIFY_ICONS_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return themifyIconsCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
-
+        Collection<String> themifyIconsKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            themifyIconsKeyList.add(value.name());
         }
-
-        return icons;
+        return themifyIconsKeyList;
     }
 
     @Override public String getAuthor() {
-        return "Lally Elias";
+        return THEMIFY_ICONS_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "http://themify.me/themify-icons";
+        return THEMIFY_ICONS_URL;
     }
 
     @Override public String getDescription() {
-        return "Themify Icons is a complete set of icons for use in web design and apps, consisting of 320+ pixel-perfect, hand-crafted icons that draw inspiration from Apple iOS 7.";
+        return THEMIFY_ICONS_DESC;
     }
 
     @Override public String getLicense() {
-        return "SIL Open Font License (OFL)";
+        return THEMIFY_ICONS_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "http://scripts.sil.org/OFL";
+        return THEMIFY_ICONS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (themifyIconsTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return themifyIconsTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        themifyIconsTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by ThemifyIcons ITypeface.
+     */
     public enum Icon implements IIcon {
         THEI_WAND('\ue600'),
         THEI_VOLUME('\ue601'),
@@ -477,10 +481,10 @@ public class ThemifyIcons implements ITypeface {
         THEI_RSS('\ue75e'),
         THEI_RSS_ALT('\ue75f');
 
-        char character;
+        char themifyIconsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.themifyIconsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -488,7 +492,7 @@ public class ThemifyIcons implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return themifyIconsCharacter;
         }
 
         public String getName() {
@@ -496,13 +500,18 @@ public class ThemifyIcons implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface themifyIconsTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new ThemifyIcons();
+            if (themifyIconsTypeface == null) {
+                setTypeface(new ThemifyIcons());
             }
-            return typeface;
+            return themifyIconsTypeface;
+        }
+
+        private static void setTypeface(ThemifyIcons themifyIconsTypeface) {
+            Icon.themifyIconsTypeface = themifyIconsTypeface;
         }
     }
 }

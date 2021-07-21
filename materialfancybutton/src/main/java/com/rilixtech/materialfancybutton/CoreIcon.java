@@ -17,7 +17,7 @@ public final class CoreIcon {
     private static final LogHelper logHelper = new LogHelper(DOMAIN, TAG);
     private static boolean loggingEnabled = false;
 
-    private static boolean INIT_DONE = false;
+    private static boolean initDone = false;
     private static final HashMap<String, ITypeface> FONTS = new HashMap<>();
 
 
@@ -33,7 +33,7 @@ public final class CoreIcon {
      * initializes the FONTS. This also tries to find all founds automatically via their font file
      */
     public static void init() {
-        if (!INIT_DONE) {
+        if (!initDone) {
             String[] fonts = GenericsUtil.getFields();
             for (String fontsClassPath : fonts) {
                 try {
@@ -49,7 +49,7 @@ public final class CoreIcon {
                 }
             }
             logHelper.logDebug("Total font = %{public}d", FONTS.size());
-            INIT_DONE = true;
+            initDone = true;
         }
     }
 
@@ -138,6 +138,6 @@ public final class CoreIcon {
     }
 
     public static boolean isInitDone() {
-        return INIT_DONE;
+        return initDone;
     }
 }

@@ -1,141 +1,141 @@
 package com.rilixtech.open_iconic_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the OpenIconic font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class OpenIconic implements ITypeface {
     private static final String TTF_FILE = "open-iconic-1.1.1.ttf";
-    private static final String MAPPING_FONT_PREFIX = "OPIC";
+    private static final String OPEN_ICONIC_PREFIX = "OPIC";
+    public static final String OPEN_ICONIC_NAME = "Open Iconic";
+    public static final String OPEN_ICONIC_VERSION = "1" + ".1.1";
+    public static final String OPEN_ICONIC_AUTHOR = "Iconic";
+    public static final String OPEN_ICONIC_URL = "https://github.com/iconic/open-iconic/";
+    public static final String OPEN_ICONIC_DESC = "GitHub's icon font http://useiconic.com/";
+    public static final String OPEN_ICONIC_LICENSE = " SIL OFL 1.1";
+    public static final String OPEN_ICONIC_LICENSE_URL = "http://scripts.sil.org/OFL";
 
-    private static Font typeface = null;
+    private static Font openIconicTypeface = null;
+    private static HashMap<String, Character> openIconicCharMap;
 
-    private static HashMap<String, Character> mChars;
-
-    @Override
-    public IIcon getIcon(String key) {
+    /**
+     * OpenIconic IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which OpenIconic IIcon is to be retrieved.
+     */
+    @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
-    @Override
-    public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+    /**
+     * Get all the OpenIconic icon characters in a HashMap.
+     *
+     * @return HashMap of all OpenIconic icon character names mapped to their character values.
+     */
+    @Override public HashMap<String, Character> getCharacters() {
+        if (openIconicCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(),
-                        v.character);
+                characterHashMap.put(v.name(), v.openIconicCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-
-        return mChars;
+        return openIconicCharMap;
     }
 
+    /**
+     * Set the OpenIconic Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        openIconicCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the OpenIconic Mapping Prefix.
+     *
+     * @return OpenIconic Mapping Prefix, used by all OpenIconic icons.
+     */
     @Override
     public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return OPEN_ICONIC_PREFIX;
     }
 
     @Override
     public String getFontName() {
-        return "Open Iconic";
+        return OPEN_ICONIC_NAME;
     }
 
     @Override
     public String getVersion() {
-        return "1.1.1";
+        return OPEN_ICONIC_VERSION;
     }
 
     @Override
     public int getIconCount() {
-        return mChars.size();
+        return openIconicCharMap.size();
     }
 
-    @Override
-    public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
-
+    @Override public Collection<String> getIcons() {
+        Collection<String> openIconicKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            openIconicKeyList.add(value.name());
         }
-
-        return icons;
+        return openIconicKeyList;
     }
 
     @Override
     public String getAuthor() {
-        return "Iconic";
+        return OPEN_ICONIC_AUTHOR;
     }
 
     @Override
     public String getUrl() {
-        return "https://github.com/iconic/open-iconic/";
+        return OPEN_ICONIC_URL;
     }
 
     @Override
     public String getDescription() {
-        return "GitHub's icon font http://useiconic.com/";
+        return OPEN_ICONIC_DESC;
     }
 
     @Override
     public String getLicense() {
-        return " SIL OFL 1.1";
+        return OPEN_ICONIC_LICENSE;
     }
 
     @Override
     public String getLicenseUrl() {
-        return "http://scripts.sil.org/OFL";
+        return OPEN_ICONIC_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (openIconicTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return openIconicTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        openIconicTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by OpenIconic ITypeface.
+     */
     public enum Icon implements IIcon {
         //Open Iconic
         OPIC_ACCOUNT_LOGIN('\ue000'),
@@ -362,10 +362,10 @@ public class OpenIconic implements ITypeface {
         OPIC_ZOOM_IN('\ue0dd'),
         OPIC_ZOOM_OUT('\ue0de');
 
-        char character;
+        char openIconicCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.openIconicCharacter = character;
         }
 
         public String getFormattedName() {
@@ -373,7 +373,7 @@ public class OpenIconic implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return openIconicCharacter;
         }
 
         public String getName() {
@@ -381,13 +381,18 @@ public class OpenIconic implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface openIconicTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new OpenIconic();
+            if (openIconicTypeface == null) {
+                setTypeface(new OpenIconic());
             }
-            return typeface;
+            return openIconicTypeface;
+        }
+
+        private static void setTypeface(OpenIconic openIconicTypeface) {
+            Icon.openIconicTypeface = openIconicTypeface;
         }
     }
 }

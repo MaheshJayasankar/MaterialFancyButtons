@@ -9,113 +9,133 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-
 /**
  * ITypeface implementation using the Devicon font. It hosts a variety of icons that can be used by
  * the MaterialFancyButton Components.
  */
 public class Devicon implements ITypeface {
     private static final String TTF_FILE = "devicon-font-v2.0.0.1.ttf";
-    private static final String MAPPING_FONT_PREFIX = "DEVI";
+    private static final String DEVICON_PREFIX = "DEVI";
+    public static final String DEVICON_NAME = "DevIcon";
+    public static final String DEVICON_VERSION = "2" + ".0.0.1";
+    public static final String DEVICON_AUTHOR = "Konpa";
+    public static final String DEVICON_URL = "http://devicon.fr/";
+    public static final String DEVICON_DESC = "Devicon is a set of icons representing programming languages, designing"
+            + " & development tools. You can use it as a font or directly copy/paste the svg code into your project.";
+    public static final String DEVICON_LICENSE = "MIT License";
+    public static final String DEVICON_LICENSE_URL = "https://github.com/konpa/devicon/blob/master/LICENSE";
+    private static Font deviconTypeface = null;
+    private static HashMap<String, Character> deviconCharMap;
 
-    private static Font typeface = null;
-    private static HashMap<String, Character> mChars;
-
+    /**
+     * Devicon IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which Devicon IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the Devicon icon characters in a HashMap.
+     *
+     * @return HashMap of all Devicon icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
+        if (deviconCharMap == null) {
             HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                characterHashMap.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.deviconCharacter);
             }
             setChars(characterHashMap);
         }
-        return mChars;
+        return deviconCharMap;
     }
 
+    /**
+     * Set the Devicon Characters into a HashMap.
+     */
     private static void setChars(HashMap<String, Character> characterHashMap) {
-        mChars = characterHashMap;
+        deviconCharMap = characterHashMap;
     }
 
+    /**
+     * Return the Devicon Mapping Prefix.
+     *
+     * @return Devicon Mapping Prefix, used by all Devicon icons.
+     */
     @Override
     public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return DEVICON_PREFIX;
     }
 
     @Override
     public String getFontName() {
-        return "DevIcon";
+        return DEVICON_NAME;
     }
 
     @Override
     public String getVersion() {
-        return "2" + ".0.0.1";
+        return DEVICON_VERSION;
     }
 
     @Override
     public int getIconCount() {
-        return mChars.size();
+        return deviconCharMap.size();
     }
 
     @Override
     public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> deviconKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            deviconKeyList.add(value.name());
         }
-        return icons;
+        return deviconKeyList;
     }
 
     @Override
     public String getAuthor() {
-        return "Konpa";
+        return DEVICON_AUTHOR;
     }
 
     @Override
     public String getUrl() {
-        return "http://devicon.fr/";
+        return DEVICON_URL;
     }
 
     @Override
     public String getDescription() {
-        return "Devicon is a set of icons representing programming languages, designing & development tools. "
-                + "You can use it as a font or directly copy/paste the svg code into your project.";
+        return DEVICON_DESC;
     }
 
     @Override
     public String getLicense() {
-        return "MIT License";
+        return DEVICON_LICENSE;
     }
 
     @Override
     public String getLicenseUrl() {
-        return "https://github.com/konpa/devicon/blob/master/LICENSE";
+        return DEVICON_LICENSE_URL;
     }
-
-
-
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
+        if (deviconTypeface == null) {
             try {
                 cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
             } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return typeface;
+        return deviconTypeface;
     }
 
     private static void cacheTypeface(Font font) {
-        typeface = font;
+        deviconTypeface = font;
     }
 
     /**
-     * Enumerates all the supported Custom Icon Unicode characters by this ITypeface.
+     * Enumerates all the supported Custom Icon Unicode characters by Devicon typeface.
      */
     public enum Icon implements IIcon {
         DEVI_SSH_PLAIN_WORDMARK('\ue900'),
@@ -281,10 +301,10 @@ public class Devicon implements ITypeface {
         DEVI_ZEND_PLAIN_WORDMARK('\uec03'),
         DEVI_ZEND_PLAIN('\uec04');
 
-        char character;
+        char deviconCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.deviconCharacter = character;
         }
 
         public String getFormattedName() {
@@ -292,7 +312,7 @@ public class Devicon implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return deviconCharacter;
         }
 
         public String getName() {
@@ -300,21 +320,18 @@ public class Devicon implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface deviconTypeface;
 
-        /** Gets the ITypeface corresponding to this IIcon.
-         *
-         * @return ITypeface object corresponding to this IIcon.
-         */
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                setTypeface(new Devicon());
+            if (deviconTypeface == null) {
+                setDeviconTypeface(new Devicon());
             }
-            return typeface;
+            return deviconTypeface;
         }
 
-        private static void setTypeface(Devicon typeface) {
-            Icon.typeface = typeface;
+        private static void setDeviconTypeface(Devicon deviconTypeface) {
+            Icon.deviconTypeface = deviconTypeface;
         }
     }
 }

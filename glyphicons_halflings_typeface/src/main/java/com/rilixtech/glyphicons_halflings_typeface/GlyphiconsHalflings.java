@@ -1,128 +1,135 @@
 package com.rilixtech.glyphicons_halflings_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-
+/**
+ * ITypeface implementation using the GlyphiconsHalflings font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class GlyphiconsHalflings implements ITypeface {
     private static final String TTF_FILE = "glyphicons-halflings-regular.ttf";
-    private static final String MAPPING_FONT_PREFIX = "GLYI";
+    private static final String GLYPHICONS_HALFLINGS_PREFIX = "GLYI";
+    public static final String GLYPHICONS_HALFLINGS_NAME = "Glyphicons Halflings";
+    public static final String GLYPHICONS_HALFLINGS_VERSION = "1" + ".0.0";
+    public static final String GLYPHICONS_HALFLINGS_AUTHOR = "Jan Kovarik";
+    public static final String GLYPHICONS_HALFLINGS_URL = "http://glyphicons.com/";
+    public static final String GLYPHICONS_HALFLINGS_DESC = "GLYPHICONS Halflings font is also released as an extension of a Bootstrap www.getbootstrap.com for free and it is released under the same license as Bootstrap.";
+    public static final String GLYPHICONS_HALFLINGS_LICENSE = "MIT License";
+    public static final String GLYPHICONS_HALFLINGS_LICENSE_URL = "https://opensource.org/licenses/MIT";
 
-    private static Font typeface = null;
-    private static HashMap<String, Character> mChars;
+    private static Font glyphiconsHalflingsTypeface = null;
+    private static HashMap<String, Character> glyphiconsHalflingsCharMap;
 
+    /**
+     * GlyphiconsHalflings IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which GlyphiconsHalflings IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the GlyphiconsHalflings icon characters in a HashMap.
+     *
+     * @return HashMap of all GlyphiconsHalflings icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (glyphiconsHalflingsCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.glyphiconsHalflingsCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
 
-        return mChars;
+        return glyphiconsHalflingsCharMap;
     }
 
+    /**
+     * Set the GlyphiconsHalflings Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        glyphiconsHalflingsCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the GlyphiconsHalflings Mapping Prefix.
+     *
+     * @return GlyphiconsHalflings Mapping Prefix, used by all GlyphiconsHalflings icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return GLYPHICONS_HALFLINGS_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Glyphicons Halflings";
+        return GLYPHICONS_HALFLINGS_NAME;
     }
 
     @Override public String getVersion() {
-        return "1.0.0";
+        return GLYPHICONS_HALFLINGS_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return glyphiconsHalflingsCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> glyphiconsHalflingsKeyList = new LinkedList<>();
 
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            glyphiconsHalflingsKeyList.add(value.name());
         }
 
-        return icons;
+        return glyphiconsHalflingsKeyList;
     }
 
     @Override public String getAuthor() {
-        return "Jan Kovarik";
+        return GLYPHICONS_HALFLINGS_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "http://glyphicons.com/";
+        return GLYPHICONS_HALFLINGS_URL;
     }
 
     @Override public String getDescription() {
-        return "GLYPHICONS Halflings font is also released as an extension of a Bootstrap www.getbootstrap.com for free and it is released under the same license as Bootstrap.";
+        return GLYPHICONS_HALFLINGS_DESC;
     }
 
     @Override public String getLicense() {
-        return "MIT License";
+        return GLYPHICONS_HALFLINGS_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "https://opensource.org/licenses/MIT";
+        return GLYPHICONS_HALFLINGS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (glyphiconsHalflingsTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return glyphiconsHalflingsTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        glyphiconsHalflingsTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by GlyphiconsHalflings ITypeface.
+     */
     public enum Icon implements IIcon {
         GLYI_ASTERISK('\u002a'),
         GLYI_PLUS('\u002b'),
@@ -387,10 +394,10 @@ public class GlyphiconsHalflings implements ITypeface {
         GLYI_MENU_DOWN('\ue259'),
         GLYI_MENU_UP('\ue260');
 
-        char character;
+        char glyphiconsHalflingsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.glyphiconsHalflingsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -398,7 +405,7 @@ public class GlyphiconsHalflings implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return glyphiconsHalflingsCharacter;
         }
 
         public String getName() {
@@ -406,13 +413,18 @@ public class GlyphiconsHalflings implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface glyphiconsHalflingsTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new GlyphiconsHalflings();
+            if (glyphiconsHalflingsTypeface == null) {
+                setTypeface(new GlyphiconsHalflings());
             }
-            return typeface;
+            return glyphiconsHalflingsTypeface;
+        }
+
+        private static void setTypeface(GlyphiconsHalflings glyphiconsHalflingsTypeface) {
+            Icon.glyphiconsHalflingsTypeface = glyphiconsHalflingsTypeface;
         }
     }
 }

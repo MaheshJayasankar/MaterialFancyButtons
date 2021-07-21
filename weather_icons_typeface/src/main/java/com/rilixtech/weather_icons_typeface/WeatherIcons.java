@@ -1,128 +1,132 @@
 package com.rilixtech.weather_icons_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the WeatherIcons font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class WeatherIcons implements ITypeface {
     private static final String TTF_FILE = "weather-icons-v2.0.10.ttf";
-    private static final String MAPPING_FONT_PREFIX = "WICI";
+    private static final String WEATHER_ICONS_PREFIX = "WICI";
+    public static final String WEATHER_ICONS_NAME = "Weather Icons";
+    public static final String WEATHER_ICONS_VERSION = "2" + ".0.10";
+    public static final String WEATHER_ICONS_AUTHOR = "Erik Flowers";
+    public static final String WEATHER_ICONS_URL = "http://weathericons.io/";
+    public static final String WEATHER_ICONS_DESC = "Weather Icons is the only icon font and CSS with 222 weather themed icons, ready to be dropped right into Bootstrap, or any project that needs high quality weather, maritime, and meteorological based icons!";
+    public static final String WEATHER_ICONS_LICENSE = "SIL OFL 1.1";
+    public static final String WEATHER_ICONS_LICENSE_URL = "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL";
 
-    private static Font typeface = null;
+    private static Font weatherIconsTypeface = null;
+    private static HashMap<String, Character> weatherIconsCharMap;
 
-    private static HashMap<String, Character> mChars;
-
+    /**
+     * WeatherIcons IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which WeatherIcons IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the WeatherIcons icon characters in a HashMap.
+     *
+     * @return HashMap of all WeatherIcons icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (weatherIconsCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.weatherIconsCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-
-        return mChars;
+        return weatherIconsCharMap;
     }
 
+    /**
+     * Set the WeatherIcons Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        weatherIconsCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the WeatherIcons Mapping Prefix.
+     *
+     * @return WeatherIcons Mapping Prefix, used by all WeatherIcons icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return WEATHER_ICONS_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Weather Icons";
+        return WEATHER_ICONS_NAME;
     }
 
     @Override public String getVersion() {
-        return "2.0.10";
+        return WEATHER_ICONS_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return weatherIconsCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
-
+        Collection<String> weatherIconsKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            weatherIconsKeyList.add(value.name());
         }
-
-        return icons;
+        return weatherIconsKeyList;
     }
 
     @Override public String getAuthor() {
-        return "Erik Flowers";
+        return WEATHER_ICONS_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "http://weathericons.io/";
+        return WEATHER_ICONS_URL;
     }
 
     @Override public String getDescription() {
-        return "Weather Icons is the only icon font and CSS with 222 weather themed icons, ready to be dropped right into Bootstrap, or any project that needs high quality weather, maritime, and meteorological based icons!";
+        return WEATHER_ICONS_DESC;
     }
 
     @Override public String getLicense() {
-        return "SIL OFL 1.1";
+        return WEATHER_ICONS_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL";
+        return WEATHER_ICONS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (weatherIconsTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return weatherIconsTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        weatherIconsTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by WeatherIcons ITypeface.
+     */
     public enum Icon implements IIcon {
         WICI_DAY_SUNNY('\uf00d'),
         WICI_DAY_CLOUDY('\uf002'),
@@ -715,10 +719,10 @@ public class WeatherIcons implements ITypeface {
         WICI_WU_TSTORMS('\uf01e'),
         WICI_WU_UNKNOWN('\uf00d');
 
-        char character;
+        char weatherIconsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.weatherIconsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -726,7 +730,7 @@ public class WeatherIcons implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return weatherIconsCharacter;
         }
 
         public String getName() {
@@ -734,13 +738,18 @@ public class WeatherIcons implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface weatherIconsTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new WeatherIcons();
+            if (weatherIconsTypeface == null) {
+                setTypeface(new WeatherIcons());
             }
-            return typeface;
+            return weatherIconsTypeface;
+        }
+
+        private static void setTypeface(WeatherIcons weatherIconsTypeface) {
+            Icon.weatherIconsTypeface = weatherIconsTypeface;
         }
     }
 }

@@ -1,141 +1,143 @@
 package com.rilixtech.mfglabs_iconset_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the MFGLabsIconset font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class MFGLabsIconset implements ITypeface {
     private static final String TTF_FILE = "mfglabsiconset-webfont-1.0.ttf";
-    private static final String MAPPING_FONT_PREFIX = "MFGI";
+    private static final String MFGLABS_ICONSET_PREFIX = "MFGI";
+    public static final String MFGLABS_ICONSET_NAME = "mfglabs-iconset";
+    public static final String MFGLABS_ICONSET_VERSION = "1" + ".0";
+    public static final String MFGLABS_ICONSET_AUTHOR = "MFG Labs";
+    public static final String MFGLABS_ICONSET_URL = "https://github.com/MfgLabs/mfglabs-iconset";
+    public static final String MFGLABS_ICONSET_DESC = "Awesome web font icon by MFG Labs.";
+    public static final String MFGLABS_ICONSET_LICENSE = "Licensed under the SIL Open Font License - http://scripts.sil.org/OFL";
+    public static final String MFGLABS_ICONSET_LICENSE_URL = "http://scripts.sil.org/OFL";
 
-    private static Font typeface = null;
+    private static Font mfgLabsIconsetTypeface = null;
 
-    private static HashMap<String, Character> mChars;
+    private static HashMap<String, Character> mfgLabsIconsetCharMap;
 
+    /**
+     * MFGLabsIconset IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which MFGLabsIconset IIcon is to be retrieved.
+     */
     @Override
     public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
-    @Override
-    public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+    /**
+     * Get all the MFGLabsIconset icon characters in a HashMap.
+     *
+     * @return HashMap of all MFGLabsIconset icon character names mapped to their character values.
+     */
+    @Override public HashMap<String, Character> getCharacters() {
+        if (mfgLabsIconsetCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(),
-                        v.character);
+                characterHashMap.put(v.name(), v.mfgLabsIconsetCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-
-        return mChars;
+        return mfgLabsIconsetCharMap;
     }
 
+    /**
+     * Set the MFGLabsIconset Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        mfgLabsIconsetCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the MFGLabsIconset Mapping Prefix.
+     *
+     * @return MFGLabsIconset Mapping Prefix, used by all MFGLabsIconset icons.
+     */
     @Override
     public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return MFGLABS_ICONSET_PREFIX;
     }
 
     @Override
     public String getFontName() {
-        return "mfglabs-iconset";
+        return MFGLABS_ICONSET_NAME;
     }
 
     @Override
     public String getVersion() {
-        return "1.0";
+        return MFGLABS_ICONSET_VERSION;
     }
 
     @Override
     public int getIconCount() {
-        return mChars.size();
+        return mfgLabsIconsetCharMap.size();
     }
 
-    @Override
-    public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
-
+    @Override public Collection<String> getIcons() {
+        Collection<String> mfgLabsIconsetKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            mfgLabsIconsetKeyList.add(value.name());
         }
-
-        return icons;
+        return mfgLabsIconsetKeyList;
     }
 
     @Override
     public String getAuthor() {
-        return "MFG Labs";
+        return MFGLABS_ICONSET_AUTHOR;
     }
 
     @Override
     public String getUrl() {
-        return "https://github.com/MfgLabs/mfglabs-iconset";
+        return MFGLABS_ICONSET_URL;
     }
 
     @Override
     public String getDescription() {
-        return "Awesome web font icon by MFG Labs.";
+        return MFGLABS_ICONSET_DESC;
     }
 
     @Override
     public String getLicense() {
-        return "Licensed under the SIL Open Font License - http://scripts.sil.org/OFL";
+        return MFGLABS_ICONSET_LICENSE;
     }
 
     @Override
     public String getLicenseUrl() {
-        return "http://scripts.sil.org/OFL";
+        return MFGLABS_ICONSET_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (mfgLabsIconsetTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return mfgLabsIconsetTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        mfgLabsIconsetTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by MFGLabsIconset ITypeface.
+     */
     public enum Icon implements IIcon {
         // MFG Labs iconset 1.0
         MFGI_ICON_CLOUD('\u2601'),
@@ -325,11 +327,10 @@ public class MFGLabsIconset implements ITypeface {
         MFGI_ICON_GRAPH('\uF535'),
         MFGI_ICON_NEW_USER('\uF536');
 
-
-        char character;
+        char mfgLabsIconsetCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.mfgLabsIconsetCharacter = character;
         }
 
         public String getFormattedName() {
@@ -337,7 +338,7 @@ public class MFGLabsIconset implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return mfgLabsIconsetCharacter;
         }
 
         public String getName() {
@@ -345,13 +346,18 @@ public class MFGLabsIconset implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface mfgLabsIconsetTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new MFGLabsIconset();
+            if (mfgLabsIconsetTypeface == null) {
+                setTypeface(new MFGLabsIconset());
             }
-            return typeface;
+            return mfgLabsIconsetTypeface;
+        }
+
+        private static void setTypeface(MFGLabsIconset mfgLabsIconsetTypeface) {
+            Icon.mfgLabsIconsetTypeface = mfgLabsIconsetTypeface;
         }
     }
 }

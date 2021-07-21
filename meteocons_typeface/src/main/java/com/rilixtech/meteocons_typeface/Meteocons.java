@@ -1,143 +1,143 @@
 package com.rilixtech.meteocons_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the Meteocons font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class Meteocons implements ITypeface {
     private static final String TTF_FILE = "meteocons.ttf";
-    private static final String MAPPING_FONT_PREFIX = "METI";
+    private static final String METEOCONS_PREFIX = "METI";
+    public static final String METEOCONS_NAME = "Meteocons";
+    public static final String METEOCONS_VERSION = "1" + ".1.1";
+    public static final String METEOCONS_AUTHOR = "Alessio Atzeni";
+    public static final String METEOCONS_URL = "http://www.alessioatzeni.com/meteocons/";
+    public static final String METEOCONS_DESC = "Meteocons is a set of weather icons, it containing 40+ icons available in PSD, CSH, EPS, SVG, Desktop font and Web font. All icon and updates are free and always will be.";
+    public static final String METEOCONS_LICENSE = "Meteocons are free for use in both personal and commercial projects.\n"
+            + "No attribution or backlinks are required, but any form of spreading the word is always appreciated!\n"
+            + "You must not resell any icons or distribute them in any other way.\n"
+            + "The Icons as such are the property of the author.";
+    public static final String METEOCONS_LICENSE_URL = "";
 
-    private static Font typeface = null;
+    private static Font meteoconsTypeface = null;
 
-    private static HashMap<String, Character> mChars;
+    private static HashMap<String, Character> meteoconsCharMap;
 
+    /**
+     * Meteocons IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which Meteocons IIcon is to be retrieved.
+     */
     @Override
     public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the Meteocons icon characters in a HashMap.
+     *
+     * @return HashMap of all Meteocons icon character names mapped to their character values.
+     */
     @Override
     public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (meteoconsCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.meteoconsCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
 
-        return mChars;
+        return meteoconsCharMap;
+    }
+
+    /**
+     * Set the Meteocons Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        meteoconsCharMap = characterHashMap;
     }
 
     @Override
     public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return METEOCONS_PREFIX;
     }
 
     @Override
     public String getFontName() {
-        return "Meteocons";
+        return METEOCONS_NAME;
     }
 
     @Override
     public String getVersion() {
-        return "1.1.1";
+        return METEOCONS_VERSION;
     }
 
     @Override
     public int getIconCount() {
-        return mChars.size();
+        return meteoconsCharMap.size();
     }
 
-    @Override
-    public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
-
+    @Override public Collection<String> getIcons() {
+        Collection<String> meteoconsKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            meteoconsKeyList.add(value.name());
         }
-
-        return icons;
+        return meteoconsKeyList;
     }
 
     @Override
     public String getAuthor() {
-        return "Alessio Atzeni";
+        return METEOCONS_AUTHOR;
     }
 
     @Override
     public String getUrl() {
-        return "http://www.alessioatzeni.com/meteocons/";
+        return METEOCONS_URL;
     }
 
     @Override
     public String getDescription() {
-        return "Meteocons is a set of weather icons, it containing 40+ icons available in PSD, CSH, EPS, SVG, Desktop font and Web font. All icon and updates are free and always will be.";
+        return METEOCONS_DESC;
     }
 
     @Override
     public String getLicense() {
-        return "Meteocons are free for use in both personal and commercial projects.\n"
-                + "No attribution or backlinks are required, but any form of spreading the word is always appreciated!\n"
-                + "You must not resell any icons or distribute them in any other way.\n"
-                + "The Icons as such are the property of the author.";
+        return METEOCONS_LICENSE;
     }
 
     @Override
     public String getLicenseUrl() {
-        return "";
+        return METEOCONS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (meteoconsTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return meteoconsTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        meteoconsTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by Meteocons ITypeface.
+     */
     public enum Icon implements IIcon {
         METI_WINDY_RAIN_INV('\ue800'),
         METI_SNOW_INV('\ue801'),
@@ -187,10 +187,10 @@ public class Meteocons implements ITypeface {
         METI_CLOUDS('\ue82d'),
         METI_CLOUDS_FLASH('\ue82e');
 
-        char character;
+        char meteoconsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.meteoconsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -198,7 +198,7 @@ public class Meteocons implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return meteoconsCharacter;
         }
 
         public String getName() {
@@ -206,13 +206,18 @@ public class Meteocons implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface meteoconsTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new Meteocons();
+            if (meteoconsTypeface == null) {
+                setTypeface(new Meteocons());
             }
-            return typeface;
+            return meteoconsTypeface;
+        }
+
+        private static void setTypeface(Meteocons meteoconsTypeface) {
+            Icon.meteoconsTypeface = meteoconsTypeface;
         }
     }
 }

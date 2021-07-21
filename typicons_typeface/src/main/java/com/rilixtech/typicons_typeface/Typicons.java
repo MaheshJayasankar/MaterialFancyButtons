@@ -1,136 +1,141 @@
 package com.rilixtech.typicons_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the Typicons font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class Typicons implements ITypeface {
     private static final String TTF_FILE = "typicons-font-v2.0.7.1.ttf";
-    private static final String MAPPING_FONT_PREFIX = "TYPI";
+    private static final String TYPICONS_PREFIX = "TYPI";
+    public static final String TYPICONS_NAME = "Typicons";
+    public static final String TYPICONS_VERSION = "2" + ".0.7.1";
+    public static final String TYPICONS_AUTHOR = "Stephen Hutchings";
+    public static final String TYPICONS_URL = "http://typicons.com/";
+    public static final String TYPICONS_DESC = "336 pixel perfect, all-purpose vector icons";
+    public static final String TYPICONS_LICENSE = "SIL OPEN FONT LICENSE";
+    public static final String TYPICONS_LICENSE_URL = "http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web";
 
-    private static Font typeface = null;
-    private static HashMap<String, Character> mChars;
+    private static Font typiconsTypeface = null;
+    private static HashMap<String, Character> typiconsCharMap;
 
-    @Override
-    public IIcon getIcon(String key) {
+    /**
+     * Typicons IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which Typicons IIcon is to be retrieved.
+     */
+    @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
-    @Override
-    public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+    /**
+     * Get all the Typicons icon characters in a HashMap.
+     *
+     * @return HashMap of all Typicons icon character names mapped to their character values.
+     */
+    @Override public HashMap<String, Character> getCharacters() {
+        if (typiconsCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.typiconsCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-        return mChars;
+        return typiconsCharMap;
     }
 
+    /**
+     * Set the Typicons Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        typiconsCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the Typicons Mapping Prefix.
+     *
+     * @return Typicons Mapping Prefix, used by all Typicons icons.
+     */
     @Override
     public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return TYPICONS_PREFIX;
     }
 
     @Override
     public String getFontName() {
-        return "Typicons";
+        return TYPICONS_NAME;
     }
 
     @Override
     public String getVersion() {
-        return "2.0.7.1";
+        return TYPICONS_VERSION;
     }
 
     @Override
     public int getIconCount() {
-        return mChars.size();
+        return typiconsCharMap.size();
     }
 
-    @Override
-    public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+    @Override public Collection<String> getIcons() {
+        Collection<String> typiconsKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            typiconsKeyList.add(value.name());
         }
-        return icons;
+        return typiconsKeyList;
     }
 
     @Override
     public String getAuthor() {
-        return "Stephen Hutchings";
+        return TYPICONS_AUTHOR;
     }
 
     @Override
     public String getUrl() {
-        return "http://typicons.com/";
+        return TYPICONS_URL;
     }
 
     @Override
     public String getDescription() {
-        return "336 pixel perfect, all-purpose vector icons";
+        return TYPICONS_DESC;
     }
 
     @Override
     public String getLicense() {
-        return "SIL OPEN FONT LICENSE";
+        return TYPICONS_LICENSE;
     }
 
     @Override
     public String getLicenseUrl() {
-        return "http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web";
+        return TYPICONS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (typiconsTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return typiconsTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        typiconsTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by Typicons ITypeface.
+     */
     public enum Icon implements IIcon {
         TYPI_ADJUST_BRIGHTNESS('\ue000'),
         TYPI_ADJUST_CONTRAST('\ue001'),
@@ -469,10 +474,10 @@ public class Typicons implements ITypeface {
         TYPI_ZOOM_OUTLINE('\ue14e'),
         TYPI_ZOOM('\ue14f');
 
-        char character;
+        char typiconsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.typiconsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -480,7 +485,7 @@ public class Typicons implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return typiconsCharacter;
         }
 
         public String getName() {
@@ -488,13 +493,18 @@ public class Typicons implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface typiconsTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new Typicons();
+            if (typiconsTypeface == null) {
+                setTypeface(new Typicons());
             }
-            return typeface;
+            return typiconsTypeface;
+        }
+
+        private static void setTypeface(Typicons typiconsTypeface) {
+            Icon.typiconsTypeface = typiconsTypeface;
         }
     }
 }

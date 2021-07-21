@@ -15,99 +15,124 @@ import java.util.LinkedList;
  */
 public class Dripicons implements ITypeface {
     private static final String TTF_FILE = "dripicons-v2.ttf";
-    private static final String MAPPING_FONT_PREFIX = "DRPI";
+    private static final String DRIPICONS_PREFIX = "DRPI";
+    public static final String DRIPICONS_NAME = "Dripicons";
+    public static final String DRIPICONS_VERSION = "2.0";
+    public static final String DRIPICONS_AUTHOR = "Amit Jakhu";
+    public static final String DRIPICONS_URL = "https://github.com/amitjakhu/dripicons";
+    public static final String DRIPICONS_DESC = "A completely free vector line iconset by Amit Jakhu.";
+    public static final String DRIPICONS_LICENSE = "SIL Open Font License";
+    public static final String DRIPICONS_LICENSE_URL = "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL";
 
-    private static Font typeface = null;
+    private static Font dripiconsTypeface = null;
 
-    private static HashMap<String, Character> mChars;
+    private static HashMap<String, Character> dripiconsCharMap;
 
+    /**
+     * Dripicons IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which Dripicons IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the Dripicons icon characters in a HashMap.
+     *
+     * @return HashMap of all Dripicons icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
+        if (dripiconsCharMap == null) {
             HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                characterHashMap.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.dripiconsCharacter);
             }
             setChars(characterHashMap);
         }
 
-        return mChars;
+        return dripiconsCharMap;
     }
 
+    /**
+     * Set the Dripicons Characters into a HashMap.
+     */
     private static void setChars(HashMap<String, Character> characterHashMap) {
-        mChars = characterHashMap;
+        dripiconsCharMap = characterHashMap;
     }
 
+    /**
+     * Return the Dripicons Mapping Prefix.
+     *
+     * @return Dripicons Mapping Prefix, used by all Dripicons icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return DRIPICONS_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Dripicons";
+        return DRIPICONS_NAME;
     }
 
     @Override public String getVersion() {
-        return "2.0";
+        return DRIPICONS_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return dripiconsCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> dripiconsKeyList = new LinkedList<>();
 
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            dripiconsKeyList.add(value.name());
         }
 
-        return icons;
+        return dripiconsKeyList;
     }
 
     @Override public String getAuthor() {
-        return "Amit Jakhu";
+        return DRIPICONS_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "https://github.com/amitjakhu/dripicons";
+        return DRIPICONS_URL;
     }
 
     @Override public String getDescription() {
-        return "A completely free vector line iconset by Amit Jakhu.";
+        return DRIPICONS_DESC;
     }
 
     @Override public String getLicense() {
-        return "SIL Open Font License";
+        return DRIPICONS_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL";
+        return DRIPICONS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
+        if (dripiconsTypeface == null) {
             try {
                 cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
             } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return typeface;
+        return dripiconsTypeface;
     }
 
     private static void cacheTypeface(Font font) {
-        typeface = font;
+        dripiconsTypeface = font;
     }
 
     private static final char A_LOWERCASE = 0x0027;
     private static final char BACK_SLASH = 0x005C;
 
     /**
-     * Enumerates all the supported Custom Icon Unicode characters by this ITypeface.
+     * Enumerates all the supported Custom Icon Unicode characters by Dripicons ITypeface.
      */
     public enum Icon implements IIcon {
         DRPI_ALARM('\u0061'),
@@ -311,10 +336,10 @@ public class Dripicons implements ITypeface {
         DRPI_ZOOM_IN('\ue068'),
         DRPI_ZOOM_OUT('\ue069');
 
-        char character;
+        char dripiconsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.dripiconsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -322,7 +347,7 @@ public class Dripicons implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return dripiconsCharacter;
         }
 
         public String getName() {
@@ -330,21 +355,18 @@ public class Dripicons implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface dripiconsTypeface;
 
-        /** Gets the ITypeface corresponding to this IIcon.
-         *
-         * @return ITypeface object corresponding to this IIcon.
-         */
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
+            if (dripiconsTypeface == null) {
                 setTypeface(new Dripicons());
             }
-            return typeface;
+            return dripiconsTypeface;
         }
 
-        private static void setTypeface(Dripicons typeface) {
-            Icon.typeface = typeface;
+        private static void setTypeface(Dripicons dripiconsTypeface) {
+            Icon.dripiconsTypeface = dripiconsTypeface;
         }
     }
 }

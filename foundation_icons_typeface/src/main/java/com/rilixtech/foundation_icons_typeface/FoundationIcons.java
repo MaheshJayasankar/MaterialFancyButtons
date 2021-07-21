@@ -1,125 +1,132 @@
 package com.rilixtech.foundation_icons_typeface;
 
-
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the FoundationIcons font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class FoundationIcons implements ITypeface {
     private static final String TTF_FILE = "foundation-icons-font-v3.0.0.1.ttf";
-    private static final String MAPPING_FONT_PREFIX = "FOUI";
+    private static final String FOUNDATION_ICONS_PREFIX = "FOUI";
+    public static final String FOUNDATION_ICONS_NAME = "Foundation Icons";
+    public static final String FOUNDATION_ICONS_VERSION = "3" + ".0.0.1";
+    public static final String FOUNDATION_ICONS_AUTHOR = "ZURB Inc.";
+    public static final String FOUNDATION_ICONS_URL = "http://zurb.com/playground/foundation-icon-fonts-3";
+    public static final String FOUNDATION_ICONS_DESC = "Customize your icons to be any size, color, style in CSS";
+    public static final String FOUNDATION_ICONS_LICENSE = "MIT Open Source License";
+    public static final String FOUNDATION_ICONS_LICENSE_URL = "https://github.com/zurb/foundation-icons/blob/master/MIT-LICENSE.txt";
 
-    private static Font typeface = null;
-    private static HashMap<String, Character> mChars;
+    private static Font foundationIconsTypeface = null;
+    private static HashMap<String, Character> foundationIconsCharMap;
 
+    /**
+     * FoundationIcons IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which FoundationIcons IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the FoundationIcons icon characters in a HashMap.
+     *
+     * @return HashMap of all FoundationIcons icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (foundationIconsCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.foundationIconsCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-        return mChars;
+        return foundationIconsCharMap;
     }
 
+    /**
+     * Set the FoundationIcons Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        foundationIconsCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the FoundationIcons Mapping Prefix.
+     *
+     * @return FoundationIcons Mapping Prefix, used by all FoundationIcons icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return FOUNDATION_ICONS_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Foundation Icons";
+        return FOUNDATION_ICONS_NAME;
     }
 
     @Override public String getVersion() {
-        return "3.0.0.1";
+        return FOUNDATION_ICONS_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return foundationIconsCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> foundationIconsKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            foundationIconsKeyList.add(value.name());
         }
-        return icons;
+        return foundationIconsKeyList;
     }
 
     @Override public String getAuthor() {
-        return "ZURB Inc.";
+        return FOUNDATION_ICONS_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "http://zurb.com/playground/foundation-icon-fonts-3";
+        return FOUNDATION_ICONS_URL;
     }
 
     @Override public String getDescription() {
-        return "Customize your icons to be any size, color, style in CSS";
+        return FOUNDATION_ICONS_DESC;
     }
 
     @Override public String getLicense() {
-        return "MIT Open Source License";
+        return FOUNDATION_ICONS_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "https://github.com/zurb/foundation-icons/blob/master/MIT-LICENSE.txt";
+        return FOUNDATION_ICONS_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (foundationIconsTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return foundationIconsTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        foundationIconsTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by FoundationIcons ITypeface.
+     */
     public enum Icon implements IIcon {
         FOUI_ADDRESS_BOOK('\uf100'),
         FOUI_ALERT('\uf101'),
@@ -405,10 +412,10 @@ public class FoundationIcons implements ITypeface {
         FOUI_ZOOM_IN('\uf219'),
         FOUI_ZOOM_OUT('\uf21a');
 
-        char character;
+        char foundationIconsCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.foundationIconsCharacter = character;
         }
 
         public String getFormattedName() {
@@ -416,7 +423,7 @@ public class FoundationIcons implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return foundationIconsCharacter;
         }
 
         public String getName() {
@@ -424,13 +431,18 @@ public class FoundationIcons implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface foundationIconsTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new FoundationIcons();
+            if (foundationIconsTypeface == null) {
+                setTypeface(new FoundationIcons());
             }
-            return typeface;
+            return foundationIconsTypeface;
+        }
+
+        private static void setTypeface(FoundationIcons foundationIconsTypeface) {
+            Icon.foundationIconsTypeface = foundationIconsTypeface;
         }
     }
 }

@@ -1,125 +1,133 @@
 package com.rilixtech.google_material_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-
+/**
+ * ITypeface implementation using the GoogleMaterial font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class GoogleMaterial implements ITypeface {
     private static final String TTF_FILE = "googlematerial.ttf";
-    private static final String MAPPING_FONT_PREFIX = "GMDI";
+    private static final String GOOGLE_MATERIAL_PREFIX = "GMDI";
+    public static final String GOOGLE_MATERIAL_NAME = "Google Material";
+    public static final String GOOGLE_MATERIAL_VERSION = "3" + ".0.1.0.original";
+    public static final String GOOGLE_MATERIAL_AUTHOR = "Google";
+    public static final String GOOGLE_MATERIAL_URL = "https://github.com/google/material-design-icons";
+    public static final String GOOGLE_MATERIAL_DESC = "Material design icons are the official icon set from Google that are designed under the material design guidelines.";
+    public static final String GOOGLE_MATERIAL_LICENSE = "CC-BY 4.0";
+    public static final String GOOGLE_MATERIAL_LICENSE_URL = "http://creativecommons.org/licenses/by/4.0/";
 
-    private static Font typeface = null;
-    private static HashMap<String, Character> mChars;
+    private static Font googleMaterialTypeface = null;
+    private static HashMap<String, Character> googleMaterialCharMap;
 
+
+    /**
+     * GoogleMaterial IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which GoogleMaterial IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the GoogleMaterial icon characters in a HashMap.
+     *
+     * @return HashMap of all GoogleMaterial icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (googleMaterialCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.googleMaterialCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
-        return mChars;
+        return googleMaterialCharMap;
     }
 
+    /**
+     * Set the GoogleMaterial Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        googleMaterialCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the GoogleMaterial Mapping Prefix.
+     *
+     * @return GoogleMaterial Mapping Prefix, used by all GoogleMaterial icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return GOOGLE_MATERIAL_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Google Material";
+        return GOOGLE_MATERIAL_NAME;
     }
 
     @Override public String getVersion() {
-        return "3.0.1.0.original";
+        return GOOGLE_MATERIAL_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return googleMaterialCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> googleMaterialKeyList = new LinkedList<>();
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            googleMaterialKeyList.add(value.name());
         }
-        return icons;
+        return googleMaterialKeyList;
     }
 
     @Override public String getAuthor() {
-        return "Google";
+        return GOOGLE_MATERIAL_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "https://github.com/google/material-design-icons";
+        return GOOGLE_MATERIAL_URL;
     }
 
     @Override public String getDescription() {
-        return "Material design icons are the official icon set from Google that are designed under the material design guidelines.";
+        return GOOGLE_MATERIAL_DESC;
     }
 
     @Override public String getLicense() {
-        return "CC-BY 4.0";
+        return GOOGLE_MATERIAL_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "http://creativecommons.org/licenses/by/4.0/";
+        return GOOGLE_MATERIAL_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (googleMaterialTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return googleMaterialTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        googleMaterialTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by GoogleMaterial ITypeface.
+     */
     public enum Icon implements IIcon {
         GMDI_3D_ROTATION('\ue84d'),
         GMDI_AC_UNIT('\ueb3b'),
@@ -1054,10 +1062,10 @@ public class GoogleMaterial implements ITypeface {
         GMDI_ZOOM_OUT('\ue900'),
         GMDI_ZOOM_OUT_MAP('\ue56b');
 
-        char character;
+        char googleMaterialCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.googleMaterialCharacter = character;
         }
 
         public String getFormattedName() {
@@ -1065,7 +1073,7 @@ public class GoogleMaterial implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return googleMaterialCharacter;
         }
 
         public String getName() {
@@ -1073,13 +1081,18 @@ public class GoogleMaterial implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface googleMaterialTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new GoogleMaterial();
+            if (googleMaterialTypeface == null) {
+                setTypeface(new GoogleMaterial());
             }
-            return typeface;
+            return googleMaterialTypeface;
+        }
+
+        private static void setTypeface(GoogleMaterial googleMaterialTypeface) {
+            Icon.googleMaterialTypeface = googleMaterialTypeface;
         }
     }
 }

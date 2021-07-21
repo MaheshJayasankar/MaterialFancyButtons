@@ -1,128 +1,136 @@
 package com.rilixtech.material_design_iconic_typeface;
 
-import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybutton.typeface.ITypeface;
 import ohos.agp.text.Font;
 import ohos.app.AbilityContext;
-import ohos.global.resource.RawFileDescriptor;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.Resource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.rilixtech.materialfancybutton.typeface.IIcon;
+import com.rilixtech.materialfancybutton.typeface.ITypeface;
+import com.rilixtech.materialfancybutton.utils.FontUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * ITypeface implementation using the MaterialDesignIconic font. It hosts a variety of icons that can be used by
+ * the MaterialFancyButton Components.
+ */
 public class MaterialDesignIconic implements ITypeface {
     private static final String TTF_FILE = "material-design-iconic-font-v2.2.0.ttf";
-    private static final String MAPPING_FONT_PREFIX = "MDII";
+    private static final String MATERIAL_DESIGN_ICONIC_PREFIX = "MDII";
+    public static final String MATERIAL_DESIGN_ICONIC_NAME = "Material Design Iconic";
+    public static final String MATERIAL_DESIGN_ICONIC_VERSION = "2" + ".2.0";
+    public static final String MATERIAL_DESIGN_ICONIC_AUTHOR = "Google. TTF created by Sergey Kupletsky";
+    public static final String MATERIAL_DESIGN_ICONIC_URL = "http://zavoloklom.github.io/material-design-iconic-font/";
+    public static final String MATERIAL_DESIGN_ICONIC_DESC = "Material Design Iconic Font is a full suite of material design icons (created and maintained by Google) for easy scalable vector graphics on websites.";
+    public static final String MATERIAL_DESIGN_ICONIC_LICENSE = "SIL OFL 1.1";
+    public static final String MATERIAL_DESIGN_ICONIC_LICENSE_URL = "http://scripts.sil.org/OFL";
 
-    private static Font typeface = null;
+    private static Font materialDesignIconicTypeface = null;
 
-    private static HashMap<String, Character> mChars;
+    private static HashMap<String, Character> materialDesignIconicCharMap;
 
+    /**
+     * MaterialDesignIconic IIcon object corresponding to this typeface for the given key.
+     *
+     * @param key Key for which MaterialDesignIconic IIcon is to be retrieved.
+     */
     @Override public IIcon getIcon(String key) {
         return Icon.valueOf(key);
     }
 
+    /**
+     * Get all the MaterialDesignIconic icon characters in a HashMap.
+     *
+     * @return HashMap of all MaterialDesignIconic icon character names mapped to their character values.
+     */
     @Override public HashMap<String, Character> getCharacters() {
-        if (mChars == null) {
-            HashMap<String, Character> aChars = new HashMap<>();
+        if (materialDesignIconicCharMap == null) {
+            HashMap<String, Character> characterHashMap = new HashMap<>();
             for (Icon v : Icon.values()) {
-                aChars.put(v.name(), v.character);
+                characterHashMap.put(v.name(), v.materialDesignIconicCharacter);
             }
-            mChars = aChars;
+            setChars(characterHashMap);
         }
 
-        return mChars;
+        return materialDesignIconicCharMap;
     }
 
+    /**
+     * Set the MaterialDesignIconic Characters into a HashMap.
+     */
+    private static void setChars(HashMap<String, Character> characterHashMap) {
+        materialDesignIconicCharMap = characterHashMap;
+    }
+
+    /**
+     * Return the MaterialDesignIconic Mapping Prefix.
+     *
+     * @return MaterialDesignIconic Mapping Prefix, used by all MaterialDesignIconic icons.
+     */
     @Override public String getMappingPrefix() {
-        return MAPPING_FONT_PREFIX;
+        return MATERIAL_DESIGN_ICONIC_PREFIX;
     }
 
     @Override public String getFontName() {
-        return "Material Design Iconic";
+        return MATERIAL_DESIGN_ICONIC_NAME;
     }
 
     @Override public String getVersion() {
-        return "2.2.0";
+        return MATERIAL_DESIGN_ICONIC_VERSION;
     }
 
     @Override public int getIconCount() {
-        return mChars.size();
+        return materialDesignIconicCharMap.size();
     }
 
     @Override public Collection<String> getIcons() {
-        Collection<String> icons = new LinkedList<>();
+        Collection<String> materialDesignIconicKeyList = new LinkedList<>();
 
         for (Icon value : Icon.values()) {
-            icons.add(value.name());
+            materialDesignIconicKeyList.add(value.name());
         }
 
-        return icons;
+        return materialDesignIconicKeyList;
     }
 
     @Override public String getAuthor() {
-        return "Google. TTF created by Sergey Kupletsky";
+        return MATERIAL_DESIGN_ICONIC_AUTHOR;
     }
 
     @Override public String getUrl() {
-        return "http://zavoloklom.github.io/material-design-iconic-font/";
+        return MATERIAL_DESIGN_ICONIC_URL;
     }
 
     @Override public String getDescription() {
-        return "Material Design Iconic Font is a full suite of material design icons (created and maintained by Google) for easy scalable vector graphics on websites.";
+        return MATERIAL_DESIGN_ICONIC_DESC;
     }
 
     @Override public String getLicense() {
-        return "SIL OFL 1.1";
+        return MATERIAL_DESIGN_ICONIC_LICENSE;
     }
 
     @Override public String getLicenseUrl() {
-        return "http://scripts.sil.org/OFL";
+        return MATERIAL_DESIGN_ICONIC_LICENSE_URL;
     }
 
     @Override
     public Font getTypeface(AbilityContext context) {
-        if (typeface == null) {
-            RawFileEntry rawFileEntry = context.getResourceManager()
-                    .getRawFileEntry("resources/rawfile/" + TTF_FILE);
+        if (materialDesignIconicTypeface == null) {
             try {
-                File file = getFileFromRawFile(context, rawFileEntry, "file_" + TTF_FILE);
-                Font.Builder newTypeface = new Font.Builder(file);
-                Font builtFont = newTypeface.build();
-                typeface = builtFont;
-                return builtFont;
-            } catch (Exception e) {
+                cacheTypeface(FontUtil.getFontFromRawFile(context, TTF_FILE));
+            } catch (IllegalStateException e) {
                 throw new IllegalStateException(e);
             }
         }
-        return  typeface;
+        return materialDesignIconicTypeface;
     }
 
-    private File getFileFromRawFile(AbilityContext ctx, RawFileEntry rawFileEntry, String filename) {
-        byte[] buf;
-        try (Resource resource = rawFileEntry.openRawFile();
-             RawFileDescriptor rawFileDescriptor = rawFileEntry.openRawFileDescriptor()) {
-            File file = new File(ctx.getCacheDir(), filename);
-
-            buf = new byte[(int) rawFileDescriptor.getFileSize()];
-            int bytesRead = resource.read(buf);
-            if (bytesRead != buf.length) {
-                throw new IOException("Asset read failed");
-            }
-            FileOutputStream output = new FileOutputStream(file);
-            output.write(buf, 0, bytesRead);
-            output.close();
-            return file;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    private static void cacheTypeface(Font font) {
+        materialDesignIconicTypeface = font;
     }
 
+    /**
+     * Enumerates all the supported Custom Icon Unicode characters by MaterialDesignIconic ITypeface.
+     */
     public enum Icon implements IIcon {
         MDII_3D_ROTATION('\uf101'),
         MDII_AIRPLANE_OFF('\uf102'),
@@ -902,7 +910,6 @@ public class MaterialDesignIconic implements ITypeface {
         MDII_YOUTUBE_PLAY('\uf408'),
         MDII_YOUTUBE('\uf409'),
         MDII_IMPORT_EXPORT('\uf30c'),
-        MDII_SWAP_VERTICAL_('\uf30c'),
         MDII_AIRPLANEMODE_INACTIVE('\uf102'),
         MDII_AIRPLANEMODE_ACTIVE('\uf103'),
         MDII_RATE_REVIEW('\uf103'),
@@ -1011,10 +1018,10 @@ public class MaterialDesignIconic implements ITypeface {
         MDII_MY_LOCATION('\uf299'),
         MDII_DIRECTIONS('\uf1e7');
 
-        char character;
+        char materialDesignIconicCharacter;
 
         Icon(char character) {
-            this.character = character;
+            this.materialDesignIconicCharacter = character;
         }
 
         public String getFormattedName() {
@@ -1022,7 +1029,7 @@ public class MaterialDesignIconic implements ITypeface {
         }
 
         public char getCharacter() {
-            return character;
+            return materialDesignIconicCharacter;
         }
 
         public String getName() {
@@ -1030,13 +1037,18 @@ public class MaterialDesignIconic implements ITypeface {
         }
 
         // remember the typeface so we can use it later
-        private static ITypeface typeface;
+        private static ITypeface materialDesignIconicTypeface;
 
+        @Override
         public ITypeface getTypeface() {
-            if (typeface == null) {
-                typeface = new MaterialDesignIconic();
+            if (materialDesignIconicTypeface == null) {
+                setTypeface(new MaterialDesignIconic());
             }
-            return typeface;
+            return materialDesignIconicTypeface;
+        }
+
+        private static void setTypeface(MaterialDesignIconic materialDesignIconicTypeface) {
+            Icon.materialDesignIconicTypeface = materialDesignIconicTypeface;
         }
     }
 }
