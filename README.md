@@ -315,7 +315,7 @@ So it will look like this:
     fancy:mfb_iconFont="fontawesome-font-v4.7.ttf"
     fancy:mfb_fontIconResource="&#xf087;"
 ```
-so it will be look like this:
+So it will look like this:
 ``` xml
 <com.rilixtech.materialfancybutton.MaterialFancyButton
    ohos:id="$+id:btn_example"
@@ -323,10 +323,10 @@ so it will be look like this:
    ohos:width="match_content"
    fancy:mfb_iconFont="fontawesome-font-v4.7.ttf"
    fancy:mfb_fontIconResource="&#xf087;"
-   fancy:mfb_text="Thumbs Up"/>
+   fancy:mfb_text="Thumbs Up Button"/>
 ```
 
-The above code will load the FontAwesome font and display the unicode character 0xF087 as an icon for the button. This icon will display as a "Thumbs Up". However, since remembering the unicode mapping of each special font character is tedious, an easy alternative would be to use the attribute `fancy:mfb_icon="THUMBS_O_UP"`.
+The above code will load the FontAwesome font and display the unicode character 0xF087 as an icon for the button. As per FontAwesome v4.7 this character will display as a "Thumbs Up". Since remembering the unicode mapping of each special font character is tedious, an easy alternative would be to use the attribute `fancy:mfb_icon="THUMBS_O_UP"`.
 
 **Please note** that when using `fancy:mfb_icon` you don't need to use `fancy:mfb_iconFont` and `fancy:mfb_fontIconResource`. If either attribute is present, they will be overriden by the `fancy:mfb_icon` attribute and ignored.
 
@@ -366,7 +366,7 @@ The above code will load the FontAwesome font and display the unicode character 
 For setting the radius of the button, you can also use `setRadius(int radiusTopLeft, int radiusTopRight, int radiusBottomLeft, int radiusBottomRight)`
 
 Also you can use Attributes with default prefix (ohos:), which makes migrating of your project more fast.
-Default Attributes have more priority than Attributes with prefix fancy, therefore, they will override potentially equivalent fancy attribute, if present.
+Default Attributes have more priority than Attributes with prefix fancy, therefore, they will override equivalent fancy attributes, if applicable.
 
 #### Supported default Attributes
 | XML Attribute    |
@@ -379,7 +379,7 @@ Default Attributes have more priority than Attributes with prefix fancy, therefo
 
 | Method        | Description  |
 | ------------- | -----:|
-| getText() | Returns Text Value of the button|
+| getText() | Returns Text String of the button|
 | getTextViewObject() | Returns Text Object|
 | getIconFontObject() | Returns icon defined by mfb_fontIconResource|
 | getIconImageObject() | Returns icon defined by mfb_iconResource |
@@ -425,7 +425,7 @@ Default Attributes have more priority than Attributes with prefix fancy, therefo
     facebookLoginBtn.setIconPosition(FancyButton.POSITION_LEFT);
     facebookLoginBtn.setFontIconSize(30);
 
-See the [example project](https://github.com/joielechong/MaterialFancyButtons/tree/master/samples/src/main/java/com/rilixtech/materialfancybutton/sample) for more samples
+See the [example project](entry) and associated [layouts folder](entry/src/main/resources/layout) for more samples. Examples are given using each of the supported libraries. Also, it is possible to define a button entirely using Java code, as shown in [ProgramButtonsSlice.java](entry/src/main/java/com/rilixtech/materialfancybuttons/slice/ProgramButtonsSlice.java).
 
 
 - - - -
@@ -435,7 +435,7 @@ See the [example project](https://github.com/joielechong/MaterialFancyButtons/tr
 ### FAQ
 
 **How to add new fonts ?**
-Just Paste your font inside `assets/fonts/` folder for Text fonts or inside `assets/iconfonts/` for icon fonts eg : entypo
+Just Paste your font inside `resources/rawfile` folder of the application. E.g. If the application runs through the default entry module, this directory will be `entry/src/main/resources/rawfile`. Use the xml tags `fancy:fontText` and `fancy:fontIcon` or corresponding Java functions `setCustomTextFont` and `setIconFont`.
 
 ## Future Work
 All contributions are welcome. Some of the currently missing features are:
