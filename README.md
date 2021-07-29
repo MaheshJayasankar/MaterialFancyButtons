@@ -59,6 +59,8 @@ The Button can be created using XML code with supported XML attributes or instan
 
 ## Dependency
 
+### Adding Main Library
+
 1. For using MaterialFancyButtons module in sample app, include the source code and add the below dependencies in entry/build.gradle to generate hap/support.har.
 ``` gradle
 	dependencies {
@@ -73,7 +75,10 @@ The Button can be created using XML code with supported XML attributes or instan
 		testCompile 'junit:junit:4.12'
 	}
 ```
-3. For using any of the precompiled icon-font libraries in sample app, include the source code for the icon font libraries required and add the required dependencies from below list in entry/build.gradle to generate hap/support.har.
+
+### Adding Icon-Font Modules
+
+1. For using any of the precompiled icon-font libraries in sample app, include the source code for the icon font libraries required and add the required dependencies from below list in entry/build.gradle to generate hap/support.har.
 ``` gradle
 	dependencies {
 		implementation project(':materialfancybutton')
@@ -102,9 +107,9 @@ The Button can be created using XML code with supported XML attributes or instan
 	}
 ```
 
-*Note that all dependencies given above are not required. Only add the dependencies to the typeface modules that are needed for the current project. E.g. If using Entypo and VaadinIcons typefaces only, then only add the dependencies `implementation project(':entypo_typeface')` and `implementation project(':vaadin_icons_typeface')`.*
+*Note that all dependencies given above are not required. Only add the dependencies to the icon-font modules that are needed for the current project. E.g. If using Entypo and VaadinIcons typefaces only, then only add the dependencies `implementation project(':entypo_typeface')` and `implementation project(':vaadin_icons_typeface')`.*
 
-4. For using any of the precompiled icon-font libraries in separate application using har file, add the har file in the entry/libs folder and add the dependencies in entry/build.gradle file.
+2. For using any of the precompiled icon-font libraries in separate application using har file, add the har file in the entry/libs folder and add the dependencies in entry/build.gradle file.
 ``` gradle
 	dependencies {
 		implementation fileTree(dir: 'libs', include: ['*.har'])
@@ -112,9 +117,11 @@ The Button can be created using XML code with supported XML attributes or instan
 	}
 ```
 
-5. Add the associated font .ttf file of the icon-font modules added to the rawfile directory of the application. E.g. If using octicons_typeface module, add the file [octicons-v3.2.0.ttf](entry/src/main/resources/rawfile/octicons-v3.2.0.ttf) into the directory resources/rawfile, in the resource directory of the application. 
+### Adding Font Files
+
+Add the associated font .ttf file of the icon-font modules added to the rawfile directory of the application. E.g. If using octicons_typeface module, add the file [octicons-v3.2.0.ttf](entry/src/main/resources/rawfile/octicons-v3.2.0.ttf) into the directory resources/rawfile, in the resource directory of the application. 
  
-*Note: Without adding the font files to the rawfile directory, the associated typeface modules will not display the desired font-icons.* Each typeface module has an associated font file. To find the font files corresponding to the modules, refer to the [rawfile directory of this repository's sample app.](entry/src/main/resources/rawfile). It contains all the font files of the supported typeface modules.
+*Note: Without adding the font files to the rawfile directory, the associated typeface modules will not display the desired font-icons. So, ensure that for all the added icon-font modules, the corresponding font file is also added.* Each icon-font module has an associated font file. To find the font files corresponding to the modules, refer to the [rawfile directory of this repository's sample app.](entry/src/main/resources/rawfile). It contains all the font files of the supported typeface modules.
 
 **Icon Font List:**
 	
