@@ -311,7 +311,6 @@ public class FoundationIcons implements ITypeface {
         FOUI_SOCIAL_500PX('\uf1b4'),
         FOUI_SOCIAL_ADOBE('\uf1b5'),
         FOUI_SOCIAL_AMAZON('\uf1b6'),
-        FOUI_SOCIAL_ANDROID('\uf1b7'),
         FOUI_SOCIAL_APPLE('\uf1b8'),
         FOUI_SOCIAL_BEHANCE('\uf1b9'),
         FOUI_SOCIAL_BING('\uf1ba'),

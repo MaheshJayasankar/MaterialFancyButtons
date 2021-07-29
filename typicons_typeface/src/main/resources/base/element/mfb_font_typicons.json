@@ -906,9 +906,6 @@
 { "name": "typi_user",
 "value": "typi_user"
 },
-{ "name": "typi_vendor_android",
-"value": "typi_vendor_android"
-},
 { "name": "typi_vendor_apple",
 "value": "typi_vendor_apple"
 },

@@ -139,11 +139,12 @@
                 fancy:mfb_borderWidth="1vp"
                 fancy:mfb_defaultColor="#222326"
                 fancy:mfb_focusColor="#424243"
-                fancy:mfb_icon="DEVI_ANDROID_PLAIN_WORDMARK"
+                fancy:mfb_icon="DEVI_FIREFOX_PLAIN_WORDMARK"
                 fancy:mfb_radius="30vp"
-                fancy:mfb_text="Android"
+                fancy:mfb_text="Firefox"
                 fancy:mfb_textColor="#dfe0d9"
                 />
+<!--            TODO-->
         </DirectionalLayout>
 
     </DirectionalLayout>

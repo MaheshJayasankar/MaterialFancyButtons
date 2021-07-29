@@ -1368,9 +1368,6 @@
     { "name": "mdii_scanner",
       "value": "mdii_scanner"
     },
-    { "name": "mdii_smartphone_android",
-      "value": "mdii_smartphone_android"
-    },
     { "name": "mdii_smartphone_download",
       "value": "mdii_smartphone_download"
     },
@@ -1409,9 +1406,6 @@
     },
     { "name": "mdii_speaker",
       "value": "mdii_speaker"
-    },
-    { "name": "mdii_tablet_android",
-      "value": "mdii_tablet_android"
     },
     { "name": "mdii_tablet_mac",
       "value": "mdii_tablet_mac"
@@ -1709,12 +1703,6 @@
     },
     { "name": "mdii_timer",
       "value": "mdii_timer"
-    },
-    { "name": "mdii_android_alt",
-      "value": "mdii_android_alt"
-    },
-    { "name": "mdii_android",
-      "value": "mdii_android"
     },
     { "name": "mdii_apple",
       "value": "mdii_apple"

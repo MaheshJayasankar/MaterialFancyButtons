@@ -132,9 +132,6 @@
     { "name": "gmdi_all_out",
       "value": "gmdi_all_out"
     },
-    { "name": "gmdi_android",
-      "value": "gmdi_android"
-    },
     { "name": "gmdi_announcement",
       "value": "gmdi_announcement"
     },
@@ -1839,9 +1836,6 @@
     { "name": "gmdi_phone",
       "value": "gmdi_phone"
     },
-    { "name": "gmdi_phone_android",
-      "value": "gmdi_phone_android"
-    },
     { "name": "gmdi_phone_bluetooth_speaker",
       "value": "gmdi_phone_bluetooth_speaker"
     },
@@ -2480,9 +2474,6 @@
     },
     { "name": "gmdi_tablet",
       "value": "gmdi_tablet"
-    },
-    { "name": "gmdi_tablet_android",
-      "value": "gmdi_tablet_android"
     },
     { "name": "gmdi_tablet_mac",
       "value": "gmdi_tablet_mac"

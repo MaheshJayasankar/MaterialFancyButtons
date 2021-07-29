@@ -216,8 +216,6 @@ public class Devicon implements ITypeface {
         DEVI_DOCKER_PLAIN('\ue61f'),
         DEVI_AMAZONWEBSERVICES_PLAIN('\ue603'),
         DEVI_AMAZONWEBSERVICES_PLAIN_WORDMARK('\ue604'),
-        DEVI_ANDROID_PLAIN_WORDMARK('\ue60d'),
-        DEVI_ANDROID_PLAIN('\ue60e'),
         DEVI_ANGULARJS_PLAIN_WORDMARK('\ue61c'),
         DEVI_ANGULARJS_PLAIN('\ue61d'),
         DEVI_APPCELERATOR_PLAIN('\ue620'),

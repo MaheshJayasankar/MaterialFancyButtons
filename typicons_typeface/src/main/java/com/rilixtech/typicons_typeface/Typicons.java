@@ -438,7 +438,6 @@ public class Typicons implements ITypeface {
         TYPI_USER_DELETE('\ue12a'),
         TYPI_USER_OUTLINE('\ue12b'),
         TYPI_USER('\ue12c'),
-        TYPI_VENDOR_ANDROID('\ue12d'),
         TYPI_VENDOR_APPLE('\ue12e'),
         TYPI_VENDOR_MICROSOFT('\ue12f'),
         TYPI_VIDEO_OUTLINE('\ue130'),

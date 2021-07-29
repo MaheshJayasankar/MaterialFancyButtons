@@ -454,7 +454,6 @@ public class ThemifyIcons implements ITypeface {
         THEI_DROPBOX('\ue742'),
         THEI_DRIBBBLE('\ue743'),
         THEI_APPLE('\ue744'),
-        THEI_ANDROID('\ue745'),
         THEI_SAVE('\ue746'),
         THEI_SAVE_ALT('\ue747'),
         THEI_YAHOO('\ue748'),

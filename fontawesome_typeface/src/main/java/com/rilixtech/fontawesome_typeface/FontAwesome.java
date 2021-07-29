@@ -478,7 +478,6 @@ public class FontAwesome implements ITypeface {
         FAWI_LONG_ARROW_RIGHT('\uf178'),
         FAWI_APPLE('\uf179'),
         FAWI_WINDOWS('\uf17a'),
-        FAWI_ANDROID('\uf17b'),
         FAWI_LINUX('\uf17c'),
         FAWI_DRIBBBLE('\uf17d'),
         FAWI_SKYPE('\uf17e'),

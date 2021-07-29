@@ -1029,9 +1029,6 @@
     { "name": "fawi_windows",
       "value": "fawi_windows"
     },
-    { "name": "fawi_android",
-      "value": "fawi_android"
-    },
     { "name": "fawi_linux",
       "value": "fawi_linux"
     },

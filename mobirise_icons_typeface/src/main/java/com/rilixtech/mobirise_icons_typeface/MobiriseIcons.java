@@ -135,7 +135,6 @@ public class MobiriseIcons implements ITypeface {
         MBRI_ALIGN_JUSTIFY('\ue903'),
         MBRI_ALIGN_LEFT('\ue904'),
         MBRI_ALIGN_RIGHT('\ue905'),
-        MBRI_ANDROID('\ue906'),
         MBRI_APPLE('\ue907'),
         MBRI_ARROW_DOWN('\ue908'),
         MBRI_ARROW_NEXT('\ue909'),

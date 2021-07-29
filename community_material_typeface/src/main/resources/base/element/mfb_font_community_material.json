@@ -183,15 +183,6 @@
     { "name": "cmdi_anchor",
       "value": "cmdi_anchor"
     },
-    { "name": "cmdi_android",
-      "value": "cmdi_android"
-    },
-    { "name": "cmdi_android_debug_bridge",
-      "value": "cmdi_android_debug_bridge"
-    },
-    { "name": "cmdi_android_studio",
-      "value": "cmdi_android_studio"
-    },
     { "name": "cmdi_angular",
       "value": "cmdi_angular"
     },
@@ -1049,9 +1040,6 @@
     },
     { "name": "cmdi_cellphone",
       "value": "cmdi_cellphone"
-    },
-    { "name": "cmdi_cellphone_android",
-      "value": "cmdi_cellphone_android"
     },
     { "name": "cmdi_cellphone_basic",
       "value": "cmdi_cellphone_basic"
@@ -5009,9 +4997,6 @@
     },
     { "name": "cmdi_tablet",
       "value": "cmdi_tablet"
-    },
-    { "name": "cmdi_tablet_android",
-      "value": "cmdi_tablet_android"
     },
     { "name": "cmdi_tablet_ipad",
       "value": "cmdi_tablet_ipad"
