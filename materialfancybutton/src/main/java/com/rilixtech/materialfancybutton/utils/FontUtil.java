@@ -112,8 +112,8 @@ public class FontUtil {
 
     /**
      * Reads a font file from the rawfile directory of the current HAP with the given font name, builds a Font and
-     * returns the built Font. The rawfile directory is located
-     * at src/resources/rawfile.
+     * returns the built Font. The rawfile directory is located at resources/rawfile, in the module of the currently
+     * active AbilityContext.
      *
      * @param context The AbilityContext from which this Font is being loaded. Note that non-ability Contexts may not
      *                load font from rawfile.

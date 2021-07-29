@@ -68,7 +68,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     private int mIconPaddingTop = 0;
     private int mIconPaddingBottom = 0;
 
-    private int mBorderColor;
+    private int mBorderColor = Color.BLACK.getValue();
     private int mBorderWidth = 0;
 
     private int mRadius = 0;
@@ -309,14 +309,13 @@ public class MaterialFancyButton extends DirectionalLayout {
         mEnabled = getBoolAttribute(attrSet, "enabled", true);
         // // mTextAllCaps
         mTextAllCaps = getBoolAttribute(attrSet, "mfb_textAllCaps", false);
-        mTextAllCaps = getBoolAttribute(attrSet, "textAllCaps", mTextAllCaps);
         // //
         mGhost = getBoolAttribute(attrSet, "mfb_ghost", mGhost);
 
         // DIMENSION ATTRIBUTES
         // // mTextSize
         mTextSize = getDimensionAttribute(attrSet, "mfb_textSize", mTextSize);
-        mTextSize = getDimensionAttribute(attrSet, "textSize", mTextSize);
+        mTextSize = getDimensionAttribute(attrSet, "text_size", mTextSize);
         // //
         mBorderWidth = getDimensionAttribute(attrSet, "mfb_borderWidth", mBorderWidth);
         mRadius = getDimensionAttribute(attrSet, "mfb_radius", mRadius);
