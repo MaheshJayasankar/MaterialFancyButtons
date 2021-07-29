@@ -20,7 +20,8 @@ public class MaterialDesignIconic implements ITypeface {
     public static final String MATERIAL_DESIGN_ICONIC_VERSION = "2" + ".2.0";
     public static final String MATERIAL_DESIGN_ICONIC_AUTHOR = "Google. TTF created by Sergey Kupletsky";
     public static final String MATERIAL_DESIGN_ICONIC_URL = "http://zavoloklom.github.io/material-design-iconic-font/";
-    public static final String MATERIAL_DESIGN_ICONIC_DESC = "Material Design Iconic Font is a full suite of material design icons (created and maintained by Google) for easy scalable vector graphics on websites.";
+    public static final String MATERIAL_DESIGN_ICONIC_DESC = "Material Design Iconic Font is a full suite of material"
+            + " design icons (created and maintained by Google) for easy scalable vector graphics on websites.";
     public static final String MATERIAL_DESIGN_ICONIC_LICENSE = "SIL OFL 1.1";
     public static final String MATERIAL_DESIGN_ICONIC_LICENSE_URL = "http://scripts.sil.org/OFL";
 

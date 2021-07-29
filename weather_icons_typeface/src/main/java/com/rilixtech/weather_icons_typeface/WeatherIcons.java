@@ -20,7 +20,9 @@ public class WeatherIcons implements ITypeface {
     public static final String WEATHER_ICONS_VERSION = "2" + ".0.10";
     public static final String WEATHER_ICONS_AUTHOR = "Erik Flowers";
     public static final String WEATHER_ICONS_URL = "http://weathericons.io/";
-    public static final String WEATHER_ICONS_DESC = "Weather Icons is the only icon font and CSS with 222 weather themed icons, ready to be dropped right into Bootstrap, or any project that needs high quality weather, maritime, and meteorological based icons!";
+    public static final String WEATHER_ICONS_DESC = "Weather Icons is the only icon font and CSS with 222 weather"
+            + " themed icons, ready to be dropped right into Bootstrap, or any project that needs high quality weather,"
+            + " maritime, and meteorological based icons!";
     public static final String WEATHER_ICONS_LICENSE = "SIL OFL 1.1";
     public static final String WEATHER_ICONS_LICENSE_URL = "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL";
 

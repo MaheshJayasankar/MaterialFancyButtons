@@ -20,7 +20,8 @@ public class ThemifyIcons implements ITypeface {
     public static final String THEMIFY_ICONS_VERSION = "0" + ".1.2";
     public static final String THEMIFY_ICONS_AUTHOR = "Lally Elias";
     public static final String THEMIFY_ICONS_URL = "http://themify.me/themify-icons";
-    public static final String THEMIFY_ICONS_DESC = "Themify Icons is a complete set of icons for use in web design and apps, consisting of 320+ pixel-perfect, hand-crafted icons that draw inspiration from Apple iOS 7.";
+    public static final String THEMIFY_ICONS_DESC = "Themify Icons is a complete set of icons for use in web design and"
+            + " apps, consisting of 320+ pixel-perfect, hand-crafted icons that draw inspiration from Apple iOS 7.";
     public static final String THEMIFY_ICONS_LICENSE = "SIL Open Font License (OFL)";
     public static final String THEMIFY_ICONS_LICENSE_URL = "http://scripts.sil.org/OFL";
 

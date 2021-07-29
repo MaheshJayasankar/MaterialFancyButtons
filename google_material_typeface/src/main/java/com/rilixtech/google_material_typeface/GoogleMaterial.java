@@ -20,7 +20,8 @@ public class GoogleMaterial implements ITypeface {
     public static final String GOOGLE_MATERIAL_VERSION = "3" + ".0.1.0.original";
     public static final String GOOGLE_MATERIAL_AUTHOR = "Google";
     public static final String GOOGLE_MATERIAL_URL = "https://github.com/google/material-design-icons";
-    public static final String GOOGLE_MATERIAL_DESC = "Material design icons are the official icon set from Google that are designed under the material design guidelines.";
+    public static final String GOOGLE_MATERIAL_DESC = "Material design icons are the official icon set from Google that"
+            + " are designed under the material design guidelines.";
     public static final String GOOGLE_MATERIAL_LICENSE = "CC-BY 4.0";
     public static final String GOOGLE_MATERIAL_LICENSE_URL = "http://creativecommons.org/licenses/by/4.0/";
 

@@ -20,7 +20,8 @@ public class Picol implements ITypeface {
     public static final String PICOL_ICON_VERSION = "1" + ".1";
     public static final String PICOL_ICON_AUTHOR = "http://picol.org/";
     public static final String PICOL_ICON_URL = "http://picol.org/";
-    public static final String PICOL_ICON_DESC = "PICOL stands for PIctorial COmmunication Language and is a project to find a standard and reduced sign system for electronic communication.";
+    public static final String PICOL_ICON_DESC = "PICOL stands for PIctorial COmmunication Language and is a project to"
+            + " find a standard and reduced sign system for electronic communication.";
     public static final String PICOL_ICON_LICENSE = "Creative Commons-License BY";
     public static final String PICOL_ICON_LICENSE_URL = "http://www.creativecommons.org/licenses/by/3.0/";
 

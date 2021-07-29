@@ -20,8 +20,10 @@ public class Meteocons implements ITypeface {
     public static final String METEOCONS_VERSION = "1" + ".1.1";
     public static final String METEOCONS_AUTHOR = "Alessio Atzeni";
     public static final String METEOCONS_URL = "http://www.alessioatzeni.com/meteocons/";
-    public static final String METEOCONS_DESC = "Meteocons is a set of weather icons, it containing 40+ icons available in PSD, CSH, EPS, SVG, Desktop font and Web font. All icon and updates are free and always will be.";
-    public static final String METEOCONS_LICENSE = "Meteocons are free for use in both personal and commercial projects.\n"
+    public static final String METEOCONS_DESC = "Meteocons is a set of weather icons, it containing 40+ icons available"
+            + " in PSD, CSH, EPS, SVG, Desktop font and Web font. All icon and updates are free and always will be.";
+    public static final String METEOCONS_LICENSE =
+            "Meteocons are free for use in both personal and commercial projects.\n"
             + "No attribution or backlinks are required, but any form of spreading the word is always appreciated!\n"
             + "You must not resell any icons or distribute them in any other way.\n"
             + "The Icons as such are the property of the author.";

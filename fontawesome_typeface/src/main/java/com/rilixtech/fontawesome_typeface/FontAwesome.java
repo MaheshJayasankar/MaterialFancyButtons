@@ -20,7 +20,9 @@ public class FontAwesome implements ITypeface {
     public static final String FONT_AWESOME_VERSION = "4" + ".7.0.0";
     public static final String FONT_AWESOME_AUTHOR = "Dave Gandy";
     public static final String FONT_AWESOME_URL = "https://github.com/FortAwesome/Font-Awesome";
-    public static final String FONT_AWESOME_DESC = "Font Awesome is a full suite of 675 pictographic icons for easy scalable vector graphics on websites, created and maintained by Dave Gandy. Stay up to date @fontawesome.";
+    public static final String FONT_AWESOME_DESC = "Font Awesome is a full suite of 675 pictographic icons for easy"
+            + " scalable vector graphics on websites, created and maintained by Dave Gandy."
+            + " Stay up to date @fontawesome.";
     public static final String FONT_AWESOME_LICENSE = "SIL OFL 1.1";
     public static final String FONT_AWESOME_LICENSE_URL = "http://scripts.sil.org/OFL";
 

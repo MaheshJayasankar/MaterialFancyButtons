@@ -20,7 +20,8 @@ public class VaadinIcons implements ITypeface {
     public static final String VAADIN_ICONS_VERSION = "4" + ".1.0";
     public static final String VAADIN_ICONS_AUTHOR = "Jarmo Kemppainen";
     public static final String VAADIN_ICONS_URL = "https://vaadin.com/icons/";
-    public static final String VAADIN_ICONS_DESC = "Vaadin Icons is a set of 600+ icons designed for web applications. Free to use, anywhere!";
+    public static final String VAADIN_ICONS_DESC = "Vaadin Icons is a set of 600+ icons designed for web applications."
+            + " Free to use, anywhere!";
     public static final String VAADIN_ICONS_LICENSE = "Creative Commons licenses: CC-BY license";
     public static final String VAADIN_ICONS_LICENSE_URL = "https://creativecommons.org/licenses/by/4.0/";
 

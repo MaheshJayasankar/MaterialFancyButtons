@@ -110,6 +110,18 @@ public class FontUtil {
         return typeface;
     }
 
+    /**
+     * Reads a font file from the rawfile directory of the current HAP with the given font name, builds a Font and
+     * returns the built Font. The rawfile directory is located
+     * at src/resources/rawfile.
+     *
+     * @param context The AbilityContext from which this Font is being loaded. Note that non-ability Contexts may not
+     *                load font from rawfile.
+     * @param fontName The name of the font file as stored in the rawfile directory.  The name should include the
+     *                extension of the file name.
+     * @return Font object built from the provided font file.
+     * @throws IllegalStateException In case the file does not exist, could not be read, or is not a readable font file.
+     */
     public static Font getFontFromRawFile(AbilityContext context, String fontName) throws IllegalStateException  {
         Font typeface;
         RawFileEntry rawFileEntry = context.getResourceManager()

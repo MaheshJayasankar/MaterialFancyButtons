@@ -20,7 +20,8 @@ public class MobiriseIcons implements ITypeface {
     public static final String MOBIRISE_ICONS_VERSION = "1" + ".0.0";
     public static final String MOBIRISE_ICONS_AUTHOR = "Free Website Builder, https://mobirise.com/";
     public static final String MOBIRISE_ICONS_URL = "https://mobirise.com/";
-    public static final String MOBIRISE_ICONS_DESC = "A free, open source set of 150 elegant, pixel-perfect vector icons from Free Website Builder.";
+    public static final String MOBIRISE_ICONS_DESC = "A free, open source set of 150 elegant, pixel-perfect vector"
+            + " icons from Free Website Builder.";
     public static final String MOBIRISE_ICONS_LICENSE = "CC BY 4.0.";
     public static final String MOBIRISE_ICONS_LICENSE_URL = "https://creativecommons.org/licenses/by/4.0/";
 

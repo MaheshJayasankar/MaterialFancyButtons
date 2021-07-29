@@ -20,7 +20,8 @@ public class GlyphiconsHalflings implements ITypeface {
     public static final String GLYPHICONS_HALFLINGS_VERSION = "1" + ".0.0";
     public static final String GLYPHICONS_HALFLINGS_AUTHOR = "Jan Kovarik";
     public static final String GLYPHICONS_HALFLINGS_URL = "http://glyphicons.com/";
-    public static final String GLYPHICONS_HALFLINGS_DESC = "GLYPHICONS Halflings font is also released as an extension of a Bootstrap www.getbootstrap.com for free and it is released under the same license as Bootstrap.";
+    public static final String GLYPHICONS_HALFLINGS_DESC = "GLYPHICONS Halflings font is also released as an extension"
+            + " of a Bootstrap www.getbootstrap.com for free and it is released under the same license as Bootstrap.";
     public static final String GLYPHICONS_HALFLINGS_LICENSE = "MIT License";
     public static final String GLYPHICONS_HALFLINGS_LICENSE_URL = "https://opensource.org/licenses/MIT";
 

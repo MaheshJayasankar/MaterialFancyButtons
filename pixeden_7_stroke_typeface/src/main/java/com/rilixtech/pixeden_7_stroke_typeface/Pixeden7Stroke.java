@@ -21,7 +21,8 @@ public class Pixeden7Stroke implements ITypeface {
     public static final String PIXEDEN_7_STROKE_AUTHOR = "Riccardo Montagnin";
     public static final String PIXEDEN_7_STROKE_URL = "http://themes-pixeden.com/font-demos/7-stroke/";
     public static final String PIXEDEN_7_STROKE_DESC = "A series of iOS 7 inspired vector icons";
-    public static final String PIXEDEN_7_STROKE_LICENSE = "Royalty free for use in both personal and commercial projects";
+    public static final String PIXEDEN_7_STROKE_LICENSE =
+            "Royalty free for use in both personal and commercial projects";
     public static final String PIXEDEN_7_STROKE_LICENSE_URL = "http://themes-pixeden.com/font-demos/7-stroke/";
 
     private static Font pixeden7StrokeTypeface = null;
