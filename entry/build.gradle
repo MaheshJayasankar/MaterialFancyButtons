@@ -17,7 +17,7 @@ ohos {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
+
     implementation project(path: ':materialfancybutton')
     implementation project(path: ':fontawesome_typeface')
     implementation project(path: ':community_material_typeface')

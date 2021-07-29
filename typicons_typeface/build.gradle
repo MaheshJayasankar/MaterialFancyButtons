@@ -16,7 +16,7 @@ ohos {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation project(path: ':materialfancybutton')
     implementation project(path: ':materialfancybutton')
     implementation project(path: ':materialfancybutton')
