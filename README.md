@@ -4,8 +4,7 @@ MaterialFancyButtons is a library that provides highly customizable buttons, wit
 
 # Source
 
-Inspired by Android library MaterialFancyButtons (v1.8.7) by [Joielechong](http://www.github.com/joielechong):
-
+Inspired by library MaterialFancyButtons (v1.8.7) by [Joielechong](http://www.github.com/joielechong):
 
 https://github.com/joielechong/MaterialFancyButtons
 
@@ -53,137 +52,179 @@ The following parameters can be adjusted to design the button as per requirement
 
 The Button can be created using XML code with supported XML attributes or instantiated using Java code.
 
-### Installation
+## Dependency
 
-```gradle
-compile 'com.rilixtech:materialfancybuttons:1.8.8'
+1. For using MaterialFancyButtons module in sample app, include the source code and add the below dependencies in entry/build.gradle to generate hap/support.har.
+``` gradle
+	dependencies {
+		implementation project(':materialfancybutton')
+        	testCompile 'junit:junit:4.12'
+	}
+```
+2. For using MaterialFancyButtons module in separate application using har file, add the har file in the entry/libs folder and add the dependencies in entry/build.gradle file.
+``` gradle
+	dependencies {
+		implementation fileTree(dir: 'libs', include: ['*.har'])
+		testCompile 'junit:junit:4.12'
+	}
+```
+3. For using any of the precompiled icon-font libraries in sample app, include the source code for the icon font libraries required and add the below dependencies in entry/build.gradle to generate hap/support.har.
+``` gradle
+	dependencies {
+		implementation project(':materialfancybutton')
+		implementation project(':community_material_typeface')
+		implementation project(':devicon_typeface')
+		implementation project(':dripicons_typeface')
+		implementation project(':fontawesome_typeface')
+		implementation project(':entypo_typeface')
+		implementation project(':foundation_icons_typeface')
+		implementation project(':glyphicons_halflings_typeface')
+		implementation project(':google_material_typeface')
+		implementation project(':ionicons_typeface')
+		implementation project(':material_design_iconic_typeface')
+		implementation project(':meteocons_typeface')
+		implementation project(':mfglabs_iconset_typeface')
+		implementation project(':mobirise_icons_typeface')
+		implementation project(':octicons_typeface')
+		implementation project(':open_iconic_typeface')
+		implementation project(':picol_typeface')
+		implementation project(':pixeden_7_stroke_typeface')
+		implementation project(':themify_icons_typeface')
+		implementation project(':typicons_typeface')
+		implementation project(':vaadin_icons_typeface')
+		implementation project(':weather_icons_typeface')
+		testImplementation 'junit:junit:4.13'
+	}
 ```
 
-Add maven to your build.gradle:
-```gradle
-maven {
-      url "http://dl.bintray.com/rilixtech/maven"
-    }
+*Note that all dependencies given above are not required. Only add the dependencies to the typeface modules that are needed for the current project.*
+
+4. For using any of the precompiled icon-font libraries in separate application using har file, add the har file in the entry/libs folder and add the dependencies in entry/build.gradle file.
+``` gradle
+	dependencies {
+		implementation fileTree(dir: 'libs', include: ['*.har'])
+		testCompile 'junit:junit:4.12'
+	}
 ```
 
-Choose your desired icon fonts from a precompiled font list, add the font that you want to use from below list:
-
-```gradle
-compile 'com.rilixtech:community-material-typeface:1.9.32.2'
-compile 'com.rilixtech:devicon-typeface:2.0.0.3'
-compile 'com.rilixtech:dripicons-typeface:2.0.0'
-compile 'com.rilixtech:entypo-typeface:1.0.0.3'
-compile 'com.rilixtech:fontawesome-typeface:4.7.0.4'
-compile 'com.rilixtech:foundation-icons-typeface:3.0.0.3'
-compile 'com.rilixtech:glyphicons-halflings-typeface:1.0.0'
-compile 'com.rilixtech:google-material-typeface:3.0.1.1.original'
-compile 'com.rilixtech:mfglabs-iconset-typeface:1.0'
-compile 'com.rilixtech:material-design-iconic-typeface:2.2.0.3'
-compile 'com.rilixtech:meteocons-typeface:1.1.0.3'
-compile 'com.rilixtech:mobirise-icons-typeface:1.0.0'
-compile 'com.rilixtech:ionicons-typeface:2.0.1.3'
-compile 'com.rilixtech:octicons-typeface:3.2.0.3'
-compile 'com.rilixtech:open-iconic-typeface:1.1.1'
-compile 'com.rilixtech:picol-typeface:1.0.0'
-compile 'com.rilixtech:pixeden-7-stroke-typeface:1.2.0.1'
-compile 'com.rilixtech:themify-icons-typeface:0.1.2'
-compile 'com.rilixtech:typicons-typeface:2.0.7.3'
-compile 'com.rilixtech:vaadin-icons-typeface:4.1.0'
-compile 'com.rilixtech:weather-icons-typeface:2.0.10.3'
-```
+5. Add the associated font .ttf file of the icon-font modules added to the rawfile directory of the application. Eg. If using octicons_typeface module, add the file [octicons-v3.2.0.ttf](entry/src/main/resources/rawfile/octicons-v3.2.0.ttf) into the directory resources/rawfile, in the resource directory of the application. 
+ 
+*Note: Without adding the font files to the rawfile directory, the associated typeface modules will not display the desired font-icons.* Each typeface module has an associated font file. For a complete list of font files of the various modules used, refer to the [rawfile directory of this repository's sample app.](entry/src/main/resources/rawfile)
 
 **Icon Font List:**
 
-The following list is within this format:
+		
+		implementation project(':dripicons_typeface')
+		implementation project(':fontawesome_typeface')
+		implementation project(':entypo_typeface')
+		implementation project(':foundation_icons_typeface')
+		implementation project(':glyphicons_halflings_typeface')
+		implementation project(':google_material_typeface')
+		implementation project(':ionicons_typeface')
+		implementation project(':material_design_iconic_typeface')
+		implementation project(':meteocons_typeface')
+		implementation project(':mfglabs_iconset_typeface')
+		implementation project(':mobirise_icons_typeface')
+		implementation project(':octicons_typeface')
+		implementation project(':open_iconic_typeface')
+		implementation project(':picol_typeface')
+		implementation project(':pixeden_7_stroke_typeface')
+		implementation project(':themify_icons_typeface')
+		implementation project(':typicons_typeface')
+		implementation project(':vaadin_icons_typeface')
+		implementation project(':weather_icons_typeface')
+		
+The details of the precompiled icon-font modules are given below. The following list is within this format:
 * Font Icon link
   * "Prefix", this is prefix for each icon in the font
-  * `compile 'com.rilixtech:...'`, this is the dependency to use the icon font.
+  * `implementation project...'`, this is the dependency to use the icon font.
+  * "fontname.ttf" this is the corresponding font file to be added to the resources/rawfile directory of the application.
 
  **Icon List:**
 
 * [Community Material](http://materialdesignicons.com/)
-  * "cmdi"
-  * `compile 'com.rilixtech:community-material-typeface:1.9.32.2'`
+  * "CMDI"
+  * `implementation project(':community_material_typeface')`
 
 * [Devicon](http://devicon.fr/)
-  * "devi"
-  * `compile 'com.rilixtech:devicon-typeface:2.0.0.3'`
+  * "DEVI"
+  * `implementation project(':devicon_typeface')`
 
 * [Dripicons](http://demo.amitjakhu.com/dripicons/)
-  * "drpi"
+  * "DRPI"
   * `compile 'com.rilixtech:dripicons-typeface:2.0.0'`
 
 * [Entypo](http://www.entypo.com/)
-  * "enti"
+  * "ENTI"
   * `compile 'com.rilixtech:entypo-typeface:1.0.0.3'`
 
 * [Fontawesome](http://fontawesome.io)
-  * "fawi"
+  * "FAWI"
   * `compile 'com.rilixtech:fontawesome-typeface:4.7.0.4'`
 
 * [Foundation Icons](http://zurb.com/playground/foundation-icon-fonts-3)
-  * "foui"
+  * "FOUI"
   * `compile 'com.rilixtech:foundation-icons-typeface:3.0.0.3'`
 
 * [Glyphicons Halflings](http://glyphicons.com/)
-  * "glyi"
+  * "GLYI"
   * `compile 'com.rilixtech:glyphicons-halflings-typeface:1.0.0'`
 
 * [Google Material Design Icons](https://github.com/google/material-design-icons)
-  * "gmdi"
+  * "GMDI"
   * `compile 'com.rilixtech:google-material-typeface:3.0.1.1.original'`
 
 * [Ionicons](http://ionicons.com/)
-  * "ioni"
+  * "IONI"
   * `compile 'com.rilixtech:ionicons-typeface:2.0.1.3'`
 
 * [Material Design Iconic Font](http://zavoloklom.github.io/material-design-iconic-font)
-  * "gmii"
+  * "GMII"
   * **Google Material Iconic**
   * `compile 'com.rilixtech:material-design-iconic-typeface:2.2.0.3'`
 
 * [MFGLabs Iconset](https://github.com/MfgLabs/mfglabs-iconset)
-  * "mfgi"
+  * "MFGI"
   * `compile 'com.rilixtech:mfglabs-iconset-typeface:1.0'`
 
 * [Meteocons](http://www.alessioatzeni.com/meteocons/)
-  * "meti"
+  * "METI"
   * `compile 'com.rilixtech:meteocons-typeface:1.1.0.3'`
 
 * [Mobirise Icons](https://mobiriseicons.com/)
-  * "mbri"
+  * "MBRI"
   * `compile 'com.rilixtech:mobirise-icons-typeface:1.0.0'`
 
 * [Octicons](https://github.com/github/octicons)
-  * "octi"
+  * "OCTI"
   * `compile 'com.rilixtech:octicons-typeface:3.2.0.3'`
 
 * [Open Iconic](https://useiconic.com/)
-  * "opic"
+  * "OPIC"
   * `compile 'com.rilixtech:open-iconic-typeface:1.1.1'`
 
 * [PICOL](http://picol.org/)
-  * "pici"
+  * "PICI"
   * `compile 'com.rilixtech:picol-typeface:1.0.0'`
 
 * [Pixden7Stroke](http://themes-pixeden.com/font-demos/7-stroke/)
-  * "pe7i"
+  * "PE7I"
   * `compile 'com.rilixtech:pixeden-7-stroke-typeface:1.2.0.1'`
 
 * [Themify Icons](http://themify.me/themify-icons)
-  * "thei"
+  * "THEI"
   * `compile 'com.rilixtech:themify-icons-typeface:0.1.2'`
 
 * [Typeicons](http://typicons.com/)
-  * "typi"
+  * "TYPI"
   * `compile 'com.rilixtech:typicons-typeface:2.0.7.3'`
 
 * [Vaadin Icons](https://github.com/vaadin/vaadin-icons/)
-  * "vaai"
+  * "VAAI"
   * `compile 'com.rilixtech:vaadin-icons-typeface:4.1.0'`
 
 * [Weather Icons](https://erikflowers.github.io/weather-icons/)
-  * "wici"
+  * "WICI"
   * `compile 'com.rilixtech:weather-icons-typeface:2.0.10.3'`
 
 Licenses for all included fonts are linked inside the class or can be found on the corresponding repositories.
