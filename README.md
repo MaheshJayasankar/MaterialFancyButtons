@@ -1,12 +1,17 @@
-# Material Fancy Button
+# MaterialFancyButtons
 
-MaterialFancyButtons is a library that provides highly customizable buttons, with options to include icons made of Element graphics or icon fonts. Using this library, one can effortlessly design attractive and aesthetic buttons to go along with the theme of the UI. It supports 21 precompiled icon fonts and provides an interface to easily include new fonts.
+MaterialFancyButtons is a library that provides highly customizable buttons, with options to include icons made of Element graphics or icon-fonts loaded from font files. Using this library, one can effortlessly design attractive and aesthetic buttons to go along with the theme of the UI. It supports 21 precompiled icon-fonts and provides an interface to easily include new fonts.
 
 # Source
 
 Inspired by library MaterialFancyButtons (v1.8.7) by [Joielechong](http://www.github.com/joielechong):
 
 https://github.com/joielechong/MaterialFancyButtons
+
+The library author has also credited the following contributors:
+
+- [El Mehdi Sakout](http://twitter.com/medyo80)
+- [mikepenz.com](http://mikepenz.com)
 
 ## Features
 
@@ -41,7 +46,7 @@ The following parameters can be adjusted to design the button as per requirement
     * [Typeicons](http://typicons.com/)
     * [Vaadin Icons](https://github.com/vaadin/vaadin-icons/)
     * [Weather Icons](https://erikflowers.github.io/weather-icons/)
-	* Provisions to add Custom fonts, both for use as Button Text and for use as the icon-font.
+* Provisions to add Custom Fonts for buttons, custom text fonts and also custom icon-fonts.
 * Icon (Position, size)
     * right
     * left
@@ -68,15 +73,15 @@ The Button can be created using XML code with supported XML attributes or instan
 		testCompile 'junit:junit:4.12'
 	}
 ```
-3. For using any of the precompiled icon-font libraries in sample app, include the source code for the icon font libraries required and add the below dependencies in entry/build.gradle to generate hap/support.har.
+3. For using any of the precompiled icon-font libraries in sample app, include the source code for the icon font libraries required and add the required dependencies from below list in entry/build.gradle to generate hap/support.har.
 ``` gradle
 	dependencies {
 		implementation project(':materialfancybutton')
 		implementation project(':community_material_typeface')
 		implementation project(':devicon_typeface')
 		implementation project(':dripicons_typeface')
-		implementation project(':fontawesome_typeface')
 		implementation project(':entypo_typeface')
+		implementation project(':fontawesome_typeface')
 		implementation project(':foundation_icons_typeface')
 		implementation project(':glyphicons_halflings_typeface')
 		implementation project(':google_material_typeface')
@@ -97,7 +102,7 @@ The Button can be created using XML code with supported XML attributes or instan
 	}
 ```
 
-*Note that all dependencies given above are not required. Only add the dependencies to the typeface modules that are needed for the current project.*
+*Note that all dependencies given above are not required. Only add the dependencies to the typeface modules that are needed for the current project. E.g. If using Entypo and VaadinIcons typefaces only, then only add the dependencies `implementation project(':entypo_typeface')` and `implementation project(':vaadin_icons_typeface')`.*
 
 4. For using any of the precompiled icon-font libraries in separate application using har file, add the har file in the entry/libs folder and add the dependencies in entry/build.gradle file.
 ``` gradle
@@ -107,33 +112,12 @@ The Button can be created using XML code with supported XML attributes or instan
 	}
 ```
 
-5. Add the associated font .ttf file of the icon-font modules added to the rawfile directory of the application. Eg. If using octicons_typeface module, add the file [octicons-v3.2.0.ttf](entry/src/main/resources/rawfile/octicons-v3.2.0.ttf) into the directory resources/rawfile, in the resource directory of the application. 
+5. Add the associated font .ttf file of the icon-font modules added to the rawfile directory of the application. E.g. If using octicons_typeface module, add the file [octicons-v3.2.0.ttf](entry/src/main/resources/rawfile/octicons-v3.2.0.ttf) into the directory resources/rawfile, in the resource directory of the application. 
  
-*Note: Without adding the font files to the rawfile directory, the associated typeface modules will not display the desired font-icons.* Each typeface module has an associated font file. For a complete list of font files of the various modules used, refer to the [rawfile directory of this repository's sample app.](entry/src/main/resources/rawfile)
+*Note: Without adding the font files to the rawfile directory, the associated typeface modules will not display the desired font-icons.* Each typeface module has an associated font file. To find the font files corresponding to the modules, refer to the [rawfile directory of this repository's sample app.](entry/src/main/resources/rawfile). It contains all the font files of the supported typeface modules.
 
 **Icon Font List:**
-
-		
-		implementation project(':dripicons_typeface')
-		implementation project(':fontawesome_typeface')
-		implementation project(':entypo_typeface')
-		implementation project(':foundation_icons_typeface')
-		implementation project(':glyphicons_halflings_typeface')
-		implementation project(':google_material_typeface')
-		implementation project(':ionicons_typeface')
-		implementation project(':material_design_iconic_typeface')
-		implementation project(':meteocons_typeface')
-		implementation project(':mfglabs_iconset_typeface')
-		implementation project(':mobirise_icons_typeface')
-		implementation project(':octicons_typeface')
-		implementation project(':open_iconic_typeface')
-		implementation project(':picol_typeface')
-		implementation project(':pixeden_7_stroke_typeface')
-		implementation project(':themify_icons_typeface')
-		implementation project(':typicons_typeface')
-		implementation project(':vaadin_icons_typeface')
-		implementation project(':weather_icons_typeface')
-		
+	
 The details of the precompiled icon-font modules are given below. The following list is within this format:
 * Font Icon link
   * "Prefix", this is prefix for each icon in the font
@@ -144,222 +128,261 @@ The details of the precompiled icon-font modules are given below. The following 
 
 * [Community Material](http://materialdesignicons.com/)
   * "CMDI"
-  * `implementation project(':community_material_typeface')`
+  * `implementation project(':community_material_typeface')`'
+  * [communitymaterial-font-v1.9.32.ttf](entry/src/main/resources/rawfile/communitymaterial-font-v1.9.32.ttf)
 
 * [Devicon](http://devicon.fr/)
   * "DEVI"
   * `implementation project(':devicon_typeface')`
+  * [devicon-font-v2.0.0.1.ttf](entry/src/main/resources/rawfile/devicon-font-v2.0.0.1.ttf)
 
 * [Dripicons](http://demo.amitjakhu.com/dripicons/)
   * "DRPI"
-  * `compile 'com.rilixtech:dripicons-typeface:2.0.0'`
+  * `implementation project(':dripicons_typeface')`
+  * [dripicons-v2.ttf](entry/src/main/resources/rawfile/dripicons-v2.ttf)
 
 * [Entypo](http://www.entypo.com/)
   * "ENTI"
-  * `compile 'com.rilixtech:entypo-typeface:1.0.0.3'`
+  * `implementation project(':entypo_typeface')`
+  * [entypo-font-v1.0.0.1.ttf](entry/src/main/resources/rawfile/entypo-font-v1.0.0.1.ttf)
 
-* [Fontawesome](http://fontawesome.io)
+* [FontAwesome](http://fontawesome.io)
   * "FAWI"
-  * `compile 'com.rilixtech:fontawesome-typeface:4.7.0.4'`
+  * `implementation project(':fontawesome_typeface')`
+  * [fontawesome-font-v4.7.ttf](entry/src/main/resources/rawfile/fontawesome-font-v4.7.ttf)
 
 * [Foundation Icons](http://zurb.com/playground/foundation-icon-fonts-3)
   * "FOUI"
-  * `compile 'com.rilixtech:foundation-icons-typeface:3.0.0.3'`
+  * `implementation project(':foundation_icons_typeface')`
+  * [foundation-icons-font-v3.0.0.1.ttf](entry/src/main/resources/rawfile/foundation-icons-font-v3.0.0.1.ttf)
 
 * [Glyphicons Halflings](http://glyphicons.com/)
   * "GLYI"
-  * `compile 'com.rilixtech:glyphicons-halflings-typeface:1.0.0'`
+  * `implementation project(':glyphicons_halflings_typeface')`
+  * [glyphicons-halflings-regular.ttf](entry/src/main/resources/rawfile/glyphicons-halflings-regular.ttf)
 
 * [Google Material Design Icons](https://github.com/google/material-design-icons)
   * "GMDI"
-  * `compile 'com.rilixtech:google-material-typeface:3.0.1.1.original'`
+  * `implementation project(':google_material_typeface')`
+  * [googlematerial.ttf](entry/src/main/resources/rawfile/googlematerial.ttf)
 
 * [Ionicons](http://ionicons.com/)
   * "IONI"
-  * `compile 'com.rilixtech:ionicons-typeface:2.0.1.3'`
+  * `implementation project(':ionicons_typeface')`
+  * [ionicons.ttf](entry/src/main/resources/rawfile/ionicons.ttf)
 
 * [Material Design Iconic Font](http://zavoloklom.github.io/material-design-iconic-font)
   * "GMII"
-  * **Google Material Iconic**
-  * `compile 'com.rilixtech:material-design-iconic-typeface:2.2.0.3'`
+  * `implementation project(':material_design_iconic_typeface')`
+  * [material-design-iconic-font-v2.2.0.ttf](entry/src/main/resources/rawfile/material-design-iconic-font-v2.2.0.ttf)
 
 * [MFGLabs Iconset](https://github.com/MfgLabs/mfglabs-iconset)
   * "MFGI"
-  * `compile 'com.rilixtech:mfglabs-iconset-typeface:1.0'`
+  * `compile 'implementation project(':mfglabs_iconset_typeface')`
+  * [mfglabsiconset-webfont-1.0.ttf](entry/src/main/resources/rawfile/mfglabsiconset-webfont-1.0.ttf)
 
 * [Meteocons](http://www.alessioatzeni.com/meteocons/)
   * "METI"
-  * `compile 'com.rilixtech:meteocons-typeface:1.1.0.3'`
+  * `implementation project(':meteocons_typeface')`
+  * [meteocons.ttf](entry/src/main/resources/rawfile/meteocons.ttf)
 
 * [Mobirise Icons](https://mobiriseicons.com/)
   * "MBRI"
-  * `compile 'com.rilixtech:mobirise-icons-typeface:1.0.0'`
+  * `implementation project(':mobirise_icons_typeface')`
+  * [mobirise-icons-v1.0.0.ttf](entry/src/main/resources/rawfile/mobirise-icons-v1.0.0.ttf)
 
 * [Octicons](https://github.com/github/octicons)
   * "OCTI"
-  * `compile 'com.rilixtech:octicons-typeface:3.2.0.3'`
+  * `implementation project(':octicons_typeface')`
+  * [octicons-v3.2.0.ttf](entry/src/main/resources/rawfile/octicons-v3.2.0.ttf)
 
 * [Open Iconic](https://useiconic.com/)
   * "OPIC"
-  * `compile 'com.rilixtech:open-iconic-typeface:1.1.1'`
+  * `implementation project(':open_iconic_typeface')`
+  * [open-iconic-1.1.1.ttf](entry/src/main/resources/rawfile/open-iconic-1.1.1.ttf)
 
 * [PICOL](http://picol.org/)
   * "PICI"
-  * `compile 'com.rilixtech:picol-typeface:1.0.0'`
+  * `implementation project(':picol_typeface')`
+  * [picol-v1.1.ttf](entry/src/main/resources/rawfile/picol-v1.1.ttf)
 
 * [Pixden7Stroke](http://themes-pixeden.com/font-demos/7-stroke/)
   * "PE7I"
-  * `compile 'com.rilixtech:pixeden-7-stroke-typeface:1.2.0.1'`
+  * `implementation project(':pixeden_7_stroke_typeface')`
+  * [pixeden-7-stroke-font-v1.2.0.ttf](entry/src/main/resources/rawfile/pixeden-7-stroke-font-v1.2.0.ttf)
 
 * [Themify Icons](http://themify.me/themify-icons)
   * "THEI"
-  * `compile 'com.rilixtech:themify-icons-typeface:0.1.2'`
+  * `implementation project(':themify_icons_typeface')`
+  * [themify-icons-v0.1.2.ttf](entry/src/main/resources/rawfile/themify-icons-v0.1.2.ttf)
 
-* [Typeicons](http://typicons.com/)
+* [Typicons](http://typicons.com/)
   * "TYPI"
-  * `compile 'com.rilixtech:typicons-typeface:2.0.7.3'`
+  * `implementation project(':typicons_typeface')`
+  * [typicons-font-v2.0.7.1.ttf](entry/src/main/resources/rawfile/typicons-font-v2.0.7.1.ttf)
 
 * [Vaadin Icons](https://github.com/vaadin/vaadin-icons/)
   * "VAAI"
-  * `compile 'com.rilixtech:vaadin-icons-typeface:4.1.0'`
+  * `implementation project(':vaadin_icons_typeface')`
+  * [vaadin-icons-v4.1.0.ttf](entry/src/main/resources/rawfile/vaadin-icons-v4.1.0.ttf)
 
 * [Weather Icons](https://erikflowers.github.io/weather-icons/)
   * "WICI"
-  * `compile 'com.rilixtech:weather-icons-typeface:2.0.10.3'`
+  * `implementation project(':weather_icons_typeface')`
+  * [weather-icons-v2.0.10.ttf](entry/src/main/resources/rawfile/weather-icons-v2.0.10.ttf)
 
 Licenses for all included fonts are linked inside the class or can be found on the corresponding repositories.
 
 
-### Basic Usage Example
-1 - Add MaterialFancyButton to your dependencies:
+## Usage
+
+Given below is a basic usage example of this library.
+
+1. Add MaterialFancyButton to your dependencies:
 ```gradle
-compile 'com.rilixtech:materialfancybuttons:1.8.7'
+	implementation project(':materialfancybutton')
 ```
 
-2 - Include MaterialFancyButton namespace to the root element:
+2. Include MaterialFancyButton namespace to the root element in the layout file:
 
-	xmlns:fancy="http://schemas.android.com/apk/res-auto"
-
-3 - Add the MaterialFancyButton View:
-
-	<com.rilixtech.materialfancybutton.MaterialFancyButton
-	    android:id="@+id/btn_preview"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"/>
-
-4 - Select the font that you desire, for example FontAwesome. Add it as dependencies:
-```gradle
-compile 'com.rilixtech:fontawesome-typeface:4.7.0.4'
+``` xml
+	xmlns:fancy="http://schemas.huawei.com/hap/res-auto"
 ```
- All icon font characters will be included in **String Resource**.
 
-5 - Add the attribute for icon font character that you want, for example star icon. It should be in `prefix_icon_name` format.
-    Because we use FontAwesome the prefix is `fawi` and the icon character is `fawi_star`. Use `fancy:mfb_icon` attribute:
+3. Add the MaterialFancyButton Component:
 
-    fancy:mfb_icon="@string/fawi_star"
+``` xml
+            <com.rilixtech.materialfancybutton.MaterialFancyButton
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:id="$+id:btn_example"
+```
 
- So it become:
+4. Select the font that you desire, for example FontAwesome. Add it as dependencies:
+```gradle
+implementation project(':fontawesome_typeface')'
+```
+The list of supported font characters are included in the Enum FontAwesome.Icon.
 
-	<com.rilixtech.materialfancybutton.MaterialFancyButton
-	    android:id="@+id/btn_preview"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    fancy:mfb_icon="@string/fawi_star"/>
+5. Copy the [fontawesome-font-v4.7.ttf](entry/src/main/resources/rawfile/fontawesome-font-v4.7.ttf) file into the `resources/rawfile` directory of your application. E.g. If the application runs through the default entry module, this directory will be `entry/src/main/resources/rawfile`.
 
-**This is the recommended way**, so you don't need to manually copy the font and remembering all the characters of the font, which is very tedious and error prone.
+6. - Add the attribute for icon font character that you want, for example star icon. It should be in `PREFIX_ICON_NAME` format.
+    Because we use FontAwesome the prefix is `FAWI` and the icon character is `FAWI_STAR`. Use `fancy:mfb_icon` attribute:
+
+``` xml
+fancy:mfb_icon="FAWI_STAR"
+```
+
+ Therefore, the xml tag becomes:
+
+``` xml
+<com.rilixtech.materialfancybutton.MaterialFancyButton
+    ohos:height="match_content"
+    ohos:width="match_content"
+    ohos:id="$+id:btn_example"
+    fancy:mfb_icon="FAWI_STAR"/>
+```
+
+The library will, upon encountering the prefix `FAWI`, search and load the FontAwesome font from the provided font file in the rawfile directory. Therefore, the font file name does not need to be explicitly specified in the tag.
+
+**This is the recommended way**, so you don't need to manually load the font from file and remember all the characters of the font, which is very tedious and error prone.
 
 ### Custom Font
-If you want to use custom Font, follow this easy steps:
+If you want to use custom Font, follow these easy steps:
 
-1 - Paste your font inside `assets/fonts/` folder for Text fonts or inside `assets/iconfonts/` for icon fonts eg : fontawesome
+1 - Paste your font inside the `resources/rawfile` directory of the application. E.g. If the application runs through the default entry module, this directory will be `entry/src/main/resources/rawfile`.
 
 2 - Then add the following attribute:
 
  For text:
 
+``` xml
     fancy:mfb_textFont="robotothin.ttf"
-    fancy:mfb_text="your text"
-
-so it will be look like this:
-
-	<com.rilixtech.materialfancybutton.MaterialFancyButton
-	    android:id="@+id/btn_preview"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    fancy:mfb_textFont="robotothin.ttf"
-        fancy:mfb_text="your text"/>
+    fancy:mfb_text="Text written in Roboto Thin Font."
+```
+So it will look like this:
+``` xml
+<com.rilixtech.materialfancybutton.MaterialFancyButton
+    ohos:id="$+id:btn_example"
+    ohos:height="match_content"
+    ohos:width="match_content"
+    fancy:mfb_textFont="robotothin.ttf"
+    fancy:mfb_text="Text written in Roboto Thin Font."/>
+```
 
  For icon:
-
-    fancy:mfb_iconFont="fontawesome.ttf"
+``` xml
+    fancy:mfb_iconFont="fontawesome-font-v4.7.ttf"
     fancy:mfb_fontIconResource="&#xf087;"
-
+```
 so it will be look like this:
+``` xml
+<com.rilixtech.materialfancybutton.MaterialFancyButton
+   ohos:id="$+id:btn_example"
+   ohos:height="match_content"
+   ohos:width="match_content"
+   fancy:mfb_iconFont="fontawesome-font-v4.7.ttf"
+   fancy:mfb_fontIconResource="&#xf087;"
+   fancy:mfb_text="Thumbs Up"/>
+```
 
-	<com.rilixtech.materialfancybutton.MaterialFancyButton
-	   android:id="@+id/btn_preview"
-	   android:layout_width="wrap_content"
-	   android:layout_height="wrap_content"
-	   fancy:mfb_iconFont="fontawesome.ttf"
-       fancy:mfb_fontIconResource="&#xf087;"/>
+The above code will load the FontAwesome font and display the unicode character 0xF087 as an icon for the button. This icon will display as a "Thumbs Up". However, since remembering the unicode mapping of each special font character is tedious, an easy alternative would be to use the attribute `fancy:mfb_icon="THUMBS_O_UP"`.
 
-**Please be noted** that when using `fancy:mfb_icon` you don't need to use `fancy:mfb_iconFont` and `fancy:mfb_fontIconResource`. If both value is present, they will be override and ignored.
+**Please note** that when using `fancy:mfb_icon` you don't need to use `fancy:mfb_iconFont` and `fancy:mfb_fontIconResource`. If either attribute is present, they will be overriden by the `fancy:mfb_icon` attribute and ignored.
 
 ####  Supported Attributes
 
 | XML Attribute        | Java Method           | Description  |
 | ------------- |:-------------:| -----:|
-| fancy:mfb_text      | setText(String)     | Text of the button |
-| fancy:mfb_textColor     | setTextColor(int)      |  Text Color of the button |
-| fancy:mfb_textSize | setTextSize(int)      |    Size of the text |
-| fancy:mfb_textFont | setCustomTextFont(String)      |    FontFamily of the text|
-| fancy:mfb_textGravity | setTextGravity(Int)      |    Gravity of the text|
-| fancy:mfb_icon | setIcon(String), setIcon(char) | Set icon from icon font list. Need the font library (fontawesome_typeface_library, etc) to works. This will override fancy:mfb_fontIconResource and fancy:mfb_iconFont |
-| fancy:mfb_iconResource | setIconResource(Drawable)      |    Drawable icon of the button|
-| fancy:mfb_iconPosition | setsetIconPosition(int)      |    Position of the icon : Left, Right, Top, Bottom|
-| fancy:mfb_fontIconResource | setIconResource(String)      |    font icon of the button|
-| fancy:mfb_fontIconSize | setFontIconSize(int)      |    Size of the icon |
-| fancy:mfb_iconFont | setCustomIconFont(String)      |    FontFamily of the icon|
-| fancy:mfb_borderWidth | setBorderWidth(int)      |    Width of the border|
-| fancy:mfb_borderColor | setBorderColor(int)      |    Color of the border|
-| fancy:mfb_defaultColor | setBackgroundColor(int)      |    Background color of the button|
-| fancy:mfb_focusColor | setFocusBackgroundColor(int)      |    Focus Color of button background|
-| fancy:mfb_disabledColor | setDisableBackgroundColor(int)      |    Disabled Color of button background|
-| fancy:mfb_disabledTextColor | setDisableTextColor(int)      |    Disabled Color of button text|
-| fancy:mfb_disabledBorderColor | setDisableBorderColor(int)      |    Disabled Color of button border|
-| fancy:mfb_radius | setRadius(int)      |    Radius of the button|
-| fancy:mfb_radiusTopLeft | setRadiusTopLeft(int)      |    Radius top left of the button|
-| fancy:mfb_radiusTopRight | setRadiusTopRight(int)      |    Radius top right of the button|
-| fancy:mfb_radiusBottomLeft | setRadiusBottomLeft(int)      |    Radius bottom left of the button|
-| fancy:mfb_radiusBottomRight | setRadiusBottomRight(int)      |    Radius bottom right of the button|
-| fancy:mfb_iconPaddingLeft | setIconPadding(int,int,int,int)      |    Icon Padding|
-| fancy:mfb_iconPaddingRight | setIconPadding(int,int,int,int)      |    Icon Padding|
-| fancy:mfb_iconPaddingTop | setIconPadding(int,int,int,int)      |    Icon Padding|
-| fancy:mfb_iconPaddingBottom | setIconPadding(int,int,int,int)      |    Icon Padding|
-| fancy:mfb_ghost | setGhost(boolean)      |    Ghost (Hollow)|
+| fancy:mfb_text      | setText(String)     | Text of the button. Overriden by ohos:text if included. Default: "BUTTON" |
+| fancy:mfb_textColor     | setTextColor(int)      |  Text Color of the button. Default: White (#FFFFFFFF) |
+| fancy:mfb_textSize | setTextSize(int)      |    Size of the text. Default: 16fp |
+| fancy:mfb_textFont | setCustomTextFont(String)      |    Font Family of the text. If included, ensure it is the name of a font file in the rawfile directory. Default: System Default Font|
+| fancy:mfb_textGravity | setTextGravity(Int)      |    Alignment of the text. Refer to AttrEnumUtil.MfbTextGravity to view supported arguments. Default: MfbTextGravity.CENTER|
+| fancy:mfb_icon | setIcon(String) | Set icon from icon font list. Need the font library (fontawesome_typeface_library, etc) to work. This will override fancy:mfb_fontIconResource and fancy:mfb_iconFont. Default: No icon |
+| fancy:mfb_iconResource | setIconResource(Element)      |    Element icon of the button. Element icon is separate from the icon-font. Default: No element icon|
+| fancy:mfb_iconPosition | setsetIconPosition(int)      |    Position of the icon : Left, Right, Top, Bottom. Refer to MaterialFancyButton.POSITION_LEFT, POSITION_RIGHT etc. Default: POSITION_LEFT |
+| fancy:mfb_fontIconResource | setIcon(char), setIconResource(String)      |    The unicode value(s) of the font icon of the button. This is not required if using mfb_icon attribute. Default: No icon. |
+| fancy:mfb_fontIconSize | setFontIconSize(int)      |    Size of the icon-font. Note that this will scale the icon-font but not the Element icon. Default: 40fp|
+| fancy:mfb_iconFont | setCustomIconFont(String)      |    Font Family of the icon. If included, ensure it is the name of a font file in the rawfile directory. This setting will not affect the font of the text. Default: No icon or Font decided using prefix of mfb_icon attribute.|
+| fancy:mfb_borderWidth | setBorderWidth(int)      |    Width of the border. Default: 0 px|
+| fancy:mfb_borderColor | setBorderColor(int)      |    Color of the border. Default: Color Black (#000000)|
+| fancy:mfb_defaultColor | setBackgroundColor(int)      |    Background color of the button. Default: Color Black (#000000)|
+| fancy:mfb_focusColor | setFocusBackgroundColor(int)      |    Focus Color of button background. Default: Color Black (#000000)|
+| fancy:mfb_disabledColor | setDisableBackgroundColor(int)      |    Disabled Color of button background. Default: #f6f7f9|
+| fancy:mfb_disabledTextColor | setDisableTextColor(int)      |    Disabled Color of button text. Default: #bec2c9|
+| fancy:mfb_disabledBorderColor | setDisableBorderColor(int)      |    Disabled Color of button border. Default: #dddfe2|
+| fancy:mfb_radius | setRadius(int)      |    Radius of the corners of the button. Default: 0 px|
+| fancy:mfb_radiusTopLeft | setRadiusTopLeft(int)      |    Radius top left of the button. Default: As per mfb_radius attribute|
+| fancy:mfb_radiusTopRight | setRadiusTopRight(int)      |    Radius top right of the button. Default: As per mfb_radius attribute|
+| fancy:mfb_radiusBottomLeft | setRadiusBottomLeft(int)      |    Radius bottom left of the button. Default: As per mfb_radius attribute|
+| fancy:mfb_radiusBottomRight | setRadiusBottomRight(int)      |    Radius bottom right of the button. Default: As per mfb_radius attribute|
+| fancy:mfb_iconPaddingLeft | setIconPadding(int,int,int,int)      |    Icon Padding Left. Default: 10 px|
+| fancy:mfb_iconPaddingRight | setIconPadding(int,int,int,int)      |    Icon Padding Right. Default: 10 px|
+| fancy:mfb_iconPaddingTop | setIconPadding(int,int,int,int)      |    Icon Padding Top. Default: 0 px|
+| fancy:mfb_iconPaddingBottom | setIconPadding(int,int,int,int)      |    Icon Padding Bottom. Default: 0 px|
+| fancy:mfb_ghost | setGhost(boolean)      |    Change button appearance to be like a "Ghost" (Hollow). Default: false|
 
 For setting the radius of the button, you can also use `setRadius(int radiusTopLeft, int radiusTopRight, int radiusBottomLeft, int radiusBottomRight)`
 
-Also you can use Attributes with default prefix (android:) which makes migrating of your project more fast.
-Default Attributes have more priority than Attributes with prefix fancy.
+Also you can use Attributes with default prefix (ohos:), which makes migrating of your project more fast.
+Default Attributes have more priority than Attributes with prefix fancy, therefore, they will override potentially equivalent fancy attribute, if present.
 
 #### Supported default Attributes
 | XML Attribute    |
 | ------------- |
-| android:enabled |
-| android:text |
-| android:textSize |
-| android:textAllCaps |
-| android:textStyle|
+| ohos:enabled |
+| ohos:text |
+| ohos:text_size |
 
 ####  Supported Getters
 
 | Method        | Description  |
 | ------------- | -----:|
 | getText() | Returns Text Value of the button|
-| getTextViewObject() | Returns TextView Object|
-| getIconFontObject() | Returns icon defined by fb_fontIconResource|
-| getIconImageObject() | Returns icon defined by fb_iconResource |
+| getTextViewObject() | Returns Text Object|
+| getIconFontObject() | Returns icon defined by mfb_fontIconResource|
+| getIconImageObject() | Returns icon defined by mfb_iconResource |
 
 #### Sample
 
@@ -414,20 +437,10 @@ See the [example project](https://github.com/joielechong/MaterialFancyButtons/tr
 **How to add new fonts ?**
 Just Paste your font inside `assets/fonts/` folder for Text fonts or inside `assets/iconfonts/` for icon fonts eg : entypo
 
-## Contributions
-MaterialFancyButtons needs you to build the missing features:
+## Future Work
+All contributions are welcome. Some of the currently missing features are:
 * Supporting Circular buttons
 * Add elevation (Material Design)
-
-# Credits
-
-- [El Mehdi Sakout](http://twitter.com/medyo80) The creator of [FancyButtons](https://github.com/medyo/fancybuttons) which is the origin of this project.
-- [mikepenz.com](http://mikepenz.com) He is the creator of [Android-Iconics](https://github.com/mikepenz/Android-Iconics/) which is the origin of the icon font project.
-
-# Developed By
-
- * [Joielechong](http://www.github.com/joielechong)
-
 
 # License
 
