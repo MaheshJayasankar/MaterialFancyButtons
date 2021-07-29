@@ -178,7 +178,7 @@ The details of the precompiled icon-font modules are given below. The following 
 
 * [MFGLabs Iconset](https://github.com/MfgLabs/mfglabs-iconset)
   * "MFGI"
-  * `compile 'implementation project(':mfglabs_iconset_typeface')`
+  * `implementation project(':mfglabs_iconset_typeface')`
   * [mfglabsiconset-webfont-1.0.ttf](entry/src/main/resources/rawfile/mfglabsiconset-webfont-1.0.ttf)
 
 * [Meteocons](http://www.alessioatzeni.com/meteocons/)
@@ -252,17 +252,18 @@ Given below is a basic usage example of this library.
 3. Add the MaterialFancyButton Component:
 
 ``` xml
-            <com.rilixtech.materialfancybutton.MaterialFancyButton
-                ohos:height="match_content"
-                ohos:width="match_content"
-                ohos:id="$+id:btn_example"
+    <com.rilixtech.materialfancybutton.MaterialFancyButton
+	ohos:height="match_content"
+	ohos:width="match_content"
+	ohos:id="$+id:btn_example"
+	fancy:mfb_text="Example Button"/>
 ```
 
-4. Select the font that you desire, for example FontAwesome. Add it as dependencies:
+4. Select the font that you want to use, for example FontAwesome. Add it as a dependency:
 ```gradle
 implementation project(':fontawesome_typeface')'
 ```
-The list of supported font characters are included in the Enum FontAwesome.Icon.
+The list of supported font characters for FontAwesome are included in the Enum FontAwesome.Icon.
 
 5. Copy the [fontawesome-font-v4.7.ttf](entry/src/main/resources/rawfile/fontawesome-font-v4.7.ttf) file into the `resources/rawfile` directory of your application. E.g. If the application runs through the default entry module, this directory will be `entry/src/main/resources/rawfile`.
 
@@ -280,6 +281,7 @@ fancy:mfb_icon="FAWI_STAR"
     ohos:height="match_content"
     ohos:width="match_content"
     ohos:id="$+id:btn_example"
+    fancy:mfb_text="Example Button"
     fancy:mfb_icon="FAWI_STAR"/>
 ```
 
