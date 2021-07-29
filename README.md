@@ -268,7 +268,7 @@ Given below is a basic usage example of this library.
 
 4. Select the font that you want to use, for example FontAwesome. Add it as a dependency:
 ```gradle
-implementation project(':fontawesome_typeface')'
+implementation project(':fontawesome_typeface')
 ```
 The list of supported font characters for FontAwesome are included in the Enum FontAwesome.Icon.
 
@@ -292,7 +292,7 @@ fancy:mfb_icon="FAWI_STAR"
     fancy:mfb_icon="FAWI_STAR"/>
 ```
 
-The library will, upon encountering the prefix `FAWI`, search and load the FontAwesome font from the provided font file in the rawfile directory. Therefore, the font file name does not need to be explicitly specified in the tag.
+The library will, upon encountering the prefix `FAWI`, search and load the FontAwesome font from the provided font file in the rawfile directory. Therefore, the file name does not need to be explicitly specified in the xml tag.
 
 **This is the recommended way**, so you don't need to manually load the font from file and remember all the characters of the font, which is very tedious and error prone.
 
@@ -335,7 +335,7 @@ So it will look like this:
    fancy:mfb_text="Thumbs Up Button"/>
 ```
 
-The above code will load the FontAwesome font and display the unicode character 0xF087 as an icon for the button. As per FontAwesome v4.7 this character will display as a "Thumbs Up". Since remembering the unicode mapping of each special font character is tedious, an easy alternative would be to use the attribute `fancy:mfb_icon="THUMBS_O_UP"`.
+The above code will load the FontAwesome font and display the unicode character 0xF087 as an icon for the button. As per FontAwesome v4.7 font, this character will display as a "Thumbs Up". But, remembering the unicode mapping of each special font character is tedious, moreover the font file name would have to be repeatedly specified for every tag. So, an easy alternative would be to use the attribute `fancy:mfb_icon="FAWI_THUMBS_O_UP"` instead. Therefore, this approach is suitable only when using icon-fonts that are not currently supported by this library.
 
 **Please note** that when using `fancy:mfb_icon` you don't need to use `fancy:mfb_iconFont` and `fancy:mfb_fontIconResource`. If either attribute is present, they will be overriden by the `fancy:mfb_icon` attribute and ignored.
 
@@ -434,7 +434,7 @@ Default Attributes have more priority than Attributes with prefix fancy, therefo
     facebookLoginBtn.setIconPosition(FancyButton.POSITION_LEFT);
     facebookLoginBtn.setFontIconSize(30);
 
-See the [example project](entry) and associated [layouts folder](entry/src/main/resources/layout) for more samples. Examples are given using each of the supported libraries. Also, it is possible to define a button entirely using Java code, as shown in [ProgramButtonsSlice.java](entry/src/main/java/com/rilixtech/materialfancybuttons/slice/ProgramButtonsSlice.java).
+See the [example project](entry) and associated [layouts folder](entry/src/main/resources/layout) for more samples. Every supported font module has an example layout file. To view all the examples, run the sample app through the entry module. It is also possible to define a button entirely using Java code, as shown in [ProgramButtonsSlice.java](entry/src/main/java/com/rilixtech/materialfancybuttons/slice/ProgramButtonsSlice.java).
 
 
 - - - -
@@ -444,7 +444,7 @@ See the [example project](entry) and associated [layouts folder](entry/src/main/
 ### FAQ
 
 **How to add new fonts ?**
-Just Paste your font inside `resources/rawfile` folder of the application. E.g. If the application runs through the default entry module, this directory will be `entry/src/main/resources/rawfile`. Use the xml tags `fancy:fontText` and `fancy:fontIcon` or corresponding Java functions `setCustomTextFont` and `setIconFont`.
+Just Paste your font inside `resources/rawfile` folder of the application. E.g. If the application runs through the default entry module, this directory will be `entry/src/main/resources/rawfile`. Use the xml tags `fancy:fontText` and `fancy:fontIcon` or corresponding Java functions `setCustomTextFont` and `setIconFont`. Refer to "Custom Font" section of this readme for an example.
 
 ## Future Work
 All contributions are welcome. Some of the currently missing features are:
