@@ -1,6 +1,5 @@
-package com.rilixtech.materialfancybuttons.utils;
+package com.rilixtech.materialfancybutton.utils;
 
-import com.rilixtech.materialfancybutton.utils.FontUtil;
 import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
 import ohos.agp.components.AttrHelper;
 import ohos.app.Context;

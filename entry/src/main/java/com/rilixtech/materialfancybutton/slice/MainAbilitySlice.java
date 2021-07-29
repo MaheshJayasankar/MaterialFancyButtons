@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.rilixtech.materialfancybuttons.slice;
+package com.rilixtech.materialfancybutton.slice;
 
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.ListContainer;
 import ohos.agp.components.Text;
-import com.rilixtech.materialfancybuttons.ListItemProvider;
-import com.rilixtech.materialfancybuttons.ResourceTable;
+import com.rilixtech.materialfancybutton.ListItemProvider;
+import com.rilixtech.materialfancybutton.ResourceTable;
 import java.util.ArrayList;
 import java.util.List;
 

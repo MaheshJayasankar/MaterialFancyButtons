@@ -1,9 +1,6 @@
-package com.rilixtech.materialfancybuttons;
+package com.rilixtech.materialfancybutton;
 
 import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
-import ohos.agp.colors.RgbColor;
-import ohos.agp.colors.RgbPalette;
-import ohos.agp.utils.Color;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

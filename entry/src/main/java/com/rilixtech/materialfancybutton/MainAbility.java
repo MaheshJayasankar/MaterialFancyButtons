@@ -14,26 +14,19 @@
  * limitations under the License.
  */
 
-package com.rilixtech.materialfancybuttons.slice;
+package com.rilixtech.materialfancybutton;
 
-import ohos.aafwk.ability.AbilitySlice;
+import ohos.aafwk.ability.Ability;
 import ohos.aafwk.content.Intent;
+import com.rilixtech.materialfancybutton.slice.MainAbilitySlice;
 
 /**
- * This class displays the layout as specified by the intent parameter "layoutIdExtra".
- * It is used to display buttons of different font modules from the corresponding layout files.
- * Refer to the various supported layouts in resources->base->layout directory.
+ * This is the launch ability for this sample application.
  */
-public class IconButtonsSlice extends AbilitySlice {
-
-    public static final String LAYOUT_ID_EXTRA = "layoutIdExtra";
-    public static final String TITLE_EXTRA = "titleExtra";
-
-    @Override protected void onStart(Intent intent) {
+public class MainAbility extends Ability {
+    @Override
+    public void onStart(Intent intent) {
         super.onStart(intent);
-
-        int layoutId = intent.getIntParam(LAYOUT_ID_EXTRA, 0);
-
-        super.setUIContent(layoutId);
+        super.setMainRoute(MainAbilitySlice.class.getName());
     }
 }

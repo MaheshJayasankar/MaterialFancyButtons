@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rilixtech.materialfancybuttons.slice;
+package com.rilixtech.materialfancybutton.slice;
 
 import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_CONTENT;
 import ohos.aafwk.ability.AbilitySlice;
@@ -32,7 +32,7 @@ import com.rilixtech.ionicons_typeface.Ionicons;
 import com.rilixtech.material_design_iconic_typeface.MaterialDesignIconic;
 import com.rilixtech.materialfancybutton.MaterialFancyButton;
 import com.rilixtech.materialfancybutton.typeface.IIcon;
-import com.rilixtech.materialfancybuttons.ResourceTable;
+import com.rilixtech.materialfancybutton.ResourceTable;
 import com.rilixtech.meteocons_typeface.Meteocons;
 import com.rilixtech.mfglabs_iconset_typeface.MFGLabsIconset;
 import com.rilixtech.mobirise_icons_typeface.MobiriseIcons;

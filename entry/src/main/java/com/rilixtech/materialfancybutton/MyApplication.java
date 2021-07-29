@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package com.rilixtech.materialfancybuttons;
+package com.rilixtech.materialfancybutton;
 
-import ohos.aafwk.ability.Ability;
-import ohos.aafwk.content.Intent;
-import com.rilixtech.materialfancybuttons.slice.MainAbilitySlice;
+import ohos.aafwk.ability.AbilityPackage;
 
 /**
- * This is the launch ability for this sample application.
+ * Entry point of this sample application.
  */
-public class MainAbility extends Ability {
+public class MyApplication extends AbilityPackage {
     @Override
-    public void onStart(Intent intent) {
-        super.onStart(intent);
-        super.setMainRoute(MainAbilitySlice.class.getName());
+    public void onInitialize() {
+        super.onInitialize();
     }
 }

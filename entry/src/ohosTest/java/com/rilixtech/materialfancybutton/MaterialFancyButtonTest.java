@@ -1,4 +1,4 @@
-package com.rilixtech.materialfancybuttons;
+package com.rilixtech.materialfancybutton;
 
 import ohos.agp.components.Attr;
 import ohos.agp.components.AttrSet;
@@ -6,8 +6,6 @@ import ohos.agp.components.element.Element;
 import ohos.agp.utils.Color;
 import ohos.agp.utils.TextAlignment;
 import ohos.app.Context;
-import com.rilixtech.materialfancybutton.MaterialFancyButton;
-import com.rilixtech.materialfancybutton.ResourceTable;
 import com.rilixtech.materialfancybutton.utils.AttrEnumUtil;
 import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
 import org.junit.Test;

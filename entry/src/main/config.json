@@ -14,7 +14,7 @@
   },
   "deviceConfig": {},
   "module": {
-    "package": "com.rilixtech.materialfancybuttons",
+    "package": "com.rilixtech.materialfancybutton",
     "name": ".MyApplication",
     "deviceType": [
       "phone"
@@ -38,7 +38,7 @@
           }
         ],
         "orientation": "unspecified",
-        "name": "com.rilixtech.materialfancybuttons.MainAbility",
+        "name": "com.rilixtech.materialfancybutton.MainAbility",
         "icon": "$media:icon",
         "description": "$string:mainability_description",
         "label": "$string:app_name",
