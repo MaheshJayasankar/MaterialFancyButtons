@@ -32,8 +32,8 @@ import java.util.Optional;
 /**
  * This class is used to define a Button-type UI Component that may be customized using a variety of attributes.
  * Apart from button {@link Text}, it may have an associated {@link Element} or {@link ITypeface} style icon that can be
- * positioned as required. It supports a set of custom attributes that can be used to define the style of the component.
- * Refer to example code and documentation for the list of supported attributes.
+ * positioned beside the text as required. It supports a set of custom attributes that can be used to customize the
+ * component. Refer to example code and documentation for the list of supported attributes.
  */
 public class MaterialFancyButton extends DirectionalLayout {
 
@@ -54,7 +54,6 @@ public class MaterialFancyButton extends DirectionalLayout {
     private int mTextSize = FontUtil.fpToPx(getContext(), 16);
     private int mTextGravity; // Gravity.CENTER
     private String mText = null;
-    private int mTextStyle;
 
     // # Icon Attributes
     private Element mIconResource = null;
@@ -129,8 +128,8 @@ public class MaterialFancyButton extends DirectionalLayout {
      * when defining the button using XML code.
      *
      * @param context The context in which this Component is being instantiated.
-     * @param attrs The set of Attributes, both standard attributes and custom attributes, used for defining the
-     *              style of this button.
+     * @param attrs The set of Attributes, both standard attributes and custom attributes, used to configure this
+     *              Button.
      */
     public MaterialFancyButton(Context context, AttrSet attrs) {
         super(context, attrs);
@@ -214,7 +213,6 @@ public class MaterialFancyButton extends DirectionalLayout {
         mTextView.setTextColor(new Color(mEnabled ? mDefaultTextColor : mDisabledTextColor));
         mTextView.setTextSize(FontUtil.pxToFp(getContext(), mTextSize), Text.TextSizeType.FP);
         mTextView.setLayoutConfig(new LayoutConfig(MATCH_CONTENT, MATCH_CONTENT));
-        // TODO How to set font style?
         mTextView.setFont(mTextView.getFont());
     }
 
@@ -291,7 +289,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     /**
      * Initialize Attributes from the AttrSet.
      *
-     * @param attrSet : Attribute set containing the style attributes of the button.
+     * @param attrSet : Attribute set containing the custom and regular attributes of the button.
      */
     private void initAttributes(AttrSet attrSet) {
         // COLOR ATTRIBUTES
@@ -329,9 +327,6 @@ public class MaterialFancyButton extends DirectionalLayout {
         mIconPaddingTop = getDimensionAttribute(attrSet, "mfb_iconPaddingTop", mIconPaddingTop);
         mIconPaddingBottom = getDimensionAttribute(attrSet, "mfb_iconPaddingBottom", mIconPaddingBottom);
 
-        // INTEGER ATTRIBUTES
-        // TODO This attribute may have to be removed based on the decision to retain or remove TextStyle attribute.
-        mTextStyle = getIntegerAttribute(attrSet, "mfb_textStyle", Font.REGULAR);
 
         // ENUM ATTRIBUTES
         mTextGravity = getEnumAttribute(
@@ -408,11 +403,6 @@ public class MaterialFancyButton extends DirectionalLayout {
     private int getDimensionAttribute(AttrSet attrSet, String attrName, int defaultValue) {
         Optional<Attr> optionalAttribute = attrSet.getAttr(attrName);
         return optionalAttribute.map(Attr::getDimensionValue).orElse(defaultValue);
-    }
-
-    private int getIntegerAttribute(AttrSet attrSet, String attrName, int defaultValue) {
-        Optional<Attr> optionalAttribute = attrSet.getAttr(attrName);
-        return optionalAttribute.map(Attr::getIntegerValue).orElse(defaultValue);
     }
 
     private String getStringAttribute(AttrSet attrSet, String attrName) {
@@ -555,7 +545,7 @@ public class MaterialFancyButton extends DirectionalLayout {
 
     /**
      * Used by the Attribute setter functions to refresh the button Components after changes.
-     * In case a new Component is to be added (eg. Font-Icon Text Component), the Components of this ComponentContainer
+     * In case a new Component is to be added (eg. Icon-Font Text Component), the Components of this ComponentContainer
      * are rebuilt.
      */
     private void setupView() {
@@ -649,21 +639,6 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Sets the style of text.
-     *
-     * @param style The style of text to be set.
-     */
-    public void setTextStyle(/*@Typeface.Style*/ int style) {
-        mTextStyle = style;
-        if (mTextView == null) {
-            setupTextView();
-        }
-        // TODO: How to set font style? Update: Maybe use setFontVariations?
-        mTextView.setFont(mTextView.getFont());
-
-    }
-
-    /**
      * Setting the icon's color independent of the text color.
      *
      * @param color : Color
@@ -677,7 +652,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Get the Color of the font-icon.
+     * Get the Color of the icon-font.
      *
      * @return The integer value of the color.
      */
@@ -910,7 +885,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set a font-icon to the button (eg FontAwesome or Entypo...)
+     * Set a icon-font to the button (eg FontAwesome or Entypo...)
      *
      * @param icon : Icon value eg : \uf082
      */
@@ -931,9 +906,9 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Gets the String value being used as the font-icon for this button.
+     * Gets the String value being used as the icon-font for this button.
      *
-     * @return The String used for the font-icon, {@code null} if no font-icon is being used.
+     * @return The String used for the icon-font, {@code null} if no icon-font is being used.
      */
 
     public String getFontIconResource() {
@@ -941,8 +916,8 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Sets the font-icon of the button to the specified Character.
-     * Note that the Font of the font-icon remains unchanged.
+     * Sets the icon-font of the button to the specified Character.
+     * Note that the Font of the icon-font remains unchanged.
      *
      * @param icon The Character to set the icon to.
      */
@@ -951,7 +926,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Sets the font-icon of the button by finding an font-icon with the given key.
+     * Sets the icon-font of the button by finding an icon-font with the given key.
      *
      * @param icon The key of the button icon to be set. Must correspond to a {@link IIcon} field, and the prefix of
      *             the {@link IIcon} should match with the prefix of the icon key.
@@ -969,7 +944,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Sets the font-icon of the button to the given {@link IIcon}.
+     * Sets the icon-font of the button to the given {@link IIcon}.
      *
      * @param icon The {@link IIcon} to be used as the icon of the button.
      */
@@ -985,7 +960,7 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Set Icon size of the button (for only font-icons) in fp.
+     * Set Icon size of the button (for only icon-fonts) in fp.
      *
      * @param iconSize : Icon Size
      */
@@ -997,9 +972,9 @@ public class MaterialFancyButton extends DirectionalLayout {
     }
 
     /**
-     * Get Icon size of the button (for only font-icons) in fp.
+     * Get Icon size of the button (for only icon-fonts) in fp.
      *
-     * @return Icon size of the font-icon
+     * @return Icon size of the icon-font
      */
     public int getFontIconSize() {
         return mFontIconSize;
@@ -1279,14 +1254,4 @@ public class MaterialFancyButton extends DirectionalLayout {
         return mIconView;
     }
 
-    // TODO Verify if text style attribute can be used, otherwise remove this method
-    /**
-     * Get the text style.
-     *
-     * @return Text Style
-     */
-    @SuppressWarnings("unused")
-    public int getTextStyle() {
-        return mTextStyle;
-    }
 }

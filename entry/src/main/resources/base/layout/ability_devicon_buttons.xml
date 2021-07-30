@@ -144,7 +144,6 @@
                 fancy:mfb_text="Firefox"
                 fancy:mfb_textColor="#dfe0d9"
                 />
-<!--            TODO-->
         </DirectionalLayout>
 
     </DirectionalLayout>

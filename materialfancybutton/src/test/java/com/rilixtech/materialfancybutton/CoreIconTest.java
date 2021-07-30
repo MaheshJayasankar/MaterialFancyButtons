@@ -44,7 +44,8 @@ public class CoreIconTest {
 
     @Test
     public void testIconExists() {
-        assertFalse(CoreIcon.iconExists("testCoreIconFindFontKey"));
+        // Pass an invalid key that does not correspond to any icon under any of the classes
+        assertFalse(CoreIcon.iconExists("test_core_icon_invalid_font_key"));
     }
 
     @Test
@@ -125,7 +126,7 @@ public class CoreIconTest {
 
     @Test
     public void testFindFont() {
-        assertNull(CoreIcon.findFont("testCoreIconFindFontKey"));
+        assertNull(CoreIcon.findFont("test_core_icon_invalid_font_key"));
     }
 
     @Test

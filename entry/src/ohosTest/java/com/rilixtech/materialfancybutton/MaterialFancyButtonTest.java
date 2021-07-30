@@ -188,14 +188,6 @@ public class MaterialFancyButtonTest {
     }
 
     @Test
-    public void testSetTextStyle() {
-        MaterialFancyButton mfb = new MaterialFancyButton(context);
-        int textStyle = 2;
-        mfb.setTextStyle(textStyle);
-        assertEquals(textStyle, mfb.getTextStyle());
-    }
-
-    @Test
     public void testSetIconColor() {
         MaterialFancyButton mfb = new MaterialFancyButton(context);
         int newColor = Color.BLUE.getValue();

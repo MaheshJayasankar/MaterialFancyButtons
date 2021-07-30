@@ -30,7 +30,7 @@ public final class CoreIcon {
     }
 
     /**
-     * initializes the FONTS. This also tries to find all founds automatically via their font file
+     * Loads the FONTS into cache for quick lookup. This also tries to find all fonts automatically via their font file
      */
     public static void init() {
         if (!initDone) {
